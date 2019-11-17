@@ -1,0 +1,74 @@
+/* Reset Properties */
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* Variables */
+
+
+/* Container Style */
+div.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    min-height: 100vh;
+}
+div.container h1{
+    margin: 20px 0 0 0;
+}
+
+/* Home Section */
+div.home{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    opacity: 1;
+    height: auto;
+    max-height: 2000px;
+}
+/* Hide Home Section */
+div.home.hide{
+    opacity: 0;
+    max-height: 0;
+}
+/* Main Buttons */
+button.main-button{
+    width: 200px;
+    padding: 15px;
+    margin: 0 0 15px 0;
+    background-color: gray;
+    text-decoration: none;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+button.main-button:hover{
+    box-shadow: -5px 5px 0 2px rgba(0,0,0,0.2);
+}
+div.home:last-child{
+    margin: 0;
+}
+
+/* Meal Plan App Sections */
+div.meal-plan, div.meals-reference, div.reminders, div.settings{
+    opacity: 0;
+    max-height: 0;
+}
+div.show{
+    opacity: 1;
+    max-height: 10000px;
+    height: auto;
+}
+
+
+/* Meal Plan Section */
+
+
+/* Transition */
+.transition{
+    transition: 0.5s ease;
+}
