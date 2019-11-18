@@ -27,6 +27,17 @@ I am excited to see where this can go and how much I can accomplish in this mann
 
 I got to work with 'map' and 'sort' more in today's JS30 challenge. I need to use these more as they have great utility in most projects.
 
+### Day 3: November 18, 2019
+
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed Day 18 of the [JS30 challenge](https://javascript30.com)
+* I completed 85/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
+
+I got to work with 'map' and 'reduce' more in today's JS30 challenge. I am understanding more and more how to use these functions.
+
 ### All Projects
 **Link(s) to work**
 1. [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
