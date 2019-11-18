@@ -16,5 +16,17 @@ I am excited to see where this can go and how much I can accomplish in this mann
 
 **Link to work:** [Meal Plan](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
 
+### Day 2: November 17, 2019
+
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed Day 17 of the [JS30 challenge](https://javascript30.com)
+* I completed 80/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
+
+I got to work with 'map' and 'sort' more in today's JS30 challenge. I need to use these more as they have great utility in most projects.
+
+### All Projects
 **Link(s) to work**
 1. [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
