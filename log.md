@@ -35,8 +35,13 @@ I got to work with 'map' and 'sort' more in today's JS30 challenge. I need to us
 
 * I completed Day 18 of the [JS30 challenge](https://javascript30.com)
 * I completed 85/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
+* Worked on Meal Plan app more (part of this repo).
+* * Got all sections to load and populate "home" button, as well as placeholder data
+* * Need to debug heading not changing back when going home
 
 I got to work with 'map' and 'reduce' more in today's JS30 challenge. I am understanding more and more how to use these functions.
+
+I am enjoying creating a small project from scratch, and using what I have learned these last couple weeks. You really do need ot use things or you lose them, and not just use but use for a prupose.
 
 ### All Projects
 **Link(s) to work**
