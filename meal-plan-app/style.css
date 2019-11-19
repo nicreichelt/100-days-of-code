@@ -30,11 +30,6 @@ div.home{
     height: auto;
     max-height: 2000px;
 }
-/* Hide Home Section */
-div.home.hide{
-    opacity: 0;
-    max-height: 0;
-}
 /* Main Buttons */
 button.main-button{
     width: 200px;
@@ -54,7 +49,7 @@ div.home:last-child{
 }
 
 /* Meal Plan App Sections */
-div.meal-plan, div.meals-reference, div.reminders, div.settings{
+div.home, div.meal-plan, div.meals-reference, div.reminders, div.settings{
     opacity: 0;
     max-height: 0;
 }
