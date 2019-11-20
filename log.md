@@ -52,11 +52,12 @@ I am enjoying creating a small project from scratch, and using what I have learn
 * I completed Day 19 of the [JS30 challenge](https://javascript30.com)
 * I completed 95/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
 * Worked on Meal Plan app more (part of this repo).
-* * Got all sections to load and populate "home" button, as well as placeholder data
+* * Refactored code to keep it DRY
+* * Got the "Meal Plan" section to load the current date, first day of week, and a 'ul' with each day of the week and data attributes with the date attached.
 
 I got to work with the webcam today in the JS30 challenge. Seeing how you can take a video stream and grab difference elements from it (i.e. the video, a still image, etc), and putting that in the canvas to manipulate.
 
-Creating a simple UI/UX with JS, HTML, and CSS is pretty fun. 
+Creating a simple UI/UX with JS, HTML, and CSS is pretty fun. I am learning a lot about the DOM and how to manipulate things. I like working in Vanilla JS so I can see how it is all functioning in the browser.
 
 ### All Projects
 **Link(s) to work**
