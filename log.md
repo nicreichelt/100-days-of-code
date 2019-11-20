@@ -43,6 +43,21 @@ I got to work with 'map' and 'reduce' more in today's JS30 challenge. I am under
 
 I am enjoying creating a small project from scratch, and using what I have learned these last couple weeks. You really do need ot use things or you lose them, and not just use but use for a prupose.
 
+### Day 4: November 19, 2019
+
+**Today's Progress**: Learning & More "Meal Planning"
+
+**Thoughts:** 
+
+* I completed Day 19 of the [JS30 challenge](https://javascript30.com)
+* I completed 95/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
+* Worked on Meal Plan app more (part of this repo).
+* * Got all sections to load and populate "home" button, as well as placeholder data
+
+I got to work with the webcam today in the JS30 challenge. Seeing how you can take a video stream and grab difference elements from it (i.e. the video, a still image, etc), and putting that in the canvas to manipulate.
+
+Creating a simple UI/UX with JS, HTML, and CSS is pretty fun. 
+
 ### All Projects
 **Link(s) to work**
 1. [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
