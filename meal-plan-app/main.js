@@ -7,49 +7,61 @@ window.onload = function(){
     const sectionHeading = document.querySelector('#section-heading');
     // Section COntainer
     const homeContainer = document.querySelector('.home');
-    const mealPlanContainer = document.querySelector('.meal-plan');
-    const mealsReferenceCOntainer = document.querySelector('.meals-reference');
-    const remindersContainer = document.querySelector('.reminders');
-    const settingsContainer = document.querySelector('.settings');
 
-    // Meal Plan Options
-    const mealPlanOptions = [
+    // Application Sections Array
+    const appSections = [
         {
             name: "Meal Plan",
             section: "meal-plan",
-            container: "mealPlanContainer"
+            container: "mealPlanContainer",
+            loadContent: function(){
+                const section = 'meal-plan'
+                loadMealPlan(section);
+            }
         },
         {
             name: "Meals Reference",
             section: "meals-reference",
-            container: "mealsReferenceContainer"
+            container: "mealsReferenceContainer",
+            loadContent: function(){
+                loadMealsReference();
+            }
         },
         {
             name: "Reminders",
             section: "reminders",
-            container: "remindersContainer"
+            container: "remindersContainer",
+            loadContent: function(){
+                loadReminders();
+            }
         },
         {
             name: "Settings",
             section: "settings",
-            container: "settingsContainer"
+            container: "settingsContainer",
+            loadContent: function(){
+                loadSettings();
+            }
         },
         {
             name: "Simple Meal Planning!",
             section: "home",
-            container: "homeContainer"
+            container: "homeContainer",
+            loadContent: function(){
+                console.log('Well that\'s odd, this is just a console log.');
+            }
         }
     ];
-    // Home Plan Button = 
-    const home = {
-        name: "Meal Planning",
-        section: "home"
-    }
+
+    // Days of the week
+    const days = [
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"
+    ];
 
     // ** Build Functions
-    // Create App Options (Main Page)
+    // Load Home Screen (Main Page)
     function loadMainPage(){
-        mealPlanOptions.forEach(option => {
+        appSections.forEach(option => {
             if(option.section != 'home'){
                 // Create Button
                 mealPlanButton = document.createElement('button');
@@ -69,6 +81,11 @@ window.onload = function(){
     // ** Load Sections
     // Go to section function - hides all divs and loads "shows" the target div
     function goToSection(e){
+        // Grab Section Object
+        const index = appSections.map(opt => opt.section).indexOf(`${e.target.dataset.section}`);
+        const sectionObj = appSections[index];
+        console.log(sectionObj);
+
         // Hide All "Section" divs
         const divs = mainContainer.querySelectorAll('div');
         divs.forEach(div => {
@@ -84,89 +101,59 @@ window.onload = function(){
             section.style.zIndex = 10;
         }, 500);
 
-        // Populate Section
-        switch(`${e.target.dataset.section}`){
-            case "meal-plan": 
-                loadMealPlanSection();
-                break;
-            case "meals-reference":
-                loadMealsReferenceSection();
-                break;
-            case "reminders":
-                loadRemindersSection();
-                break;
-            case "settings":
-                loadSettingsSection();
-                break;
-            case "home":
-                goHome();
-                break;
-        }
-    }
-    // Load Home Section
-    function goHome(){
-        console.log(home.section);
-        sectionHeading.textContent = 'Meal Planning';
-        const index = mealPlanOptions.map(option => option.section).indexOf('home');
-        const home = mealPlanOptions[index];
+        loadSection(sectionObj);
     }
 
-    // Populate Meal Plan Section
-    function loadMealPlanSection(){
-        console.log('Meal Plan Section Loaded!');
-        // 
-        sectionHeading.textContent = 'The Meal Plan!';
-        // Go Home Button
-        if(!mealPlanContainer.querySelector('button.main-button')){
-            // Generate "Home" Button
+    // Populate Section
+    function loadSection(obj){
+        // Get Section Container
+        const container = mainContainer.querySelector(`.${obj.section}`);
+
+        // Change Heading to Section Name
+        sectionHeading.textContent = obj.name;
+
+        // Generate Go Home Button (if not present and not loading home section)
+        if(!container.querySelector('button.main-button') && obj.section != 'home'){
+            // Generage Home Button
             let goHome = generateHomeButton();
             goHome.addEventListener('click', goToSection);
-            mealPlanContainer.appendChild(goHome);
+            container.appendChild(goHome);
         }else{}
-        // Placeholder Data
-        loadPlaceHolderText(mealPlanContainer , 'Meal Plan data goes here...');
+
+        // Load Content
+        obj.loadContent();
     }
-    // Populate Meals Reference Section
-    function loadMealsReferenceSection() {
-        console.log('Meals Reference Section Loaded!');
-        sectionHeading.textContent = 'Meals Reference';
-        // Go Home Button
-        if (!mealsReferenceCOntainer.querySelector('button.main-button')) {
-            // Generate "Home" Button
-            let goHome = generateHomeButton();
-            goHome.addEventListener('click', goToSection);
-            document.querySelector('.meals-reference').appendChild(goHome);
-        }
-        // Placeholder Data
-        loadPlaceHolderText(mealsReferenceCOntainer , 'Meals Reference data goes here...');
-    }
-    // Populate Reminders Section
-    function loadRemindersSection() {
-        console.log('Reminders Section Loaded!');
-        sectionHeading.textContent = 'Reminders';
-        // Go Home Button
-        if (!remindersContainer.querySelector('button.main-button')) {
-            // Generate "Home" Button
-            let goHome = generateHomeButton();
-            goHome.addEventListener('click', goToSection);
-            document.querySelector('.reminders').appendChild(goHome);
-        }
-        // Placeholder Data
-        loadPlaceHolderText(remindersContainer, 'Reminders data goes here...');
-    }
-    // Populate Settings Section
-    function loadSettingsSection() {
-        console.log('Settings Section Loaded!');
-        sectionHeading.textContent = 'Settings';
-        // Go Home Button
-        if (!settingsContainer.querySelector('button.main-button')) {
-            // Generate "Home" Button
-            let goHome = generateHomeButton();
-            goHome.addEventListener('click', goToSection);
-            document.querySelector('.settings').appendChild(goHome);
-        }
-        // Placeholder Data
-        loadPlaceHolderText(settingsContainer, 'Settings data goes here...');
+
+    // Load Meal Plan
+    function loadMealPlan(text){
+        console.log('Meal Plan Loaded!');
+        console.log(this)
+        // Get Date Info
+        const now = new Date();
+        const firstDayOfWeek = new Date();
+        const nowDayOfWeek = now.getDay();
+        firstDayOfWeek.setDate(firstDayOfWeek.getDate() - nowDayOfWeek);
+        const todayText = `${now.getFullYear()}/${now.getMonth()+1}/${now.getDate()}`;
+        const firstDayOfWeekText = `${firstDayOfWeek.getFullYear()}/${firstDayOfWeek.getMonth()+1}/${firstDayOfWeek.getDate()}`;
+        console.log(firstDayOfWeekText);
+
+        // Set "Week Of Heading"
+        const weekOfHeading = document.createElement('h2');
+        const weekOfHeadingText = document.createTextNode(`Week of: ${firstDayOfWeekText}`);
+        weekOfHeading.appendChild(weekOfHeadingText);
+        // Append to main contaier
+        const container = mainContainer.querySelector(`.${text}`);
+        container.appendChild(weekOfHeading);
+        // Load This Weeks Meal Plan
+        const planList = document.createElement('ul');
+        var i = 0;
+        days.forEach(day => {
+            planList.innerHTML += `
+                <li data-date="${firstDayOfWeek.getFullYear()}/${firstDayOfWeek.getMonth()+1}/${firstDayOfWeek.getDate()+i}"><label>${day}:</label></li>
+            `
+            i++;
+        })
+        container.appendChild(planList);
     }
 
     // ** Utility Functions
@@ -176,9 +163,9 @@ window.onload = function(){
         mealPlanButton.classList.add('main-button');
         mealPlanButton.classList.add('transition');
         mealPlanButton.textContent = 'Go Home';
-        mealPlanButton.dataset.section = home.section;
+        mealPlanButton.dataset.section = 'home';
 
-        mealPlanButton.addEventListener('click', goHome)
+        mealPlanButton.addEventListener('click', goToSection)
 
         return mealPlanButton;
     }
@@ -199,5 +186,4 @@ window.onload = function(){
         loadMainPage();
     }
     start();
-
 }
