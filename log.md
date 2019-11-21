@@ -59,6 +59,18 @@ I got to work with the webcam today in the JS30 challenge. Seeing how you can ta
 
 Creating a simple UI/UX with JS, HTML, and CSS is pretty fun. I am learning a lot about the DOM and how to manipulate things. I like working in Vanilla JS so I can see how it is all functioning in the browser.
 
+### Day 5: November 20, 2019
+
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed Day20 of the [JS30 challenge](https://javascript30.com)
+
+Today was a shorter day. It was busier at work and I had plans for the evening. I got to work with Speech Recognition in the browser. Took me a while to figure out it is only supported by Chrome though. 
+
+I added a couple if states to check if the transcript included certain words. I made a simple "Jarvis" command that listened for the word "get" and then listened for "the traffic" or "the weather" and would return a certain response. I had to turn off "interimResults" to prevent it from firing several times. I may go back and figure out how to debounce, but couldn't figure it out effectively without messing with the speec recognition.
+
 ### All Projects
 **Link(s) to work**
 1. [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
