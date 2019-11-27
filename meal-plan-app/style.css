@@ -59,8 +59,22 @@ div.show{
     height: auto;
 }
 
-
 /* Meal Plan Section */
+div.meal-plan div.week-of{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+div.meal-plan div.week-of *{
+    margin: 5px;
+}
+div.meal-plan ul li {
+    list-style-type: none;
+    padding: 10px;
+    margin: 5px;
+    outline: 1px solid black;
+}
 
 
 /* Transition */
