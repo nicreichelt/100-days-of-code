@@ -71,6 +71,37 @@ Today was a shorter day. It was busier at work and I had plans for the evening. 
 
 I added a couple if states to check if the transcript included certain words. I made a simple "Jarvis" command that listened for the word "get" and then listened for "the traffic" or "the weather" and would return a certain response. I had to turn off "interimResults" to prevent it from firing several times. I may go back and figure out how to debounce, but couldn't figure it out effectively without messing with the speec recognition.
 
+### Day 6: November 21, 2019
+
+
+### Day 7: November 22, 2019
+
+
+### Day 8: November 23, 2019
+
+
+### Day 9: November 25, 2019
+
+
+### Day 10: November 26, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed Day 25 of the [JS30 challenge](https://javascript30.com) & the rest of the first Module in FreeCodeCamp's JS Cert (Basic JS)[https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/]
+
+I was able to complete both of these efficiently today. The setup of some of the exercises in FreeCodeCamp is a little frustrating, but I understand why it is done the way it is.
+
+* I worked on my 'Meal Plan App' tonight.
+
+I was able to complete the implementation of setting the initial date upon loading the "Meal Plan Section" and make sure the previous and next buttons move back and forward one week each. The passed date is set to 12am and adjusted for prev/next week from there.
+
+I completed the implementation of the test/dummy meal plan date. The meals load on the appropriate date because when loading the page the days of the week are set with a data attribute for their date (YYYY/MM/DD) and the dummy data uses an object with the date included.
+
+There is also a link to a recipe if one is added. All of this is loaded into local storage and "stringified" then "parsed" when loaded.
+
+Next is to add the ability to change/add a new meal which will tie into the "Meals Reference Page"
+
 ### All Projects
 **Link(s) to work**
 1. [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
