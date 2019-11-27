@@ -1,63 +1,86 @@
 # 100 Days Of Code - Log
 
-### Day 1: November 16, 2019
+### All Projects
+**Link(s) to work & Learning**
+1. **PROJECT**: [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
+2. **LEARNING**: [JavaScript30](https://javascript30.com)
+3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
-**Today's Progress**: Learning, Planning, and 1st Project Start
+### Day 11: November 27, 2019
+**Today's Progress**: Learning & 'Meal Planning' App
 
 **Thoughts:** 
 
-* I completed Day 16 of the [JS30 challenge](https://javascript30.com)
-* I started the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
-* I started my "Meal Plan" web app. It is in this Github repo
+* I completed Day 26 of the [JS30 challenge](https://javascript30.com) - Stripe Follow Along Nav
 
-I feel like things are starting to come together for me. I am creating this web app completely with Vanilla JS and creating page elements dynamically.
+This was a culmination of a few lessons in one. This is a very unique feature and adds a depth and richness to the UI/UX that a standard nav bar/dropdowns can't provide. I am excited to implement this in a navbar or even as a modal possibly in the future (possibly for 'hints' on a website/app)
 
-I am excited to see where this can go and how much I can accomplish in this manner. At this time the applications will use localStorage. Not sure if I am gong to hook it into a DB or Cookie. Will keep updated.
+* I started [FreeCodeCamp's ES6 Module](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
-**Link to work:** [Meal Plan](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
 
-### Day 2: November 17, 2019
+### Day 10: November 26, 2019
+**Today's Progress**: Learning & 'Meal Planning' App
 
+**Thoughts:** 
+
+* I completed Day 25 of the [JS30 challenge](https://javascript30.com) - Event Capture, Propagation, Bubbling and Once
+* I completed the rest of the first Module in FreeCodeCamp's JS Cert [Basic JS](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/)
+
+I was able to complete both of these efficiently today. The setup of some of the exercises in FreeCodeCamp is a little frustrating, but I understand why it is done the way it is.
+
+* I worked on my ['Meal Plan App'](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app) tonight.
+
+I was able to complete the implementation of setting the initial date upon loading the "Meal Plan Section" and make sure the previous and next buttons move back and forward one week each. The passed date is set to 12am and adjusted for prev/next week from there.
+
+I completed the implementation of the test/dummy meal plan date. The meals load on the appropriate date because when loading the page the days of the week are set with a data attribute for their date (YYYY/MM/DD) and the dummy data uses an object with the date included.
+
+There is also a link to a recipe if one is added. All of this is loaded into local storage and "stringified" then "parsed" when loaded.
+
+Next is to add the ability to change/add a new meal which will tie into the "Meals Reference Page"
+
+### Day 9: November 25, 2019
 **Today's Progress**: Learning
 
 **Thoughts:** 
 
-* I completed Day 17 of the [JS30 challenge](https://javascript30.com)
-* I completed 80/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
+* I completed Day 24 of the [JS30 challenge](https://javascript30.com) - Sticky Nav
 
-I got to work with 'map' and 'sort' more in today's JS30 challenge. I need to use these more as they have great utility in most projects.
+I have worked with a pure CSS sticky Nav and found this JS implementation to be a lot cleaner and easier to implement. I am excited to add this to other projects in the near future. The ability to dynamically update elements is huge for UX and making a site more responsive, since you are not relying on static values.
 
-### Day 3: November 18, 2019
-
+### Day 8: November 23, 2019
 **Today's Progress**: Learning
 
 **Thoughts:** 
 
-* I completed Day 18 of the [JS30 challenge](https://javascript30.com)
-* I completed 85/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
-* Worked on Meal Plan app more (part of this repo).
-* * Got all sections to load and populate "home" button, as well as placeholder data
-* * Need to debug heading not changing back when going home
+* I completed Day 23 of the [JS30 challenge](https://javascript30.com) - Speech Synthesis
 
-I got to work with 'map' and 'reduce' more in today's JS30 challenge. I am understanding more and more how to use these functions.
+This was a cool lesson to see how to access the the OS's voice synthesis 'voices' and if using Chrome, Google's 'voices'.
 
-I am enjoying creating a small project from scratch, and using what I have learned these last couple weeks. You really do need ot use things or you lose them, and not just use but use for a prupose.
+I did find the eventListener 'voiceschanged' would not fire on FireFox, but did work in Chrome. This would make it so you could only use the default voice in Firefox. I was not able to investigate further, but may in the future. All other code worked in both browsers (Chrome & FireFox).
 
-### Day 4: November 19, 2019
-
-**Today's Progress**: Learning & More "Meal Planning"
+### Day 7: November 22, 2019
+**Today's Progress**: Learning & Meal Plan App
 
 **Thoughts:** 
 
-* I completed Day 19 of the [JS30 challenge](https://javascript30.com)
-* I completed 95/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
-* Worked on Meal Plan app more (part of this repo).
-* * Refactored code to keep it DRY
-* * Got the "Meal Plan" section to load the current date, first day of week, and a 'ul' with each day of the week and data attributes with the date attached.
+* I completed Day 22 of the [JS30 challenge](https://javascript30.com) - Follow Along Link Highlighter
+* I got the [Meal Plan](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app) section to load with the previous week button (bugged)
 
-I got to work with the webcam today in the JS30 challenge. Seeing how you can take a video stream and grab difference elements from it (i.e. the video, a still image, etc), and putting that in the canvas to manipulate.
+The JS30 lesson provided a helpful UX feature. It is better than the traditional link hover effects and has a pretty cool animation watching the 'bubble' jump around the page.
 
-Creating a simple UI/UX with JS, HTML, and CSS is pretty fun. I am learning a lot about the DOM and how to manipulate things. I like working in Vanilla JS so I can see how it is all functioning in the browser.
+I was able to get the 'previous week' button working and loading the week before the current week. It added to the bottom of the container though and should replace the data. This was not able to be fixed in this session.
+
+### Day 6: November 21, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed Day 21 of the [JS30 challenge](https://javascript30.com) - Geolocation
+* I completed 100/110 exercises in the Basic JS Module of [FreeCodeCamp's JS Cert Course](https://www.freecodecamp.org/learn)
+
+The JS30 Lesson was pretty cool to see. It is awesome that browsers have access to so much info. Can be kind of scary to think about from a security/privacy perspective though.
+
+The FreeCodeCamp JS Course is pretty helpful. I find that some exercises are overly specific and hard to follow, but that is probably just me trying to rush through them. I am working on slowing down and taking my time though.
 
 ### Day 5: November 20, 2019
 
@@ -71,37 +94,59 @@ Today was a shorter day. It was busier at work and I had plans for the evening. 
 
 I added a couple if states to check if the transcript included certain words. I made a simple "Jarvis" command that listened for the word "get" and then listened for "the traffic" or "the weather" and would return a certain response. I had to turn off "interimResults" to prevent it from firing several times. I may go back and figure out how to debounce, but couldn't figure it out effectively without messing with the speec recognition.
 
-### Day 6: November 21, 2019
+### Day 4: November 19, 2019
 
+**Today's Progress**: Learning & More "Meal Planning" App 
 
-### Day 7: November 22, 2019
+**Thoughts:** 
 
+* I completed Day 19 of the [JS30 challenge](https://javascript30.com)
+* I completed 95/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
+* Worked on Meal Plan app more (part of this repo).
+* * Refactored code to keep it DRY
+* * Got the ['Meal Plan'](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app) section to load the current date, first day of week, and a 'ul' with each day of the week and data attributes with the date attached.
 
-### Day 8: November 23, 2019
+I got to work with the webcam today in the JS30 challenge. Seeing how you can take a video stream and grab difference elements from it (i.e. the video, a still image, etc), and putting that in the canvas to manipulate.
 
+Creating a simple UI/UX with JS, HTML, and CSS is pretty fun. I am learning a lot about the DOM and how to manipulate things. I like working in Vanilla JS so I can see how it is all functioning in the browser.
 
-### Day 9: November 25, 2019
+### Day 3: November 18, 2019
 
-
-### Day 10: November 26, 2019
 **Today's Progress**: Learning
 
 **Thoughts:** 
 
-* I completed Day 25 of the [JS30 challenge](https://javascript30.com) & the rest of the first Module in FreeCodeCamp's JS Cert (Basic JS)[https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/basic-javascript/]
+* I completed Day 18 of the [JS30 challenge](https://javascript30.com)
+* I completed 85/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
+* Worked on my ['Meal Plan app'](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app) more (part of this repo).
+* * Got all sections to load and populate "home" button, as well as placeholder data
+* * Need to debug heading not changing back when going home
 
-I was able to complete both of these efficiently today. The setup of some of the exercises in FreeCodeCamp is a little frustrating, but I understand why it is done the way it is.
+I got to work with 'map' and 'reduce' more in today's JS30 challenge. I am understanding more and more how to use these functions.
 
-* I worked on my 'Meal Plan App' tonight.
+I am enjoying creating a small project from scratch, and using what I have learned these last couple weeks. You really do need ot use things or you lose them, and not just use but use for a prupose.
 
-I was able to complete the implementation of setting the initial date upon loading the "Meal Plan Section" and make sure the previous and next buttons move back and forward one week each. The passed date is set to 12am and adjusted for prev/next week from there.
+### Day 2: November 17, 2019
 
-I completed the implementation of the test/dummy meal plan date. The meals load on the appropriate date because when loading the page the days of the week are set with a data attribute for their date (YYYY/MM/DD) and the dummy data uses an object with the date included.
+**Today's Progress**: Learning
 
-There is also a link to a recipe if one is added. All of this is loaded into local storage and "stringified" then "parsed" when loaded.
+**Thoughts:** 
 
-Next is to add the ability to change/add a new meal which will tie into the "Meals Reference Page"
+* I completed Day 17 of the [JS30 challenge](https://javascript30.com)
+* I completed 80/110 Lessons in the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
 
-### All Projects
-**Link(s) to work**
-1. [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
+I got to work with 'map' and 'sort' more in today's JS30 challenge. I need to use these more as they have great utility in most projects.
+
+### Day 1: November 16, 2019
+
+**Today's Progress**: Learning, Planning, and 1st Project Start
+
+**Thoughts:** 
+
+* I completed Day 16 of the [JS30 challenge](https://javascript30.com)
+* I started the FreeCodeCamp [JS Certification Course](https://www.freecodecamp.org/learn)
+* I started my ['Meal Plan'](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app) web app. It is in this Github repo
+
+I feel like things are starting to come together for me. I am creating this web app completely with Vanilla JS and creating page elements dynamically.
+
+I am excited to see where this can go and how much I can accomplish in this manner. At this time the applications will use localStorage. Not sure if I am gong to hook it into a DB or Cookie. Will keep updated.
