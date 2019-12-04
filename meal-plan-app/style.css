@@ -17,7 +17,7 @@ div.container{
     min-height: 100vh;
 }
 div.container h1{
-    margin: 20px 0 0 0;
+    margin: 20px 0;
 }
 
 /* Home Section */
@@ -29,6 +29,12 @@ div.home{
     opacity: 1;
     height: auto;
     max-height: 2000px;
+}
+button{
+    padding: 5px;
+    border:none;
+    background-color: rgba(0,0,0,0.3);
+    color:white;
 }
 /* Main Buttons */
 button.main-button{
@@ -52,11 +58,17 @@ div.home:last-child{
 div.home, div.meal-plan, div.meals-reference, div.reminders, div.settings{
     opacity: 0;
     max-height: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
 }
 div.show{
     opacity: 1;
     max-height: 10000px;
     height: auto;
+    padding: 20px;
 }
 
 /* Meal Plan Section */
@@ -70,12 +82,91 @@ div.meal-plan div.week-of *{
     margin: 5px;
 }
 div.meal-plan ul li {
+    position:relative;
     list-style-type: none;
     padding: 10px;
     margin: 5px;
     outline: 1px solid black;
+    display: flex;
+    /* flex-direction: row; */
+}
+div.meal-plan ul li.meal-exists{
+    outline: 2px solid blue;
+}
+div.meal-plan button.main-button{
+    margin: 10px auto;
+}
+/* Meal Plan Moal */
+div.modal div.add-meal-options{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+div.modal div.add-meal-options h2{
+    width: 100%;
+    text-align: center;
+}
+div.modal div.add-meal-options div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
 }
 
+/* Overlay/Modals */
+div.overlay{
+    position:fixed;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 10;
+    background-color: rgba(0,0,0,0.3);
+    max-height:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+div.overlay.show{
+    max-height: 2000px;
+}
+div.overlay div.modal{
+    background-color: gray;  
+    outline: 2px solid black;  
+    padding: 20px;
+    width: 100%;
+    max-width: 500px;
+}
+div.modal h1{
+    text-align: center;
+}
+div.overlay div.modal div.options-section{
+    max-height: 0;
+    transition: all 0.3s ease;
+    overflow: hidden;
+    padding: 0;
+    text-align: center;
+    opacity: 0;
+}
+div.overlay div.modal div.options-section.show{
+    max-height: 2000px;
+    padding: 20px;
+    opacity: 1;
+}
+div.overlay div.modal div.modal-button-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 20px 20px 0 20px;
+    margin: 0 auto;
+}
+div.overlay div.modal div.modal-button-container button{
+    margin: 0 10px;
+    padding: 10px;
+    border-radius: 3px;
+}
 
 /* Transition */
 .transition{

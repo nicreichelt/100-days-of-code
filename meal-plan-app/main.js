@@ -59,7 +59,7 @@ window.onload = function(){
 
     // Days of the week
     const days = [
-        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday","Sunday"
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
     ];
 
     // ** Build Functions
@@ -161,13 +161,14 @@ window.onload = function(){
             console.log(`Loading passed date:`)
             passedDate = new Date(date);
         }
+        // Set Time to 12am (reset)
         passedDate.setHours(0);
         passedDate.setMinutes(0);
         passedDate.setSeconds(0);
         passedDate.setMilliseconds(0);
         // Set First Day of week
         const firstDayOfWeek = new Date(passedDate.getTime() - (passedDate.getDay() * 86400000));
-        // Set to Midnight
+        // Set to 12am (reset)
         firstDayOfWeek.setHours(0);
         firstDayOfWeek.setMinutes(0);
         firstDayOfWeek.setSeconds(0);
@@ -204,8 +205,11 @@ window.onload = function(){
 
         // Add Previous Week Button
         const prevWeekDate = new Date(firstDayOfWeek.getTime() - (7 * 86400000));
+        // Check if daylight savings occured
         if(prevWeekDate.getHours() == 23){
             prevWeekDate.setTime(prevWeekDate.getTime() + 3600000);
+        } else if(prevWeekDate.getHours() == 1){
+            prevWeekDate.setTime(prevWeekDate.getTime() - 3600000);
         }
         console.log('Prev Week: ', prevWeekDate)
         const prevWeekBtn = document.createElement('button');
@@ -224,8 +228,11 @@ window.onload = function(){
 
         // Add Next Week Button
         const nextWeekDate = new Date(firstDayOfWeek.getTime() + (7 * 86400000));
+        // Check if daylight savings occurred
         if (nextWeekDate.getHours() == 23) {
             nextWeekDate.setTime(nextWeekDate.getTime() + 3600000);
+        } else if (nextWeekDate.getHours() == 1) {
+            nextWeekDate.setTime(nextWeekDate.getTime() - 3600000);
         }
         console.log('Next Week: ', nextWeekDate)
         const nextWeekBtn = document.createElement('button');
@@ -242,29 +249,32 @@ window.onload = function(){
         // Load This Weeks Meal Plan
         const planList = document.createElement('ul');
         currentWeek.forEach(day => {
+            // Initiate Meal & Recipe Link
             let currentMeal = '';
             let mealLink = '';
+            let mealDate = '';
             currentWeekMealPlanData.forEach(meal => {
                 if(getDateText(new Date(meal.date)) == getDateText(day)){
                     currentMeal = meal.meal;
                     mealLink = meal.recipeLink;
+                    mealDate = meal.date;
                 } 
             })
+            // Create 'li' to append to 'ul'
             const listItem = document.createElement('li');
-            listItem.dataset.date = getDateText(day);
-            const listItemText = document.createTextNode(`${days[day.getDay()]}: `);
+            listItem.dataset.date = day;
+            // Create List Item Text
+            const listItemText = document.createTextNode(`${days[day.getDay()]}: ${currentMeal}`);
             listItem.appendChild(listItemText);
-            const listItemLink = document.createElement('a');
-            listItemLink.setAttribute('target','_blank');
-            listItemLink.setAttribute('href', mealLink);
-            const listItemLinkText = document.createTextNode(currentMeal);
-            listItemLink.appendChild(listItemLinkText);
-            listItem.appendChild(listItemLink);
-            planList.appendChild(listItem)
-
-            // planList.innerHTML += `
-            //     <li data-date=""><label><a target='_blank' href=''>${}</a></label></li>
-            // `        
+            // Add 'addMea' or 'updateMeal' eventListener
+            if (mealDate == '') {
+                listItem.addEventListener('click', addMeal);
+            } else {
+                listItem.classList.add('meal-exists');
+                listItem.addEventListener('click', updateMeal);
+            }
+            planList.appendChild(listItem);
+       
         })
         mealPlanWrapper.appendChild(planList);
         container.appendChild(mealPlanWrapper);
@@ -308,8 +318,135 @@ window.onload = function(){
         }
         return mealObject;
     }
+    // Add new meal
+    function addMeal(){
+        console.log('Add new meal!')
+        // Create 'Modal/Popup'
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        const modal = document.createElement('div');
+        modal.classList.add('modal')
+        modal.classList.add('add-meal')
+        // Modal Heading Text
+        const modalHeading = document.createElement('h1');
+        const modalDate = getDateText(new Date(this.dataset.date));
+        const modalHeadingText = document.createTextNode(`Add Meal for ${modalDate}`)
+        modalHeading.appendChild(modalHeadingText);
+        modal.appendChild(modalHeading);
 
-    // Placeholder/Dummy Data
+        // *** Add radio button to select 'create new meal' or 'select an existing meal'
+        const addMealSelectionTypeContainer = document.createElement('div');
+        addMealSelectionTypeContainer.classList.add('add-meal-options')
+        // Heading for container
+        // const newMealHeading = document.createElement('h2');
+        // const newMealHeadingText = document.createTextNode('How would you like to add a meal:');
+        // newMealHeading.appendChild(newMealHeadingText);
+        // addMealSelectionTypeContainer.appendChild(newMealHeading);
+        // * New Meal option
+        const newMealRadioContainer = document.createElement('div');
+        // New Meal Label
+        const newMealRadioLabel = document.createElement('label');
+        const newMealRadioLabelText = document.createTextNode('Create New Meal');
+        newMealRadioLabel.setAttribute('for', 'new-meal');
+        newMealRadioLabel.appendChild(newMealRadioLabelText);
+        // New Meal Radio Button
+        const newMealRadioButton = document.createElement('input');
+        newMealRadioButton.setAttribute('type', 'radio');
+        newMealRadioButton.id = 'new-meal';
+        newMealRadioButton.setAttribute('name', 'add-meal');
+        newMealRadioButton.setAttribute('value', 'new');
+        newMealRadioButton.addEventListener('change', (e) => {
+            modalSectionToShow(e);
+        })
+        // Append Children to containers
+        newMealRadioContainer.appendChild(newMealRadioLabel);
+        newMealRadioContainer.appendChild(newMealRadioButton);
+        addMealSelectionTypeContainer.appendChild(newMealRadioContainer);
+        // * Existing Meal option
+        const existingMealRadioContainer = document.createElement('div');
+        // Existing Meal Label
+        const existingMealRadioLabel = document.createElement('label');
+        const existingMealRadioLabelText = document.createTextNode('Choose Existing Meal');
+        existingMealRadioLabel.setAttribute('for', 'existing-meal');
+        existingMealRadioLabel.appendChild(existingMealRadioLabelText);
+        // Existing Meal Radio Button
+        const existingMealRadioButton = document.createElement('input');
+        existingMealRadioButton.setAttribute('type', 'radio');
+        existingMealRadioButton.id = 'existing-meal';
+        existingMealRadioButton.setAttribute('name', 'add-meal');
+        existingMealRadioButton.setAttribute('value', 'new');
+        existingMealRadioButton.addEventListener('change', (e) => {
+            modalSectionToShow(e);
+        });
+        // Append Children to containers
+        existingMealRadioContainer.appendChild(existingMealRadioLabel);
+        existingMealRadioContainer.appendChild(existingMealRadioButton);
+        addMealSelectionTypeContainer.appendChild(existingMealRadioContainer);
+        modal.appendChild(addMealSelectionTypeContainer);
+
+        // New Meal Options
+        const newMealOptionsContainer = document.createElement('div');
+        newMealOptionsContainer.classList.add('new-meal-options');
+        newMealOptionsContainer.classList.add('options-section');
+        const newMealOptionsContainerText = document.createTextNode('New Meal Creation Options presented here!');
+        newMealOptionsContainer.appendChild(newMealOptionsContainerText)
+        modal.appendChild(newMealOptionsContainer);
+
+        // Existng Meal Options
+        const existingMealOptionsContainer = document.createElement('div');
+        existingMealOptionsContainer.classList.add('existing-meal-options');
+        existingMealOptionsContainer.classList.add('options-section');
+        const existingMealOptionsContainerText = document.createTextNode('Existing Meal Selection Options presented here!');
+        existingMealOptionsContainer.appendChild(existingMealOptionsContainerText)
+        modal.appendChild(existingMealOptionsContainer);
+
+        // Modal Buttons
+        const addMealBtnContainer = document.createElement('div');
+        addMealBtnContainer.classList.add('modal-button-container')
+        const addMealBtn = document.createElement('button');
+        const addMealBtnText = document.createTextNode('Add Meal');
+        addMealBtn.appendChild(addMealBtnText);
+        addMealBtn.addEventListener('click', addMealPlanData);
+        const cancelAddMealBtn = document.createElement('button');
+        const cancelAddMealBtnText = document.createTextNode('Cancel');
+        cancelAddMealBtn.appendChild(cancelAddMealBtnText);
+        cancelAddMealBtn.addEventListener('click', () => {
+            overlay.remove();
+        });
+        addMealBtnContainer.appendChild(addMealBtn);
+        addMealBtnContainer.appendChild(cancelAddMealBtn);
+        modal.appendChild(addMealBtnContainer);
+        overlay.appendChild(modal);
+        overlay.classList.add('show')
+        document.body.appendChild(overlay);
+    }
+    // Modal Section To Show Function
+    function modalSectionToShow(e){
+        // Remove 'show' class from children
+        const container = document.querySelector('.modal');
+        const children = container.querySelectorAll('.options-section');
+        console.log(container)
+        children.forEach((child) => {
+            console.log(child.classList)
+            child.classList.remove('show')
+            console.log(child.classList)
+        });
+        // Select section to show
+        const showSectionText = `.${e.target.id}-options`;
+        console.log(showSectionText)
+        const sectionToShow = document.querySelector(showSectionText);
+        setTimeout(() => sectionToShow.classList.add('show'),500);
+    }
+    // Add Meal Plan Data
+    function addMealPlanData(){
+        console.log('Meal Plan Data Added!')
+    }
+    // Update Meal
+    function updateMeal() {
+        console.log('Update meal!')
+    }
+
+    // *** Placeholder/Dummy Data ***
     function loadDummyMealPlan(){
         console.log('Dummy Data Loaded!')
         const mealPlan = []
@@ -317,20 +454,12 @@ window.onload = function(){
         mealPlan.push(newMealObject('Mon Nov 18 2019 00:00:01 GMT-0800 (Pacific Standard Time)', 'Spaghetti', 'https://www.foodiecrush.com/my-moms-homemade-spaghetti-and-meat-sauce/'));
         mealPlan.push(newMealObject('Sun Nov 17 2019 00:00:01 GMT-0800 (Pacific Standard Time', 'Tacos', 'https://houseofyumm.com/best-ever-taco-meat/'));
         mealPlan.push(newMealObject('Tue Nov 26 2019 00:00:01 GMT-0800 (Pacific Standard Time', 'Pizza', 'https://pizzarev.com/'));
-        mealPlan.push(newMealObject('Thur Nov 28 2019 00:00:01 GMT-0800 (Pacific Standard Time', 'Turkey', 'https://tastesbetterfromscratch.com/easy-no-fuss-thanksgiving-turkey/'))
+        mealPlan.push(newMealObject('Thur Nov 28 2019 00:00:01 GMT-0800 (Pacific Standard Time', 'Turkey', 'https://tastesbetterfromscratch.com/easy-no-fuss-thanksgiving-turkey/'));
+        mealPlan.push(newMealObject('Tue Dec 03 2019 00:00:01 GMT-0800 (Pacific Standard Time', 'Pizza', 'https://pizzarev.com/'));
+        mealPlan.push(newMealObject('Fri Dec 06 2019 00:00:01 GMT-0800 (Pacific Standard Time', 'Red Pepper Pasta', 'https://damndelicious.net/2019/01/08/creamy-red-pepper-shells/'));
         
         localStorage.setItem('mealPlanData', JSON.stringify(mealPlan))
     }
-    // Load Placeholder text
-    function loadPlaceHolderText(cont, text){
-        const p = document.createElement('p');
-        const t  = document.createTextNode(text);
-        p.appendChild(t);
-        cont.appendChild(p);
-    }
-
-    // ** Event Listeners
-
 
     // ** Start Script
     function start() {
