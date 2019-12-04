@@ -4,7 +4,70 @@
 **Link(s) to work & Learning**
 1. **PROJECT**: [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
 2. **LEARNING**: [JavaScript30](https://javascript30.com)
+    * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
 3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+
+### Day 17: December 3, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed my additonal features for Day 30 of the [JS30 challenge](https://javascript30.com) - Whack-A-Mole
+
+I finalized the addition of the level, leaderboard, total score, and game over conditions of the game. The game now has 5 levels with increased difficulty. The player gets 3 'lives' to beat level 5, and the highest score is displayed above the game.
+
+There is also a text box to enter the players name which is used for the leaderboard. There is 'levelText' at the bottom of the game to give info on the current state of the game (current level, if you beat the level or not, and game over screen)
+
+    * [BUG] There is a bug with the 'peep' function after level one. More than one mole 'peeps' on the first timeout. I have not been able to isolate the cause though.
+    
+  * I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' tonight
+
+### Day 16: December 2, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I added features to Day 30 of the [JS30 challenge](https://javascript30.com) - Whack-A-Mole
+
+I started to flesh out a level system which is contained in an array of 'level' objects. I started to add a 'totalScore' object to keep track of the game's current state. I also stated to add a leaderboard which is stored in localStorage.
+
+### Day 15: December 1, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed Day 30 of the [JS30 challenge](https://javascript30.com) - Whack-A-Mole
+
+This was a full game to build within JS. I completed the lesson as is today, so the day was kind of short. I am adding additional features to it though to end the challenge with a bang.
+
+### Day 14: November 30, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed Day 29 of the [JS30 challenge](https://javascript30.com) - Countdown Timer
+
+I had been working with dates on my 'Meal Plan App' so this was more practice using them. I added a 15-second warning flash (orange) and a time up flash (red) once the counter is over. This was a fun addition and allowed me to put my own flair on the project.
+
+* I completed up to exercise 10 of the [FreeCodeCamp's ES6 Module](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+
+### Day 13: November 29, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed Day 28 of the [JS30 challenge](https://javascript30.com) - Video Speed Controller
+
+This was a mix of the last lesson and the HTML Video Player lesson. A cool UX update for controlling the videos playback speed. The technique in and of itself could be useful for other projects, and I want to look into that at some point.
+
+### Day 12: November 28, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed Day 27 of the [JS30 challenge](https://javascript30.com) - Click & Drag
+
+This was a very handy lesson and I can see the benefits of using this technique in a carousel. I want to implement it in some of my current sites.
 
 ### Day 11: November 27, 2019
 **Today's Progress**: Learning & 'Meal Planning' App
@@ -16,6 +79,10 @@
 This was a culmination of a few lessons in one. This is a very unique feature and adds a depth and richness to the UI/UX that a standard nav bar/dropdowns can't provide. I am excited to implement this in a navbar or even as a modal possibly in the future (possibly for 'hints' on a website/app)
 
 * I started [FreeCodeCamp's ES6 Module](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+
+* I updated and refactored some of my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)'
+
+I made the whole 'li' element for the weekdays clickable and it will bring a popup to add/update a meal and provide the recipe link
 
 
 ### Day 10: November 26, 2019
