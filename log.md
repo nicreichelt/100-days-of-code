@@ -21,6 +21,10 @@ There is also a text box to enter the players name which is used for the leaderb
     * [BUG] There is a bug with the 'peep' function after level one. More than one mole 'peeps' on the first timeout. I have not been able to isolate the cause though.
     
   * I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' tonight
+  
+I added options to 'create new' or 'add existing' to the add meal popup. Placeholder text loads for now, but will present a form to create a new meal item or present options to select from the current meal list. 
+
+Refactored a little bit of the code as well.
 
 ### Day 16: December 2, 2019
 **Today's Progress**: Learning
