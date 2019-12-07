@@ -7,6 +7,45 @@
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
 3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
+### Day 20: December 6, 2019
+**Today's Progress**: Learning
+
+* I completed 10/33 lessons in the Regex module of [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+
+I have worked a little with Regex before, but this was helpful to get down to brass tacks and understand from start to finish how to use them.
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+You can now select exisiting meals when adding a new meal plan item. This pulls the meals reference list and you can filter by season and type (one or both). Next is to implement the "update existing meal plan item" logic and refactor the codebase to be a bit cleaner. It is a little all over at the moment.
+
+**Thoughts:** 
+
+### Day 19: December 5, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed the ES6 module of [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+
+I really enjoyed the lessons on promises and export/import. I can see those being a huge help, and have worked a little with promises already.
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+New meal plan items go into the Meal Plan Refernce dataset. Duplicate detection logic is in place to ensure items are not added with the same name.
+
+### Day 18: December 4, 2019
+**Today's Progress**: Learning
+
+**Thoughts:** 
+
+* I completed 20/31 lessons in the ES6 module of [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+
+This is helping to solidify a lot of what I learned doing the JS30 Challenge.
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+New meal plan items can be added to the plan. They do not load into the meals reference yet but that will come next. 
+
 ### Day 17: December 3, 2019
 **Today's Progress**: Learning
 
