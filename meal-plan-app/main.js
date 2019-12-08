@@ -11,7 +11,7 @@ window.onload = function(){
     ]
     // ** Meal Types
     const mealTypes = [
-        '','Comfort', 'Pasta', 'Poultry', 'Beef', 'Pork', 'Soup', 'Casserole', 'Dessert', 'Restaurant'
+        '', 'Left Overs', 'Comfort', 'Pasta', 'Poultry', 'Beef', 'Pork', 'Soup', 'Casserole', 'Dessert', 'Restaurant'
     ]
 
     // Page Elements
@@ -168,36 +168,17 @@ window.onload = function(){
             passedDate = new Date(date);
         }
         // Set Time to 12am (reset)
-        passedDate.setHours(0);
-        passedDate.setMinutes(0);
-        passedDate.setSeconds(0);
-        passedDate.setMilliseconds(0);
+        passedDate.timeStartOfDay();
         // Set First Day of week
-        const firstDayOfWeek = new Date(passedDate.getTime() - (passedDate.getDay() * 86400000));
+        const firstDayOfWeek = getFirstDayOfWeek(passedDate);
         // Set to 12am (reset)
-        firstDayOfWeek.setHours(0);
-        firstDayOfWeek.setMinutes(0);
-        firstDayOfWeek.setSeconds(0);
-        firstDayOfWeek.setMilliseconds(0);
+        firstDayOfWeek.timeStartOfDay();
         const firstDayOfWeekText = getDateText(firstDayOfWeek);
         // Set End of Week
-        const lastDayOfWeek = new Date(firstDayOfWeek.getTime() + (6 * 86400000) + 86399999);
+        const lastDayOfWeek = getLastDayOfWeek(firstDayOfWeek);
+        lastDayOfWeek.timeEndOfDay()
         // Week Array
-        const currentWeek = []
-        for(var i = 0; i < 7; i++){
-            const weekDay = new Date(firstDayOfWeek.getTime() + (i * 86400000));
-            currentWeek.push(weekDay);
-        }
-
-        // Get Meal Plan Data for that week (using first day of week)
-        const currentWeekMealPlanData = [];
-        mealPlanData.forEach(meal => {
-            mealDate = new Date(meal.date);
-            if(mealDate >= firstDayOfWeek && mealDate <= lastDayOfWeek){
-                console.log('Meal Added!');
-                currentWeekMealPlanData.push(meal);
-            }
-        });
+        const currentWeek = getCurrentWeek(firstDayOfWeek);
 
         // Wrap Meal Plan
         const mealPlanWrapper = document.createElement('div');
@@ -208,14 +189,11 @@ window.onload = function(){
         weekOfContainer.classList.add('week-of');
 
         // Add Previous Week Button
-        const prevWeekDate = new Date(firstDayOfWeek.getTime() - (7 * 86400000));
-        // Check if daylight savings occured
-        if(prevWeekDate.getHours() == 23){
-            prevWeekDate.setTime(prevWeekDate.getTime() + 3600000);
-        } else if(prevWeekDate.getHours() == 1){
-            prevWeekDate.setTime(prevWeekDate.getTime() - 3600000);
-        }
         const prevWeekBtn = document.createElement('button');
+        // Previous Week Date
+        const prevWeekDate = changeDate(firstDayOfWeek, -7);
+        // Check if daylight savings occured
+        checkDaylightSavings(prevWeekDate);
         prevWeekBtn.dataset.firstDay = `${prevWeekDate}`;
         prevWeekBtn.dataset.section = sectionText;
         prevWeekButtonText = document.createTextNode('Prev Week');
@@ -229,15 +207,12 @@ window.onload = function(){
         weekOfHeading.appendChild(weekOfHeadingText);
         weekOfContainer.appendChild(weekOfHeading);
 
-        // Add Next Week Button
-        const nextWeekDate = new Date(firstDayOfWeek.getTime() + (7 * 86400000));
-        // Check if daylight savings occurred
-        if (nextWeekDate.getHours() == 23) {
-            nextWeekDate.setTime(nextWeekDate.getTime() + 3600000);
-        } else if (nextWeekDate.getHours() == 1) {
-            nextWeekDate.setTime(nextWeekDate.getTime() - 3600000);
-        }
+        // Add Next week button
         const nextWeekBtn = document.createElement('button');
+        // Next Week Date
+        const nextWeekDate = changeDate(firstDayOfWeek, 7);
+        // Check if daylight savings occurred
+        checkDaylightSavings(nextWeekDate);
         nextWeekBtn.dataset.firstDay = `${nextWeekDate}`;
         nextWeekBtn.dataset.section = sectionText;
         nextWeekButtonText = document.createTextNode('Next Week');
@@ -248,21 +223,49 @@ window.onload = function(){
         // Append to wrapper contaier
         mealPlanWrapper.appendChild(weekOfContainer);
 
-        // Load This Weeks Meal Plan
+        // Get Meal Plan Data for that week (using first day of week)
+        const currentWeekMealPlanData = loadCurrentWeekMeals(firstDayOfWeek);
+
+        // Create 'ul' of current week's meal plan data
+        const planList = createCurrentWeekMealList(currentWeek, currentWeekMealPlanData);
+
+        // Append children to containers
+        mealPlanWrapper.appendChild(planList);
+        container.appendChild(mealPlanWrapper);
+    }
+    // Load Current Weeks Meals
+    function loadCurrentWeekMeals(firstDay){
+        // Create Array for Weeks Meal Plan Data
+        const weekArray = [];
+        // Set last day of week for end of day
+        const lastDay = changeDate(firstDay, 7);
+        lastDay.timeEndOfDay();
+        // Loop through meal plan data and check if meals are within the range
+        mealPlanData.forEach(meal => {
+            mealDate = new Date(meal.date);
+            if (mealDate >= firstDay && mealDate <= lastDay) {
+                console.log('Meal Added!');
+                weekArray.push(meal);
+            }
+        });
+        return weekArray;
+    }
+    // Create 'ul' list of current weeks meals
+    function createCurrentWeekMealList(week, meals){
         const planList = document.createElement('ul');
-        currentWeek.forEach(day => {
+        week.forEach(day => {
             // Initiate Meal & Recipe Link
             let currentMeal = '';
             let mealLink = '';
             let mealSeason = '';
             let mealDate = '';
-            currentWeekMealPlanData.forEach(meal => {
-                if(getDateText(new Date(meal.date)) == getDateText(day)){
+            meals.forEach(meal => {
+                if (getDateText(new Date(meal.date)) == getDateText(day)) {
                     mealDate = meal.date;
                     currentMeal = meal.meal.name;
                     mealLink = meal.meal.link;
                     mealSeason = meal.meal.season;
-                } 
+                }
             })
             // Create 'li' to append to 'ul'
             const listItem = document.createElement('li');
@@ -270,22 +273,19 @@ window.onload = function(){
             // Create List Item Text
             const listItemText = document.createTextNode(`${days[day.getDay()]}: ${currentMeal}`);
             listItem.appendChild(listItemText);
-            // Add 'addMea' or 'updateMeal' eventListener
+            // Add 'addMeal' or 'updateMeal' eventListener
             if (mealDate == '') {
                 listItem.addEventListener('click', addMeal);
             } else {
                 listItem.classList.add('meal-exists');
-                listItem.addEventListener('click', updateMeal);
+                listItem.addEventListener('click', addMeal);
             }
             planList.appendChild(listItem);
-       
         })
-        mealPlanWrapper.appendChild(planList);
-        container.appendChild(mealPlanWrapper);
+        return planList;
     }
     // Add new meal
     function addMeal() {
-        console.log('Add new meal!')
 
         // Meal Filter Object
         let mealFilter = {
@@ -295,6 +295,15 @@ window.onload = function(){
 
         // Add new/existing meal
         let addType = '';
+
+        // Check if adding or updating meal
+        if (this.classList.contains('meal-exists')) {
+            // *** TODO: Look through function to see what needs to be set here for the modal (existing meal data, etc.)
+            console.log('Update meal!')
+            console.log(this)
+        } else {
+            console.log('Add new meal!');
+        }
 
         // Create 'Modal/Popup'
         const overlay = document.createElement('div');
@@ -525,6 +534,7 @@ window.onload = function(){
         // Add eventlistener for button blick
         addMealBtn.addEventListener('click', (e) => {
             const date = this.dataset.date;
+
             // Check if 'new-meal' radio is selected
             if(addType == 'new-meal'){
                 const meal = newMealObject(newMealNameInput.value, mealTypeSelection.value, newMealLinkInput.value, seasonSelection.value);
@@ -533,22 +543,24 @@ window.onload = function(){
                     loadMealPlan(e);
                     overlay.remove();
                 }
+            // Else check if 'existing-meal' radio is selected
             } else if(addType == 'existing-meal'){
-                console.log('Existing Meal Selected');
+                // Grab 'meal-selection-radio' radio buttons
                 const radios = document.querySelectorAll('.meal-selection-radio');
-                console.log(radios);
                 let selected = '';
+                // Loop through radios and look for checked radio button
                 radios.forEach(radio => radio.checked ? selected = radio.value : '');
+                // Use selectd meal name to look for meals in 'mealsReferenceData'
                 const mealObject = mealsReferenceData
                     .filter(meal => meal.name == selected);
-                console.log('Meal Object: ', mealObject);
+                // Set 'meal' using returned value above
                 const meal = {
                     name: mealObject[0].name,
                     type: mealObject[0].type,
                     link: mealObject[0].link,
                     season: mealObject[0].season
                 }
-                console.log(meal);
+                // If meal exists add meal plan, load meal plan, and remove overlay
                 if(meal){
                     addMealPlanData(date, meal);
                     loadMealPlan(e);
@@ -577,9 +589,143 @@ window.onload = function(){
         mealPlanData.push(mealPlanObject);
         localStorage.setItem('mealPlanData', JSON.stringify(mealPlanData));
     }
-    // Update Meal
-    function updateMeal() {
+    // Update Meal Plan Data
+    function updateMealPlanData() {
         console.log('Update meal!')
+
+        // Meal Filter Object
+        let mealFilter = {
+            type: '',
+            season: ''
+        };
+
+        // Add new/existing meal
+        let addType = '';
+
+        // Create Modal Overlay
+        const overlay = document.createElement('div');
+        overlay.classList.add('overlay');
+        // Create Modal
+        const modal = document.createElement('div');
+        modal.classList.add('modal')
+        modal.classList.add('update-meal')
+        // Modal Heading Text
+        const modalHeading = document.createElement('h1');
+        const modalDate = getDateText(new Date(this.dataset.date));
+        const modalHeadingText = document.createTextNode(`Update Meal for ${modalDate}`)
+        modalHeading.appendChild(modalHeadingText);
+        modal.appendChild(modalHeading);
+
+        // *** Add radio button to select 'create new meal' or 'select an existing meal'
+        const addMealSelectionTypeContainer = document.createElement('div');
+        addMealSelectionTypeContainer.classList.add('add-meal-options')
+        // * New Meal option
+        const newMealRadioContainer = document.createElement('div');
+        // New Meal Label
+        const newMealRadioLabel = document.createElement('label');
+        const newMealRadioLabelText = document.createTextNode('Create New Meal');
+        newMealRadioLabel.setAttribute('for', 'new-meal');
+        newMealRadioLabel.appendChild(newMealRadioLabelText);
+        // New Meal Radio Button
+        const newMealRadioButton = document.createElement('input');
+        newMealRadioButton.classList.add('add-meal-radio')
+        newMealRadioButton.setAttribute('type', 'radio');
+        newMealRadioButton.id = 'new-meal';
+        newMealRadioButton.setAttribute('name', 'add-meal');
+        newMealRadioButton.setAttribute('value', 'new');
+        newMealRadioButton.addEventListener('change', (e) => {
+            modalSectionToShow(e);
+            addType = 'new-meal';
+        })
+        // Append Children to containers
+        newMealRadioContainer.appendChild(newMealRadioLabel);
+        newMealRadioContainer.appendChild(newMealRadioButton);
+        addMealSelectionTypeContainer.appendChild(newMealRadioContainer);
+        // * Existing Meal option
+        const existingMealRadioContainer = document.createElement('div');
+        // Existing Meal Label
+        const existingMealRadioLabel = document.createElement('label');
+        const existingMealRadioLabelText = document.createTextNode('Choose Existing Meal');
+        existingMealRadioLabel.setAttribute('for', 'existing-meal');
+        existingMealRadioLabel.appendChild(existingMealRadioLabelText);
+        // Existing Meal Radio Button
+        const existingMealRadioButton = document.createElement('input');
+        existingMealRadioButton.classList.add('add-meal-radio')
+        existingMealRadioButton.setAttribute('type', 'radio');
+        existingMealRadioButton.id = 'existing-meal';
+        existingMealRadioButton.setAttribute('name', 'add-meal');
+        existingMealRadioButton.setAttribute('value', 'new');
+        existingMealRadioButton.addEventListener('change', (e) => {
+            modalSectionToShow(e);
+            addType = 'existing-meal';
+        });
+        // Append Children to containers
+        existingMealRadioContainer.appendChild(existingMealRadioLabel);
+        existingMealRadioContainer.appendChild(existingMealRadioButton);
+        addMealSelectionTypeContainer.appendChild(existingMealRadioContainer);
+        modal.appendChild(addMealSelectionTypeContainer);
+
+        // ** Modal Update/Cancel Buttons
+        const addMealBtnContainer = document.createElement('div');
+        addMealBtnContainer.classList.add('modal-button-container')
+        // * Update Meal Button
+        const addMealBtn = document.createElement('button');
+        const addMealBtnText = document.createTextNode('Update Meal');
+        addMealBtn.appendChild(addMealBtnText);
+        // Set data attributes for reloading meal plan
+        addMealBtn.dataset.date = this.dataset.date;
+        addMealBtn.dataset.section = 'meal-plan';
+        // Add eventlistener for button blick
+        addMealBtn.addEventListener('click', (e) => {
+            const date = this.dataset.date;
+
+            // Check if 'new-meal' radio is selected
+            if (addType == 'new-meal') {
+                const meal = newMealObject(newMealNameInput.value, mealTypeSelection.value, newMealLinkInput.value, seasonSelection.value);
+                if (meal) {
+                    addMealPlanData(date, meal);
+                    loadMealPlan(e);
+                    overlay.remove();
+                }
+                // Else check if 'existing-meal' radio is selected
+            } else if (addType == 'existing-meal') {
+                // Grab 'meal-selection-radio' radio buttons
+                const radios = document.querySelectorAll('.meal-selection-radio');
+                let selected = '';
+                // Loop through radios and look for checked radio button
+                radios.forEach(radio => radio.checked ? selected = radio.value : '');
+                // Use selectd meal name to look for meals in 'mealsReferenceData'
+                const mealObject = mealsReferenceData
+                    .filter(meal => meal.name == selected);
+                // Set 'meal' using returned value above
+                const meal = {
+                    name: mealObject[0].name,
+                    type: mealObject[0].type,
+                    link: mealObject[0].link,
+                    season: mealObject[0].season
+                }
+                // If meal exists add meal plan, load meal plan, and remove overlay
+                if (meal) {
+                    addMealPlanData(date, meal);
+                    loadMealPlan(e);
+                    overlay.remove();
+                }
+            }
+        });
+        // * Cancel Button
+        const cancelAddMealBtn = document.createElement('button');
+        const cancelAddMealBtnText = document.createTextNode('Cancel');
+        cancelAddMealBtn.appendChild(cancelAddMealBtnText);
+        cancelAddMealBtn.addEventListener('click', () => {
+            overlay.remove();
+        });
+        addMealBtnContainer.appendChild(addMealBtn);
+        addMealBtnContainer.appendChild(cancelAddMealBtn);
+        modal.appendChild(addMealBtnContainer);
+        overlay.appendChild(modal);
+        overlay.classList.add('show')
+        document.body.appendChild(overlay);
+
     }
     // Set Meal Filters
     function setMealFilters(e, object){
@@ -644,10 +790,6 @@ window.onload = function(){
 
         return mealPlanButton;
     }
-    // Generate Date Text
-    function getDateText(date){
-        return dateText = `${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
-    }
     // Grab Section Object
     function getSectionObject(e){
         const index = appSections.map(opt => opt.section).indexOf(`${e.target.dataset.section}`);
@@ -673,6 +815,16 @@ window.onload = function(){
         const sectionToShow = document.querySelector(showSectionText);
         setTimeout(() => sectionToShow.classList.add('show'),500);
     }
+
+    // New Meal Plan Object
+    function newMealPlanObject(date, meal) {
+        const newMealPlanObject = {
+            date: date,
+            meal: meal
+        }
+        return newMealPlanObject;
+    }
+
     // New Meal Object
     function newMealObject(meal, type, link, season) {
         // console.log('Attempting to create new meal!', mealsReferenceData);
@@ -707,14 +859,6 @@ window.onload = function(){
             return false;
         }
         
-    }
-    // New Meal Plan Object
-    function newMealPlanObject(date, meal){
-        const newMealPlanObject = {
-            date: date,
-            meal: meal
-        }
-        return newMealPlanObject;
     }
 
     // ** Start Script
