@@ -7,8 +7,23 @@
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
 3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
+### Day 21: December 7, 2019
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Mostly a refactoring/code clean up day.
+
+Date functions have been moved to their own file. This cleans up the main file.
+
+I also separated some of the 'meal'/'meal plan' logic to their own functions. May split off to their own files too. Not sure yet.
+
+I am going to use the 'addMeal' logic to handle adding a new meal plan item and updating. This will make the code more "DRY".
+
+Overall it was fun analyzing the codebase thus far and seeing how to clean it up. Sometimes you just have to step back.
+
 ### Day 20: December 6, 2019
-**Today's Progress**: Learning
+**Today's Progress**: Learning & Meal Plan App
 
 * I completed 10/33 lessons in the Regex module of [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
@@ -21,7 +36,7 @@ You can now select exisiting meals when adding a new meal plan item. This pulls 
 **Thoughts:** 
 
 ### Day 19: December 5, 2019
-**Today's Progress**: Learning
+**Today's Progress**: Learning & Meal Plan App
 
 **Thoughts:** 
 
@@ -34,7 +49,7 @@ I really enjoyed the lessons on promises and export/import. I can see those bein
 New meal plan items go into the Meal Plan Refernce dataset. Duplicate detection logic is in place to ensure items are not added with the same name.
 
 ### Day 18: December 4, 2019
-**Today's Progress**: Learning
+**Today's Progress**: Learning & Meal Plan App
 
 **Thoughts:** 
 
@@ -47,7 +62,7 @@ This is helping to solidify a lot of what I learned doing the JS30 Challenge.
 New meal plan items can be added to the plan. They do not load into the meals reference yet but that will come next. 
 
 ### Day 17: December 3, 2019
-**Today's Progress**: Learning
+**Today's Progress**: Learning & Meal Plan App
 
 **Thoughts:** 
 
