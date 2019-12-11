@@ -7,6 +7,25 @@
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
 3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
+### Day 24: December 10, 2019
+**Today's Progress**: Meal Plan App
+
+### Day 23: December 9, 2019
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Updated the popup/modal transition so is smoother (setTimout was used to delay the addition of the 'show' class until after the element is appended to the body)
+
+Update meal plan logic finalized and working as intended.
+
+### Day 22: December 8, 2019
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+I started adding the 'update meal plan' logic. It is being added with the 'add new' option and a flag determines if it is a new meal plan item or updating an existing one.
+
 ### Day 21: December 7, 2019
 **Today's Progress**: Meal Plan App
 
