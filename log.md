@@ -7,8 +7,30 @@
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
 3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
+### Day 26: December 13, 2019
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+I aded the popup modal to edit existing meals (this will be enhanced to include adding new meals soon as well).
+
+The selected meal's properties populate into the fields and are able to overwrite the meal data.
+
+I need to finish the add logic and add a delete button.
+
+### Day 25: December 11, 2019
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+I worked on the Meals Reference section and got the may info to load. This include the meal list and the filter drop downs to filter the list by season & type. They work together to narrow the results to just those meals.
+
 ### Day 24: December 10, 2019
 **Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+I worked on the Meals Reference section and got the may info to load. This include the meal list and the filter drop downs to filter the list by season & type. They work together to narrow the results to just those meals.
 
 ### Day 23: December 9, 2019
 **Today's Progress**: Meal Plan App
