@@ -64,12 +64,22 @@ div.home, div.meal-plan, div.meals-reference, div.reminders, div.settings{
     justify-content: center;
     align-items: center;
     padding: 0;
+    width: 100%;
+    max-width: 800px;
 }
 div.show{
     opacity: 1;
     max-height: 10000px;
     height: auto;
     padding: 20px;
+}
+
+/* Content Wrapper */
+div.content-wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Meal Plan Section */
@@ -81,6 +91,9 @@ div.meal-plan div.week-of{
 }
 div.meal-plan div.week-of *{
     margin: 5px;
+}
+div.meal-plan div.content-wrapper ul{
+    width: 100%;
 }
 div.meal-plan ul li {
     position:relative;
@@ -97,18 +110,61 @@ div.meal-plan ul li.meal-exists{
 div.meal-plan button.main-button{
     margin: 10px auto;
 }
+
+/* Meals Reference Section */
+ul.filtered-meal-list{
+    list-style: none;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 20px;
+}
+ul.filtered-meal-list li{
+    width: calc(50% - 10px);
+    padding: 5px;
+}
+ul.filtered-meal-list li input[type=radio]{
+    margin: 0 5px 0 0;
+}
+div.meals-reference div.content-wrapper ul li{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;;
+}
+div.meals-reference div.meal-reference-buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+div.meals-reference div.meal-reference-buttons button{
+    margin: 0 10px 0 0;
+}
+div.meals-reference div.meal-reference-buttons button:nth-last-of-type(){
+    margin: 0;
+}
+
 /* Meal Plan Moal */
-div.modal div.add-meal-options{
+div.modal div.add-meal-options,
+div.modal div.update-meal-options {
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 0 0 10px 0; 
 }
-div.modal div.add-meal-options h2{
+div.modal div.add-meal-options h2,
+div.modal div.update-meal-options h2{
     width: 100%;
     text-align: center;
 }
-div.modal div.add-meal-options div{
+div.modal div.add-meal-options div,
+div.modal div.update-meal-options div{
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -129,9 +185,11 @@ div.overlay{
     justify-content: center;
     align-items: center;
     padding: 10px;
+    opacity: 0;
 }
 div.overlay.show{
     max-height: 2000px;
+    opacity: 1;
 }
 div.overlay div.modal{
     background-color: gray;  
@@ -174,7 +232,7 @@ div.overlay div.modal div.modal-button-container{
     display:flex;
     flex-direction: row;
     justify-content: center;
-    padding: 20px 20px 0 20px;
+    padding: 0 20px;
     margin: 0 auto;
 }
 div.overlay div.modal div.modal-button-container button{
