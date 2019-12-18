@@ -7,6 +7,32 @@
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
 3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
+### Day 28: December 17, 2019
+**Today's Progress**: Meal Plan App & FreeCodeCamp (Regex)
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+I added the 'add' logic to the Meals Reference Section. It is bundled with the 'edit' logic. A data attribute on the button determines which portions of the function to run (editing existing item  or adding a new one).
+
+I also started the Settings Section. 
+
+* I completed the Regex module in the [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+
+Those were intense, and I will need to spend some time with them. The syntax is a little hard to follow coming at it fresh. I hope to use these in my projects though.
+
+### Day 27: December 16, 2019
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+I added the 'delete' and 'clear selection' logic for the Meals Reference Section. 
+
+User's can now delete a meal from the reference if it is not part of a future meal plan. I am planning to add more logic and a confirmation to this.
+
+I may also change this to a 'Deactivate' or 'Archive' so it's taken out of rotation but still part of the data.
+
+If a user wants to deselect the radio buttons then clicking the 'clear selection' button will do this.
+
 ### Day 26: December 13, 2019
 **Today's Progress**: Meal Plan App
 
