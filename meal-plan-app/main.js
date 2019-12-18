@@ -74,17 +74,20 @@ window.onload = function(){
 
     // Load Home Screen (Main Page)
     function loadMainPage(){
+        // Loop through app sections to create button to go to section
         appSections.forEach(option => {
             if(option.section != 'home'){
                 // Create Button
                 mealPlanButton = document.createElement('button');
+                // Apply Classes
                 mealPlanButton.classList.add('main-button');
                 mealPlanButton.classList.add('transition');
+                // Add Text Content
                 mealPlanButton.textContent = option.name;
+                // Add Data Attribute (Section)
                 mealPlanButton.dataset.section = option.section;
-
+                // Add Event Listener
                 mealPlanButton.addEventListener('click', goToSection)
-                
                 // Append Button to Container
                 homeContainer.appendChild(mealPlanButton);
             }
@@ -97,8 +100,11 @@ window.onload = function(){
     function goToSection(e){
         // Remove content when going to 'home' section
         if(e.target.dataset.section == 'home'){
+            // Grab Parent Element
             const parent = e.target.parentElement;
+            // Grab content wrapper 
             const wrapperToRemove = parent.querySelector('.content-wrapper');
+            // Remove if already present
             if (wrapperToRemove === null) {}else{
                 wrapperToRemove.remove();
             }
@@ -241,7 +247,9 @@ window.onload = function(){
         // Loop through meal plan data and check if meals are within the range
         mealPlanData.forEach(meal => {
             mealDate = new Date(meal.date);
+            // Check if meal date is within the given week
             if (mealDate >= firstDay && mealDate <= lastDay) {
+                // If so add to weekArray
                 console.log('Meal Added!');
                 weekArray.push(meal);
             }
@@ -257,7 +265,9 @@ window.onload = function(){
             let mealLink = '';
             let mealSeason = '';
             let mealDate = '';
+            // Loop through current weeks meals
             meals.forEach(meal => {
+                // If meal date matches the week date then set meal data
                 if (getDateText(new Date(meal.date)) == getDateText(day)) {
                     mealDate = meal.date;
                     currentMeal = meal.meal.name;
@@ -272,6 +282,7 @@ window.onload = function(){
             // Create List Item Text
             const listItemText = document.createTextNode(`${days[day.getDay()]}: ${currentMeal}`);
             listItem.appendChild(listItemText);
+            listItem.dataset.date
             // Add 'addMeal' or 'updateMeal' eventListener
             if (mealDate == '') {
                 listItem.addEventListener('click', addMeal);
@@ -536,7 +547,7 @@ window.onload = function(){
         // Set data attributes for reloading meal plan
         addMealBtn.dataset.date = this.dataset.date;
         addMealBtn.dataset.section = 'meal-plan';
-        // Add eventlistener for button blick
+        // Add eventlistener for button click
         addMealBtn.addEventListener('click', (e) => {
             const date = this.dataset.date;
 
@@ -705,18 +716,23 @@ window.onload = function(){
         // Add Meal Button
         const mealsReferenceAddButton = document.createElement('button');
         mealsReferenceAddButton.textContent = 'Add Meal';
-        mealsReferenceAddButton.addEventListener('click', ()=>{
-            const mealRadios = document.querySelector('.filtered-meal-list');
+        mealsReferenceAddButton.dataset.section = 'meals-reference';
+        mealsReferenceAddButton.dataset.type = 'add-meal';
+        mealsReferenceAddButton.addEventListener('click', (e)=>{
+            let selected = '';
+            mealReferenceAddEditMealDialog(selected, e);
         })
         mealsReferenceButonContainer.appendChild(mealsReferenceAddButton);
         // Edit Meal Button
         const mealsReferenceEditButton = document.createElement('button');
+        mealsReferenceEditButton.dataset.section = 'meals-reference';
+        mealsReferenceEditButton.dataset.type = 'edit-meal';
         mealsReferenceEditButton.textContent = 'Edit Meal';
-        mealsReferenceEditButton.addEventListener('click', () => {
+        mealsReferenceEditButton.addEventListener('click', (e) => {
             const radios = document.querySelectorAll('.meal-selection-radio');
             let selected = '';
             radios.forEach(radio => radio.checked ? selected = radio.value : '');
-            selected != '' ? mealReferenceEditMealDialog(selected, e) : console.log('Nothing is selected');
+            selected != '' ? mealReferenceAddEditMealDialog(selected, e) : console.log('Nothing is selected');
         })
         mealsReferenceButonContainer.appendChild(mealsReferenceEditButton);
         // Delete Meal Button
@@ -743,16 +759,31 @@ window.onload = function(){
         // Append Wrapper to Container
         container.appendChild(mealsReferenceWrapper);
     }
-    // Meal Reference Edit Logic
-    function mealReferenceEditMealDialog(selection,e) {
+    // Meal Reference Add/Edit Logic
+    function mealReferenceAddEditMealDialog(selection,e) {
+        console.log(e)
+        // Add or Edit
+        const entryType = e.target.dataset.type;
+        console.log(entryType);
         // Grab 'meals-reference' div
         container = document.querySelector('.meals-reference');
         // Meal Object
         let originalMealObject;
         let newMealObject;
-        mealsReferenceData.forEach(meal => {
-            meal.name == selection ? originalMealObject = meal : '';
-        });
+
+        // If Editing an existing meal
+        if(entryType == 'edit-meal'){
+            mealsReferenceData.forEach(meal => {
+                meal.name == selection ? originalMealObject = meal : '';
+            });
+        }else{
+            originalMealObject = {
+                name: '',
+                type: '',
+                link: '',
+                season: ''
+            }
+        }
 
         // *** Popup Creation
         // Overlay
@@ -764,7 +795,7 @@ window.onload = function(){
 
         // ** Heading
         const editMealModalHeading = document.createElement('h2');
-        const editMealModalHeadingText = document.createTextNode(`Editing Meal: ${originalMealObject.name}`);
+        const editMealModalHeadingText = entryType == 'edit-meal' ? document.createTextNode(`Editing Meal: ${originalMealObject.name}`) : document.createTextNode(`Adding New Meal`);
         editMealModalHeading.appendChild(editMealModalHeadingText);
         editMealModal.appendChild(editMealModalHeading);
 
@@ -850,27 +881,44 @@ window.onload = function(){
         const editMealModalFinishButton = document.createElement('button');
         editMealModalFinishButton.textContent = 'Finish';
         editMealModalFinishButton.addEventListener('click', () => {
+            // Grag input field entries
             const mealName = editMealModalNameInput.value;
             const mealType = editMealModalTypeSelect.value;
             const mealLink = editMealModalLinkInput.value;
             const mealSeason = editMealModalSeasonSelect.value
-            console.log(mealName, mealLink, editMealModalTypeSelect, editMealModalSeasonSelect);
+            
+            // Create new meal object
             newMealObject = {
                 name: mealName,
                 type: mealType,
                 link: mealLink,
                 season: mealSeason
             }
-            mealsReferenceData.forEach(meal => {
-                if(originalMealObject.name == meal.name){
-                    meal.name = mealName;
-                    meal.type = mealType;
-                    meal.link = mealLink;
-                    meal.season = mealSeason;
-                };
-            })
+            
+            // If Editing Exisiting Meal
+            if (entryType == 'edit-meal') {
+                mealsReferenceData.forEach(meal => {
+                    if(originalMealObject.name == meal.name){
+                        meal.name = mealName;
+                        meal.type = mealType;
+                        meal.link = mealLink;
+                        meal.season = mealSeason;
+                    };
+                })
+            }
+
+            // If adding a new meal
+            if(entryType == 'add-meal'){
+                mealsReferenceData.push(newMealObject);
+            }
+
+            // Set local storage to updated dataset
             localStorage.setItem('mealsReferenceData', JSON.stringify(mealsReferenceData));
+            
+            // Close Overlay/Modal
             document.querySelector('.overlay').remove();
+
+            // Reload Meals Reference Section
             loadMealsReference(e)
         })
         editMealModalButtonContainer.appendChild(editMealModalFinishButton);
