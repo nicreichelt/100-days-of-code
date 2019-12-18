@@ -14,7 +14,9 @@
 
 I added the 'add' logic to the Meals Reference Section. It is bundled with the 'edit' logic. A data attribute on the button determines which portions of the function to run (editing existing item  or adding a new one).
 
-I also started the Settings Section. 
+I also started the Settings Section. The 'meal type' list section has been added. When you click on the input field it expands (may change this to just be a button though) and there is a button at the bottom of the list to minimize it again.
+
+You can added and delete items from the list as well.
 
 * I completed the Regex module in the [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
