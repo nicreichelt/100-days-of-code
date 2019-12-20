@@ -7,6 +7,27 @@
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
 3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
+### Day 31: December 20, 2019
+**Today's Progress**: Meal Plan App & FreeCodeCamp (Regex)
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+### Day 30: December 19, 2019
+**Today's Progress**: Meal Plan App & FreeCodeCamp (Regex)
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Both 'meal type' and 'meal season' logic has been implemented. Adding and removing items works. Duplicates cannot be added, but currently there is no confirmation (may add one) and does not check if is associated with a 'future' meal (may change this too).
+
+Both lists are now stored in localStorate in a 'settingsData' object.
+
+### Day 29: December 18, 2019
+**Today's Progress**: Meal Plan App & FreeCodeCamp (Regex)
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+I added the 'meal season' section to the Settings Section. The list populates the items and the 'show' functionality works with both 'meal type' and 'meal season'. Clicking on the input field shows all list items. I am thinking of moving this to a separate event (maybe click on the main container or add a '+' button to expand.
+
 ### Day 28: December 17, 2019
 **Today's Progress**: Meal Plan App & FreeCodeCamp (Regex)
 
@@ -16,7 +37,7 @@ I added the 'add' logic to the Meals Reference Section. It is bundled with the '
 
 I also started the Settings Section. The 'meal type' list section has been added. When you click on the input field it expands (may change this to just be a button though) and there is a button at the bottom of the list to minimize it again.
 
-You can added and delete items from the list as well.
+You can add and delete items from the list as well.
 
 * I completed the Regex module in the [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
