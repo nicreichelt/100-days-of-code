@@ -4,15 +4,11 @@ window.onload = function(){
     const mealPlanData = JSON.parse(localStorage.getItem('mealPlanData')) || [];
     let mealsReferenceData = JSON.parse(localStorage.getItem('mealsReferenceData')) || [];
     const remindersData = JSON.parse(localStorage.getItem('remindersData')) || [];
-    const settingsData = JSON.parse(localStorage.getItem('settingsData')) || [];
-    // ** Meal Seasons
-    const mealSeasons = [
-        '', 'Year-round', 'Warm Weather', 'Cool Weather', 'Holiday'
-    ]
-    // ** Meal Types
-    const mealTypes = [
-        '', 'Left Overs', 'Comfort', 'Pasta', 'Poultry', 'Beef', 'Pork', 'Vegetarian', 'Soup', 'Casserole', 'Dessert', 'Restaurant'
-    ]
+    let settingsData = JSON.parse(localStorage.getItem('settingsData')) || {
+        mealSeasons:[],
+        mealTypes:[],
+        darkMode: false
+    };
 
     // Page Elements
     // Main Container & Section Heading
@@ -420,7 +416,7 @@ window.onload = function(){
         // Select
         const mealTypeSelection = document.createElement('select');
         mealTypeSelection.setAttribute('name', 'season-selection');
-        mealTypes.forEach(type => {
+        settingsData.mealTypes.forEach(type => {
             const option = document.createElement('option');
             option.value = type;
             optionText = document.createTextNode(type);
@@ -458,7 +454,7 @@ window.onload = function(){
         // Select Element
         const seasonSelection = document.createElement('select');
         seasonSelection.setAttribute('name', 'season-selection');
-        mealSeasons.forEach(meal => {
+        settingsData.mealSeasons.forEach(meal => {
             const option = document.createElement('option');
             option.value = meal;
             optionText = document.createTextNode(meal);
@@ -496,7 +492,7 @@ window.onload = function(){
             mealFilter = setMealFilters(e, mealFilter);
             showFilteredMeals(mealFilter, '.modal-meal-list');
         });
-        mealTypes.forEach(type => {
+        settingsData.mealTypes.forEach(type => {
             const option = document.createElement('option');
             option.value = type;
             optionText = document.createTextNode(type);
@@ -521,7 +517,7 @@ window.onload = function(){
             mealFilter = setMealFilters(e, mealFilter);
             showFilteredMeals(mealFilter, '.content-wrapper');
         });
-        mealSeasons.forEach(season => {
+        settingsData.mealSeasons.forEach(season => {
             const option = document.createElement('option');
             option.value = season;
             optionText = document.createTextNode(season);
@@ -666,7 +662,10 @@ window.onload = function(){
             mealFilter = setMealFilters(e, mealFilter);
             showFilteredMeals(mealFilter, '.ref-meal-list');
         });
-        mealTypes.map(type => {
+        const firstType = document.createElement('option');
+        firstType.value = '';
+        mealsReferenceTypeSelection.appendChild(firstType);
+        settingsData.mealTypes.map(type => {
             const option = document.createElement('option');
             option.value = type;
             const optionText = document.createTextNode(type);
@@ -692,10 +691,13 @@ window.onload = function(){
             mealFilter = setMealFilters(e, mealFilter);
             showFilteredMeals(mealFilter, '.ref-meal-list');
         });
-        mealSeasons.map(type => {
+        const firstSeason = document.createElement('option');
+        firstSeason.value = '';
+        mealsReferenceSeasonSelection.appendChild(firstSeason);
+        settingsData.mealSeasons.map(season => {
             const option = document.createElement('option');
-            option.value = type;
-            const optionText = document.createTextNode(type);
+            option.value = season;
+            const optionText = document.createTextNode(season);
             option.appendChild(optionText);
             mealsReferenceSeasonSelection.appendChild(option);
         });
@@ -824,7 +826,7 @@ window.onload = function(){
         editMealModalTypeContainer.appendChild(editMealModalTypeLabel);
         const editMealModalTypeSelect = document.createElement('select');
         // Select Input
-        mealTypes.forEach(type => {
+        settingsData.mealTypes.forEach(type => {
             const option = document.createElement('option');
             option.value = type;
             const optionText = document.createTextNode(type);
@@ -862,7 +864,7 @@ window.onload = function(){
         editMealModalSeasonContainer.appendChild(editMealModalSeasonLabel);
         const editMealModalSeasonSelect = document.createElement('select');
         // Select Input
-        mealSeasons.forEach(season => {
+        settingsData.mealSeasons.forEach(season => {
             const option = document.createElement('option');
             option.value = season;
             const optionText = document.createTextNode(season);
@@ -936,10 +938,6 @@ window.onload = function(){
         editMealOverlay.classList.add('show')
         // Append Overlay to Container
         document.body.appendChild(editMealOverlay);
-
-    }
-    // Meal Reference Add Logic
-    function mealReferenceAddMealDialog(selection, e){
 
     }
     // Meal Reference Delete Logic
@@ -1063,6 +1061,337 @@ window.onload = function(){
         container.appendChild(mealList);
     }
 
+// ** Settings Functions
+    function loadSettings(e){
+        // Grab meal plan container
+        const container = getSection(e);
+        // Clear previous meal plan
+        cleanSectionData(container);
+
+        // Flags
+        const flags = {
+            type: 'false',
+            season: 'false'
+        }
+
+        // Wrap Settings Data
+        const settingsWrapper = document.createElement('div');
+        settingsWrapper.classList.add('content-wrapper');
+
+        // ** Type Selection List
+        // Container
+        const typeSelectionDataContainer = document.createElement('div');
+        typeSelectionDataContainer.classList.add('settings-data-container')
+        // * Label & Input (Enter New Type)
+        const newTypeSelectionContainer = document.createElement('div');
+        // Label
+        const newTypeSelectionLabel = document.createElement('label');
+        newTypeSelectionLabel.textContent = 'Enter a "New" meal type:';
+        newTypeSelectionContainer.appendChild(newTypeSelectionLabel);
+        // Input
+        const newTypeSelectionInput = document.createElement('input');
+        newTypeSelectionInput.setAttribute('type', 'text');
+        newTypeSelectionInput.classList.add('new-type-selection-input');
+        newTypeSelectionInput.addEventListener('click', (e) => {
+            flags.type = true;
+            flags.season = false;
+            expandSettingsSection(flags);
+        });
+        newTypeSelectionContainer.appendChild(newTypeSelectionInput);
+        // * Button
+        const newTypeSelectionAddButton = document.createElement('button');
+        newTypeSelectionAddButton.textContent = 'Add Type';
+        newTypeSelectionAddButton.addEventListener('click', () => {
+            const newTypeValue = document.querySelector('.new-type-selection-input').value;
+            addMealType(newTypeValue);
+        })
+        newTypeSelectionContainer.appendChild(newTypeSelectionAddButton);
+        // Append type selection container to wrapper
+        typeSelectionDataContainer.appendChild(newTypeSelectionContainer);
+        // * Type List
+        const typeSelectionList = document.createElement('div');
+        typeSelectionList.classList.add('type-selection-list');
+        typeSelectionList.classList.add('transition');
+        // Append Meal Type List container to wrapper
+        typeSelectionDataContainer.appendChild(typeSelectionList);
+        settingsWrapper.appendChild(typeSelectionDataContainer);
+
+        // ** Meal Seasons List
+        // Container
+        const seasonSelectionDataContainer = document.createElement('div');
+        seasonSelectionDataContainer.classList.add('settings-data-container')
+        // * Label & Input
+        const newSeasonSelectionContainer = document.createElement('div');
+        // Label
+        const newSeasonSelectionLabel = document.createElement('label');
+        newSeasonSelectionLabel.textContent = 'Enter a "New" meal season:';
+        newSeasonSelectionContainer.appendChild(newSeasonSelectionLabel);
+        // Input
+        const newSeasonSelectionInput = document.createElement('input');
+        newSeasonSelectionInput.setAttribute('type', 'text');
+        newSeasonSelectionInput.classList.add('new-season-selection-input');
+        newSeasonSelectionInput.addEventListener('click', (e) => {
+            flags.type = false;
+            flags.season = true;
+            expandSettingsSection(flags);
+        });
+        newSeasonSelectionContainer.appendChild(newSeasonSelectionInput);
+        // * Button
+        const newSeasonSelectionAddButton = document.createElement('button');
+        newSeasonSelectionAddButton.textContent = 'Add Season';
+        newSeasonSelectionAddButton.addEventListener('click', () => {
+            const newSeasonValue = document.querySelector('.new-season-selection-input').value;
+            addMealSeason(newSeasonValue);
+        })
+        newSeasonSelectionContainer.appendChild(newSeasonSelectionAddButton);
+        // Season List
+        const seasonSelectionList = document.createElement('div');
+        seasonSelectionList.classList.add('season-selection-list');
+        seasonSelectionList.classList.add('transition');
+        // Append type selection container to wrapper
+        seasonSelectionDataContainer.appendChild(newSeasonSelectionContainer)
+        // Append Meal Season List container to wrapper
+        seasonSelectionDataContainer.appendChild(seasonSelectionList);
+        settingsWrapper.appendChild(seasonSelectionDataContainer);
+
+        // ** Dark Mode
+        const darkModeContainer = document.createElement('div');
+        darkModeContainer.classList.add('dark-mode-container');
+        // * Label & Input
+        const darkModeLabelSpan = document.createElement('span');
+        darkModeLabelSpan.classList.add('dark-mode-text');
+        darkModeLabelSpan.textContent = 'Dark Mode';
+        darkModeContainer.appendChild(darkModeLabelSpan);
+        // Label
+        const darkModeLabel = document.createElement('label');
+        darkModeLabel.classList.add('toggle');
+        darkModeLabel.setAttribute('for', 'dark-mode-check')
+        const darkModeSwitch = document.createElement('span');
+        darkModeSwitch.classList.add('toggle-switch');
+        darkModeSwitch.classList.add('transition');
+        settingsData.darkMode ? darkModeSwitch.classList.add('on') : darkModeSwitch.classList.remove('on');
+        darkModeLabel.appendChild(darkModeSwitch);
+        darkModeContainer.appendChild(darkModeLabel);
+        // Input
+        const darkModeCheckbox = document.createElement('input');
+        darkModeCheckbox.setAttribute('type', 'checkbox');
+        darkModeCheckbox.setAttribute('id', 'dark-mode-check');
+        darkModeCheckbox.addEventListener('click', () => {
+            darkModeToggle();
+        });
+        darkModeContainer.appendChild(darkModeCheckbox);
+        // Append Dark Mode Container to wrapper
+        settingsWrapper.appendChild(darkModeContainer);
+
+        // ** Download All Data
+
+        // ** Clear All Data
+        const clearDataContainer = document.createElement('div');
+        // * Label & Input
+        const clearDataLabel 
+
+        // Append wrapper to main container
+        container.appendChild(settingsWrapper);
+
+        // 'ul' of meal types
+        showMealTypesList();
+        // 'ul' of meal seasons
+        showMealSeasonsList();
+        // Set Dark Mode Toggle
+        darkModeEnabled();
+    }
+    // Settings Section Expand
+    function expandSettingsSection(flags){
+        const typeList = document.querySelector('.type-selection-list');
+        const seasonList = document.querySelector('.season-selection-list');
+        if(flags.type){
+            typeList.classList.add('show');
+        }else{
+            typeList.classList.remove('show');
+        }
+        if(flags.season){
+            seasonList.classList.add('show');
+        }else{
+            seasonList.classList.remove('show');
+        }
+    }
+    // * Meal Type List Functions
+    // Show Meal Types List
+    function showMealTypesList(){
+        // Container
+        const container = document.querySelector('.type-selection-list');
+
+        // Check if 'ul' already exists
+        const listToClose = document.querySelector('#type-list-ul');
+        if (listToClose != undefined) {
+            listToClose.remove();
+        }
+
+        // 'ul' to hold items
+        const typeList = document.createElement('ul');
+        typeList.id = 'type-list-ul';
+        // Meal Types Loop
+        settingsData.mealTypes.forEach(type => {
+            // Create 'li'
+            const item = document.createElement('li');
+            item.dataset.type = type;
+            // Create 'a' w/text
+            const anchor = document.createElement('a');
+            anchor.textContent = type;
+            item.appendChild(anchor);
+            // Create Remove Button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Remove Type';
+            deleteBtn.addEventListener('click', () => {removeMealType(type)});
+            item.appendChild(deleteBtn);
+            typeList.appendChild(item)
+        })
+        // Append List
+        container.appendChild(typeList);
+
+        // Remove Prior button if present
+        const typeButtonToRemove = document.querySelector('.type-minimize-btn');
+        if (typeButtonToRemove != undefined) {
+            typeButtonToRemove.remove();
+        }
+        
+        // Minimize List Button
+        const minimizeTypeListButton = document.createElement('button');
+        minimizeTypeListButton.textContent = 'Minimize List'
+        minimizeTypeListButton.classList.add('type-minimize-btn');
+        minimizeTypeListButton.addEventListener('click', () => {
+            const typeList = document.querySelector('.type-selection-list');
+            typeList.classList.remove('show');
+        })
+        container.appendChild(minimizeTypeListButton)
+    }
+    // Add Meal Type
+    function addMealType(value){
+        let typeNotPresent = true;
+        settingsData.mealTypes.forEach(type => type == value ? typeNotPresent = false : '')
+        typeNotPresent ? settingsData.mealTypes.push(value) : console.log('Type already in list');
+        localStorage.setItem('settingsData', JSON.stringify(settingsData));
+        typeNotPresent ? document.querySelector('.new-type-selection-input').value = '' : '';
+        showMealTypesList();
+    }
+    // Remove Meal Type
+    function removeMealType(value){
+        settingsData.mealTypes.forEach(type => type == value ? console.log(`Deleted ${value} from meal type list!`) : '')
+        settingsData.mealTypes = settingsData.mealTypes.filter(type => type != value);
+        localStorage.setItem('settingsData', JSON.stringify(settingsData));
+        showMealTypesList();
+    };
+    // * Meal Seasons List Functions
+    function showMealSeasonsList(){
+        // Container
+        const container = document.querySelector('.season-selection-list');
+        // Check if 'ul' already exists
+        const listToClose = document.querySelector('#season-list-ul');
+        if (listToClose != undefined) {
+            listToClose.remove();
+        }
+        // 'ul' to hold items
+        const typeList = document.createElement('ul');
+        typeList.id = 'season-list-ul';
+
+        // Loop through meal seasons to add to list
+        settingsData.mealSeasons.forEach(season => {
+            // Create 'li'
+            const item = document.createElement('li');
+            item.dataset.season = season;
+            // Create 'a' with text
+            const anchor = document.createElement('a');
+            anchor.textContent = season;
+            item.appendChild(anchor)
+            // Create Remove Button
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Remove Season';
+            deleteBtn.addEventListener('click', () => {
+                removeMealSeason(season)
+            });
+            item.appendChild(deleteBtn);
+            typeList.appendChild(item)
+        });
+
+        // Append list to container
+        container.appendChild(typeList);
+
+        // Remove Prior button if present
+        const seasonButtonToRemove = document.querySelector('.season-minimize-btn');
+        if (seasonButtonToRemove != undefined) {
+            seasonButtonToRemove.remove();
+        }
+
+        // Minimize List Button
+        const minimizeSeasonListButton = document.createElement('button');
+        minimizeSeasonListButton.textContent = 'Minimize List'
+        minimizeSeasonListButton.classList.add('season-minimize-btn');
+        minimizeSeasonListButton.addEventListener('click', () => {
+            const typeList = document.querySelector('.season-selection-list');
+            typeList.classList.remove('show');
+        })
+        container.appendChild(minimizeSeasonListButton)
+    }
+    // Add Meal Season
+    function addMealSeason(value){
+        let seasonNotPresent = true;
+        settingsData.mealSeasons.forEach(season => season == value ? seasonNotPresent = false : '');
+        seasonNotPresent ? settingsData.mealSeasons.push(value) : console.log('Season already in list');
+        localStorage.setItem('settingsData', JSON.stringify(settingsData))
+        seasonNotPresent ? document.querySelector('.new-season-selection-input').value = '' : '';
+        showMealSeasonsList();
+    }
+    // Remove Meal Season
+    function removeMealSeason(value){
+        settingsData.mealSeasons.forEach(season => season == value ? console.log(`Deleted ${season} from meal seasons list!`) : '');
+        settingsData.mealSeasons = settingsData.mealSeasons.filter(season => season != value);
+        localStorage.setItem('settingsData', JSON.stringify(settingsData));
+        showMealSeasonsList();
+    }
+    // * Dark Mode
+    function darkModeToggle(){
+        // Change Dark-Mode state
+        settingsData.darkMode ? settingsData.darkMode = false : settingsData.darkMode = true;
+
+        // Get Toggle Switch
+        const toggleSwitch = document.querySelector('.toggle-switch');
+
+        // Set Toggle Switch State & update dark-mode state
+        if(settingsData.darkMode){
+            document.body.classList.add('dark-mode');
+            toggleSwitch.classList.add('on')
+            console.log(`Dark Mode: ${settingsData.darkMode}`)
+        }else{
+            document.body.classList.remove('dark-mode');
+            toggleSwitch.classList.remove('on')
+            console.log(`Dark Mode: ${settingsData.darkMode}`)
+        }
+
+        // Save settingsData
+        localStorage.setItem('settingsData', JSON.stringify(settingsData))
+    }
+    function darkModeEnabled(){
+        // Set Toggle Switch State & update dark-mode state
+        if (settingsData.darkMode) {
+            document.body.classList.add('dark-mode');
+            console.log(`Dark Mode: ${settingsData.darkMode}`)
+        } else {
+            document.body.classList.remove('dark-mode');
+            console.log(`Dark Mode: ${settingsData.darkMode}`)
+        }
+    }
+    // Clear All Data
+    function clearAllData(){
+        // Bring up confirmation (require text to be input: like 'DELETE');
+
+        // If text entered matches confirm the delete
+
+        // Clear all data from localStorage
+    }
+    // Download all Data
+    function downloadAllData(){
+        // Download data to a CSV? or HTML doc?
+    }
 
     // ** Utility Functions **
 
@@ -1125,6 +1454,7 @@ window.onload = function(){
     function start() {
         console.clear();
         loadMainPage();
+        darkModeEnabled();
     }
     start();
 }

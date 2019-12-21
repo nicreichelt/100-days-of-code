@@ -172,6 +172,87 @@ div.modal div.update-meal-options div{
     padding: 0 10px;
 }
 
+/* Settings Section */
+div.settings div.settings-data-container {
+    width: 100%;
+    padding: 10px;
+    z-index: 10;
+}
+div.settings div.type-selection-list,
+div.settings div.season-selection-list {
+    max-height: 0;
+    opacity: 0;
+}
+#type-list-ul,
+#season-list-ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    max-width: 460px;
+    width: 100%;
+    position: relative;
+}
+#type-list-ul li,
+#season-list-ul li{
+    margin: 5px;
+    padding: 5px;
+    width: calc(50% - 20px);
+    position: relatve;
+    list-style: none;
+    outline: 1px solid black;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+button.season-minimize-btn,
+button.type-minimize-btn{
+    z-index: 20;
+}
+div.settings div.type-selection-list.show,
+div.settings div.season-selection-list.show{
+    max-height: 2000px;
+    opacity: 1;
+}
+/* Dark Mode */
+div.dark-mode-container{
+    position: relative;
+}
+label.toggle{
+    display: block;
+    width: 50px;
+    height: 25px;
+    border-radius: 25px;
+    background-color: gray;
+    position: relative;
+}
+label.toggle span.dark-mode-text{
+    position:relative;
+    margin-left: 5px;
+}
+label.toggle span.toggle-switch{
+    width: 23px;
+    height: 23px;
+    border-radius: 12px;
+    background-color: white;
+    border: 1px solid black;
+    position: absolute;
+    left: 0;
+}
+label.toggle span.toggle-switch.on{
+    left: 25px;
+}
+#dark-mode-check{
+    display: none;
+}
+body.dark-mode{
+    background-color: black;
+    color: white;
+}
+
 /* Overlay/Modals */
 div.overlay{
     position:fixed;
