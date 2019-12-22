@@ -1188,7 +1188,7 @@ window.onload = function(){
         // ** Clear All Data
         const clearDataContainer = document.createElement('div');
         // * Label & Input
-        const clearDataLabel 
+        let clearDataLabel;
 
         // Append wrapper to main container
         container.appendChild(settingsWrapper);
