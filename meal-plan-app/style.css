@@ -220,6 +220,7 @@ div.settings div.season-selection-list.show{
 /* Dark Mode */
 div.dark-mode-container{
     position: relative;
+    z-index: 20;
 }
 label.toggle{
     display: block;
@@ -242,7 +243,10 @@ label.toggle span.toggle-switch{
     position: absolute;
     left: 0;
 }
-label.toggle span.toggle-switch.on{
+label.toggle.on{
+    background-color: green;
+}
+label.toggle.on span.toggle-switch{
     left: 25px;
 }
 #dark-mode-check{
@@ -251,6 +255,9 @@ label.toggle span.toggle-switch.on{
 body.dark-mode{
     background-color: black;
     color: white;
+}
+div.delete-all-data-container{
+    z-index: 30;
 }
 
 /* Overlay/Modals */

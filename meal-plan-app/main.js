@@ -1,9 +1,9 @@
 window.onload = function(){
 
     // ** Global Variables
-    const mealPlanData = JSON.parse(localStorage.getItem('mealPlanData')) || [];
+    let mealPlanData = JSON.parse(localStorage.getItem('mealPlanData')) || [];
     let mealsReferenceData = JSON.parse(localStorage.getItem('mealsReferenceData')) || [];
-    const remindersData = JSON.parse(localStorage.getItem('remindersData')) || [];
+    let remindersData = JSON.parse(localStorage.getItem('remindersData')) || [];
     let settingsData = JSON.parse(localStorage.getItem('settingsData')) || {
         mealSeasons:[],
         mealTypes:[],
@@ -11,10 +11,8 @@ window.onload = function(){
     };
 
     // Page Elements
-    // Main Container & Section Heading
     const mainContainer = document.querySelector('.container');
     const sectionHeading = document.querySelector('#section-heading');
-    // Section COntainer
     const homeContainer = document.querySelector('.home');
 
     // Application Sections Array
@@ -70,88 +68,19 @@ window.onload = function(){
 
     // Load Home Screen (Main Page)
     function loadMainPage(){
-        // Loop through app sections to create button to go to section
         appSections.forEach(option => {
             if(option.section != 'home'){
-                // Create Button
                 mealPlanButton = document.createElement('button');
-                // Apply Classes
                 mealPlanButton.classList.add('main-button');
                 mealPlanButton.classList.add('transition');
-                // Add Text Content
                 mealPlanButton.textContent = option.name;
-                // Add Data Attribute (Section)
                 mealPlanButton.dataset.section = option.section;
-                // Add Event Listener
                 mealPlanButton.addEventListener('click', goToSection)
-                // Append Button to Container
                 homeContainer.appendChild(mealPlanButton);
             }
         });
     }
-
-// ** Load Sections
-
-    // Go to section function - hides all divs and loads "shows" the target div
-    function goToSection(e){
-        // Remove content when going to 'home' section
-        if(e.target.dataset.section == 'home'){
-            // Grab Parent Element
-            const parent = e.target.parentElement;
-            // Grab content wrapper 
-            const wrapperToRemove = parent.querySelector('.content-wrapper');
-            // Remove if already present
-            if (wrapperToRemove === null) {}else{
-                wrapperToRemove.remove();
-            }
-        }
-
-        // Grab Section Object
-        const sectionObj = getSectionObject(e);
-
-        // Hide All "Section" divs
-        const divs = mainContainer.querySelectorAll('div');
-        divs.forEach(div => {
-            div.classList.remove('show');
-            div.style.zIndex = -10;
-        })
-
-        // Show selected "Section" div
-        const section = document.querySelector(`.${e.target.dataset.section}`);
-        // Delay screen load by 0.5s
-        setTimeout(() => {
-            section.classList.add('show');
-            section.style.zIndex = 10;
-        }, 500);
-
-        // Load Section
-        loadSection(sectionObj);
-
-        // Load Section Content
-        const sectionText = sectionObj.section;
-        sectionObj.loadContent(e);
-    }
-    // Populate Section
-    function loadSection(obj){
-        // Get Section Container
-        const container = mainContainer.querySelector(`.${obj.section}`);
-
-        // Change Heading to Section Name
-        sectionHeading.textContent = obj.name;
-
-        // Generate Go Home Button (if not present and not loading home section)
-        if(!container.querySelector('button.main-button') && obj.section != 'home'){
-            // Generage Home Button
-            let goHome = generateHomeButton();
-            goHome.addEventListener('click', goToSection);
-            container.appendChild(goHome);
-        }else{}
-    }
-
-// ** Meal Plan Functions
-
-    // Load Meal Plan
-    function loadMealPlan(e){
+    function loadMealPlan(e) {
         // Grab meal plan container
         const container = getSection(e);
         // Clear previous meal plan
@@ -161,10 +90,9 @@ window.onload = function(){
         const date = e.target.dataset.firstDay;
         let passedDate;
         // Get Passed date (if present) or Make today
-        if(date === undefined){
+        if (date === undefined) {
             passedDate = new Date();
-        }
-        else{
+        } else {
             passedDate = new Date(date);
         }
         // Set Time to 12am (reset)
@@ -233,7 +161,354 @@ window.onload = function(){
         mealPlanWrapper.appendChild(planList);
         container.appendChild(mealPlanWrapper);
     }
-    // Load Current Weeks Meals
+    function loadMealsReference(e) {
+        // Meal Filter Object
+        let mealFilter = {
+            type: '',
+            season: ''
+        };
+
+        // Grab meal plan container
+        const container = getSection(e);
+        // Clear previous meal plan
+        cleanSectionData(container);
+
+        // Wrap Meals Reference Data
+        const mealsReferenceWrapper = document.createElement('div');
+        mealsReferenceWrapper.classList.add('content-wrapper');
+
+        // ** Meal Filters
+        const mealsReferenceFilterContainer = document.createElement('div');
+        mealsReferenceFilterContainer.classList.add('meals-ref-filter');
+        // * Type Filter
+        const mealsReferenceTypeFilterContainer = document.createElement('div');
+        // Label
+        const mealsReferenceTypeFilterLabel = document.createElement('label');
+        const mealsReferenceTypeFilterLabelText = document.createTextNode('Filter Meals by "Type":');
+        mealsReferenceTypeFilterLabel.appendChild(mealsReferenceTypeFilterLabelText);
+        mealsReferenceTypeFilterContainer.appendChild(mealsReferenceTypeFilterLabel);
+        // Select
+        const mealsReferenceTypeSelection = document.createElement('select');
+        mealsReferenceTypeSelection.setAttribute('name', 'type-selection');
+        mealsReferenceTypeSelection.addEventListener('change', (e) => {
+            mealFilter = setMealFilters(e, mealFilter);
+            showFilteredMeals(mealFilter, '.ref-meal-list');
+        });
+        // Blank Selection Type
+        const firstType = document.createElement('option');
+        firstType.value = '';
+        // Add Selection Type Options
+        mealsReferenceTypeSelection.appendChild(firstType);
+        settingsData.mealTypes.map(type => {
+            const option = document.createElement('option');
+            option.value = type;
+            const optionText = document.createTextNode(type);
+            option.appendChild(optionText);
+            mealsReferenceTypeSelection.appendChild(option);
+        });
+        mealsReferenceTypeFilterContainer.appendChild(mealsReferenceTypeSelection);
+        mealsReferenceWrapper.appendChild(mealsReferenceTypeFilterContainer);
+        container.appendChild(mealsReferenceWrapper);
+
+        // * Season Filter
+        const mealsReferenceSeasonFilterContainer = document.createElement('div');
+        // Label
+        const mealsReferenceSeasonFilterLabel = document.createElement('label');
+        const mealsReferenceSeasonFilterLabelText = document.createTextNode('Filter Meals by "Season":');
+        mealsReferenceSeasonFilterLabel.appendChild(mealsReferenceSeasonFilterLabelText);
+        mealsReferenceSeasonFilterContainer.appendChild(mealsReferenceSeasonFilterLabel);
+        // Select
+        const mealsReferenceSeasonSelection = document.createElement('select');
+        mealsReferenceSeasonSelection
+        mealsReferenceSeasonSelection.setAttribute('name', 'season-selection');
+        mealsReferenceSeasonSelection.addEventListener('change', (e) => {
+            mealFilter = setMealFilters(e, mealFilter);
+            showFilteredMeals(mealFilter, '.ref-meal-list');
+        });
+        const firstSeason = document.createElement('option');
+        firstSeason.value = '';
+        mealsReferenceSeasonSelection.appendChild(firstSeason);
+        settingsData.mealSeasons.map(season => {
+            const option = document.createElement('option');
+            option.value = season;
+            const optionText = document.createTextNode(season);
+            option.appendChild(optionText);
+            mealsReferenceSeasonSelection.appendChild(option);
+        });
+        mealsReferenceSeasonFilterContainer.appendChild(mealsReferenceSeasonSelection);
+
+        // Append Filters to Wrapper
+        mealsReferenceWrapper.appendChild(mealsReferenceSeasonFilterContainer);
+
+        // Load Meals Reference Data
+        const mealsReferenceListContainer = document.createElement('div');
+        mealsReferenceListContainer.classList.add('ref-meal-list');
+        mealsReferenceWrapper.appendChild(mealsReferenceListContainer);
+        const mealsReferenceList = showFilteredMeals(mealFilter, '.ref-meal-list');
+
+        // Reference Buttons
+        const mealsReferenceButonContainer = document.createElement('div');
+        mealsReferenceButonContainer.classList.add('meal-reference-buttons');
+        // Add Meal Button
+        const mealsReferenceAddButton = document.createElement('button');
+        mealsReferenceAddButton.textContent = 'Add Meal';
+        mealsReferenceAddButton.dataset.section = 'meals-reference';
+        mealsReferenceAddButton.dataset.type = 'add-meal';
+        mealsReferenceAddButton.addEventListener('click', (e) => {
+            let selected = '';
+            mealReferenceAddEditMealDialog(selected, e);
+        })
+        mealsReferenceButonContainer.appendChild(mealsReferenceAddButton);
+        // Edit Meal Button
+        const mealsReferenceEditButton = document.createElement('button');
+        mealsReferenceEditButton.dataset.section = 'meals-reference';
+        mealsReferenceEditButton.dataset.type = 'edit-meal';
+        mealsReferenceEditButton.textContent = 'Edit Meal';
+        mealsReferenceEditButton.addEventListener('click', (e) => {
+            const radios = document.querySelectorAll('.meal-selection-radio');
+            let selected = '';
+            radios.forEach(radio => radio.checked ? selected = radio.value : '');
+            selected != '' ? mealReferenceAddEditMealDialog(selected, e) : console.log('Nothing is selected');
+        })
+        mealsReferenceButonContainer.appendChild(mealsReferenceEditButton);
+        // Delete Meal Button
+        const mealsReferenceDeleteButton = document.createElement('button');
+        mealsReferenceDeleteButton.textContent = 'Delete Meal';
+        mealsReferenceDeleteButton.addEventListener('click', () => {
+            const radios = document.querySelectorAll('.meal-selection-radio');
+            let selected = '';
+            radios.forEach(radio => radio.checked ? selected = radio.value : '');
+            selected != '' ? mealReferenceDeletedDialog(selected, e) : '';
+        })
+        mealsReferenceButonContainer.appendChild(mealsReferenceDeleteButton)
+        // Clear Radio Selections
+        const mealsReferenceClearButton = document.createElement('button');
+        mealsReferenceClearButton.textContent = 'Clear Selection';
+        mealsReferenceClearButton.addEventListener('click', () => {
+            const radios = document.querySelectorAll('.meal-selection-radio');
+            radios.forEach(radio => radio.checked ? radio.checked = false : '');
+        })
+        mealsReferenceButonContainer.appendChild(mealsReferenceClearButton)
+
+        mealsReferenceWrapper.appendChild(mealsReferenceButonContainer);
+
+        // Append Wrapper to Container
+        container.appendChild(mealsReferenceWrapper);
+    }
+    function loadSettings(e) {
+        // Grab meal plan container
+        const container = getSection(e);
+        // Clear previous meal plan
+        cleanSectionData(container);
+
+        // Flags
+        const flags = {
+            type: 'false',
+            season: 'false'
+        }
+
+        // Wrap Settings Data
+        const settingsWrapper = document.createElement('div');
+        settingsWrapper.classList.add('content-wrapper');
+
+        // ** Type Selection List
+        // Container
+        const typeSelectionDataContainer = document.createElement('div');
+        typeSelectionDataContainer.classList.add('settings-data-container')
+        // * Label & Input (Enter New Type)
+        const newTypeSelectionContainer = document.createElement('div');
+        // Label
+        const newTypeSelectionLabel = document.createElement('label');
+        newTypeSelectionLabel.textContent = 'Enter a "New" meal type:';
+        newTypeSelectionContainer.appendChild(newTypeSelectionLabel);
+        // Input
+        const newTypeSelectionInput = document.createElement('input');
+        newTypeSelectionInput.setAttribute('type', 'text');
+        newTypeSelectionInput.classList.add('new-type-selection-input');
+        newTypeSelectionInput.addEventListener('click', (e) => {
+            flags.type = true;
+            flags.season = false;
+            expandSettingsSection(flags);
+        });
+        newTypeSelectionContainer.appendChild(newTypeSelectionInput);
+        // * Button
+        const newTypeSelectionAddButton = document.createElement('button');
+        newTypeSelectionAddButton.textContent = 'Add Type';
+        newTypeSelectionAddButton.addEventListener('click', () => {
+            const newTypeValue = document.querySelector('.new-type-selection-input').value;
+            addMealType(newTypeValue);
+        })
+        newTypeSelectionContainer.appendChild(newTypeSelectionAddButton);
+        // Append type selection container to wrapper
+        typeSelectionDataContainer.appendChild(newTypeSelectionContainer);
+        // * Type List
+        const typeSelectionList = document.createElement('div');
+        typeSelectionList.classList.add('type-selection-list');
+        typeSelectionList.classList.add('transition');
+        // Append Meal Type List container to wrapper
+        typeSelectionDataContainer.appendChild(typeSelectionList);
+        settingsWrapper.appendChild(typeSelectionDataContainer);
+
+        // ** Meal Seasons List
+        // Container
+        const seasonSelectionDataContainer = document.createElement('div');
+        seasonSelectionDataContainer.classList.add('settings-data-container')
+        // * Label & Input
+        const newSeasonSelectionContainer = document.createElement('div');
+        // Label
+        const newSeasonSelectionLabel = document.createElement('label');
+        newSeasonSelectionLabel.textContent = 'Enter a "New" meal season:';
+        newSeasonSelectionContainer.appendChild(newSeasonSelectionLabel);
+        // Input
+        const newSeasonSelectionInput = document.createElement('input');
+        newSeasonSelectionInput.setAttribute('type', 'text');
+        newSeasonSelectionInput.classList.add('new-season-selection-input');
+        newSeasonSelectionInput.addEventListener('click', (e) => {
+            flags.type = false;
+            flags.season = true;
+            expandSettingsSection(flags);
+        });
+        newSeasonSelectionContainer.appendChild(newSeasonSelectionInput);
+        // * Button
+        const newSeasonSelectionAddButton = document.createElement('button');
+        newSeasonSelectionAddButton.textContent = 'Add Season';
+        newSeasonSelectionAddButton.addEventListener('click', () => {
+            const newSeasonValue = document.querySelector('.new-season-selection-input').value;
+            addMealSeason(newSeasonValue);
+        })
+        newSeasonSelectionContainer.appendChild(newSeasonSelectionAddButton);
+        // Season List
+        const seasonSelectionList = document.createElement('div');
+        seasonSelectionList.classList.add('season-selection-list');
+        seasonSelectionList.classList.add('transition');
+        // Append type selection 
+        seasonSelectionDataContainer.appendChild(newSeasonSelectionContainer)
+        // Append Meal Season List
+        seasonSelectionDataContainer.appendChild(seasonSelectionList);
+        settingsWrapper.appendChild(seasonSelectionDataContainer);
+
+        // ** Dark Mode
+        const darkModeContainer = document.createElement('div');
+        darkModeContainer.classList.add('dark-mode-container');
+        // * Label & Input
+        const darkModeLabelSpan = document.createElement('span');
+        darkModeLabelSpan.classList.add('dark-mode-text');
+        darkModeLabelSpan.textContent = 'Dark Mode';
+        darkModeContainer.appendChild(darkModeLabelSpan);
+        // Label
+        const darkModeLabel = document.createElement('label');
+        darkModeLabel.classList.add('toggle');
+        darkModeLabel.setAttribute('for', 'dark-mode-check')
+        const darkModeSwitch = document.createElement('span');
+        darkModeSwitch.classList.add('toggle-switch');
+        darkModeSwitch.classList.add('transition');
+        settingsData.darkMode ? darkModeSwitch.classList.add('on') : darkModeSwitch.classList.remove('on');
+        darkModeLabel.appendChild(darkModeSwitch);
+        darkModeContainer.appendChild(darkModeLabel);
+        // Input
+        const darkModeCheckbox = document.createElement('input');
+        darkModeCheckbox.setAttribute('type', 'checkbox');
+        darkModeCheckbox.setAttribute('id', 'dark-mode-check');
+        darkModeCheckbox.addEventListener('click', () => {
+            console.log('Dark Mode Clicked')
+            darkModeToggle();
+        });
+        darkModeContainer.appendChild(darkModeCheckbox);
+        // Append Dark Mode Container to wrapper
+        settingsWrapper.appendChild(darkModeContainer);
+
+        // ** Download All Data
+        const downloadDataContainer = document.createElement('div');
+        downloadDataContainer.classList.add('download-data-container');
+        // Label
+        const downloadDataLabel = document.createElement('label');
+        downloadDataLabel.textContent = 'Download all data to CSV?';
+        downloadDataContainer.appendChild(downloadDataLabel);
+        // Button
+        const downloadDataButton = document.createElement('button');
+        downloadDataButton.textContent = 'Download';
+        downloadDataButton.addEventListener('click', downloadAllData);
+        downloadDataContainer.appendChild(downloadDataButton);
+        settingsWrapper.appendChild(downloadDataContainer);
+
+        // ** Clear All Data
+        const clearDataContainer = document.createElement('div');
+        clearDataContainer.classList.add('delete-all-data-container');
+        // Label
+        const clearDataLabel = document.createElement('label');
+        clearDataLabel.textContent = 'Delete All Application Data?'
+        clearDataContainer.appendChild(clearDataLabel);
+        // Input
+        const clearDataButton = document.createElement('button');
+        clearDataButton.textContent = 'Delete Data';
+        clearDataButton.addEventListener('click', clearAllDataPopup);
+        clearDataContainer.appendChild(clearDataButton);
+        // Append Clear Data container to wrapper
+        settingsWrapper.appendChild(clearDataContainer);
+
+        // Append wrapper to main container
+        container.appendChild(settingsWrapper);
+
+        // 'ul' of meal types
+        showMealTypesList();
+        // 'ul' of meal seasons
+        showMealSeasonsList();
+        // Set Dark Mode Toggle
+        darkModeEnabled();
+    }
+
+// ** Load Sections
+    function goToSection(e){
+        // Remove content when going to 'home' section
+        if(e.target.dataset.section == 'home'){
+            const parent = e.target.parentElement;
+            const wrapperToRemove = parent.querySelector('.content-wrapper');
+            if (wrapperToRemove === null) {}else{
+                wrapperToRemove.remove();
+            }
+        }
+
+        // Grab Section Object
+        const sectionObj = getSectionObject(e);
+
+        // Hide All "Section" divs
+        const divs = mainContainer.querySelectorAll('div');
+        divs.forEach(div => {
+            div.classList.remove('show');
+            div.style.zIndex = -10;
+        })
+
+        // Show selected "Section" div
+        const section = document.querySelector(`.${e.target.dataset.section}`);
+        // Delay screen load by 0.5s
+        setTimeout(() => {
+            section.classList.add('show');
+            section.style.zIndex = 10;
+        }, 500);
+
+        // Load Section
+        loadSection(sectionObj);
+
+        // Load Section Content
+        sectionObj.loadContent(e);
+    }
+    function loadSection(obj){
+        // Get Section Container
+        const container = mainContainer.querySelector(`.${obj.section}`);
+
+        // Change Heading to Section Name
+        sectionHeading.textContent = obj.name;
+
+        // Generate Go Home Button (if not present and not loading home section)
+        if(!container.querySelector('button.main-button') && obj.section != 'home'){
+            // Generage Home Button
+            let goHome = generateHomeButton();
+            goHome.addEventListener('click', goToSection);
+            container.appendChild(goHome);
+        }else{}
+    }
+
+// ** Meal Plan Functions
     function loadCurrentWeekMeals(firstDay){
         // Create Array for Weeks Meal Plan Data
         const weekArray = [];
@@ -252,7 +527,6 @@ window.onload = function(){
         });
         return weekArray;
     }
-    // Create 'ul' list of current weeks meals
     function createCurrentWeekMealList(week, meals){
         const planList = document.createElement('ul');
         week.forEach(day => {
@@ -290,7 +564,6 @@ window.onload = function(){
         })
         return planList;
     }
-    // Add new meal
     function addMeal() {
 
         // Meal Filter Object
@@ -416,6 +689,8 @@ window.onload = function(){
         // Select
         const mealTypeSelection = document.createElement('select');
         mealTypeSelection.setAttribute('name', 'season-selection');
+        const blankTypeOption = document.createElement('option');
+        mealTypeSelection.appendChild(blankTypeOption);
         settingsData.mealTypes.forEach(type => {
             const option = document.createElement('option');
             option.value = type;
@@ -452,16 +727,18 @@ window.onload = function(){
         seasonSelectionLabel.setAttribute('for', 'season-selection');
         seasonSelectionContainer.appendChild(seasonSelectionLabel);
         // Select Element
-        const seasonSelection = document.createElement('select');
-        seasonSelection.setAttribute('name', 'season-selection');
+        const mealSeasonSelection = document.createElement('select');
+        mealSeasonSelection.setAttribute('name', 'season-selection');
+        const blankSeasonOption = document.createElement('option');
+        mealSeasonSelection.appendChild(blankSeasonOption);
         settingsData.mealSeasons.forEach(meal => {
             const option = document.createElement('option');
             option.value = meal;
             optionText = document.createTextNode(meal);
             option.appendChild(optionText);
-            seasonSelection.appendChild(option);
+            mealSeasonSelection.appendChild(option);
         });
-        seasonSelectionContainer.appendChild(seasonSelection);
+        seasonSelectionContainer.appendChild(mealSeasonSelection);
         newMealOptionsContainer.appendChild(seasonSelectionContainer);
         modal.appendChild(newMealOptionsContainer);
 
@@ -492,6 +769,8 @@ window.onload = function(){
             mealFilter = setMealFilters(e, mealFilter);
             showFilteredMeals(mealFilter, '.modal-meal-list');
         });
+        const blankExistingSeason = document.createElement('option');
+        existingMealTypeSelection.appendChild(blankExistingSeason);
         settingsData.mealTypes.forEach(type => {
             const option = document.createElement('option');
             option.value = type;
@@ -517,6 +796,8 @@ window.onload = function(){
             mealFilter = setMealFilters(e, mealFilter);
             showFilteredMeals(mealFilter, '.content-wrapper');
         });
+        const blankExistingType = document.createElement('option');
+        existingMealSeasonSelection.appendChild(blankExistingType);
         settingsData.mealSeasons.forEach(season => {
             const option = document.createElement('option');
             option.value = season;
@@ -541,7 +822,7 @@ window.onload = function(){
         const addMealBtnText = document.createTextNode('Add Meal');
         addMealBtn.appendChild(addMealBtnText);
         // Set data attributes for reloading meal plan
-        addMealBtn.dataset.date = this.dataset.date;
+        addMealBtn.dataset.firstDay = this.dataset.date;
         addMealBtn.dataset.section = 'meal-plan';
         // Add eventlistener for button click
         addMealBtn.addEventListener('click', (e) => {
@@ -549,7 +830,7 @@ window.onload = function(){
 
             // Check if 'new-meal' radio is selected
             if(addType == 'new-meal'){
-                const meal = newMealObject(newMealNameInput.value, mealTypeSelection.value, newMealLinkInput.value, seasonSelection.value);
+                const meal = newMealObject(newMealNameInput.value, mealTypeSelection.value, newMealLinkInput.value, mealSeasonSelection.value);
                 if(meal){
                     newMealPlanItem ? addMealPlanData(date, meal) : updateMealPlanData(date, this.dataset.meal ,meal);
                     this.dataset.meal = meal;
@@ -602,14 +883,12 @@ window.onload = function(){
             showOverlay.classList.add('show')
             }, 500)
     }
-    // Add Meal Plan Data
     function addMealPlanData(date, meal) {
         const mealPlanObject = newMealPlanObject(date, meal);
         // console.log('Meal Plan Object:',mealPlanObject)
         mealPlanData.push(mealPlanObject);
         localStorage.setItem('mealPlanData', JSON.stringify(mealPlanData));
     }
-    // Update Meal Plan Data
     function updateMealPlanData(date, oldMeal, newMeal) {
         console.log('Update meal!', date, oldMeal, newMeal)
 
@@ -629,139 +908,6 @@ window.onload = function(){
     }
 
 //  ** Meal Reference Functions
-    function loadMealsReference(e){
-        // Meal Filter Object
-        let mealFilter = {
-            type: '',
-            season: ''
-        };
-
-        // Grab meal plan container
-        const container = getSection(e);
-        // Clear previous meal plan
-        cleanSectionData(container);
-
-        // Wrap Meals Reference Data
-        const mealsReferenceWrapper = document.createElement('div');
-        mealsReferenceWrapper.classList.add('content-wrapper');
-
-        // ** Meal Filters
-        const mealsReferenceFilterContainer = document.createElement('div');
-        mealsReferenceFilterContainer.classList.add('meals-ref-filter');
-        // * Type Filter
-        const mealsReferenceTypeFilterContainer = document.createElement('div');
-        // Label
-        const mealsReferenceTypeFilterLabel = document.createElement('label');
-        const mealsReferenceTypeFilterLabelText = document.createTextNode('Filter Meals by "Type":');
-        mealsReferenceTypeFilterLabel.appendChild(mealsReferenceTypeFilterLabelText);
-        mealsReferenceTypeFilterContainer.appendChild(mealsReferenceTypeFilterLabel);
-        // Select
-        const mealsReferenceTypeSelection = document.createElement('select');
-        mealsReferenceTypeSelection.setAttribute('name', 'type-selection');
-        mealsReferenceTypeSelection.addEventListener('change', (e) => {
-            mealFilter = setMealFilters(e, mealFilter);
-            showFilteredMeals(mealFilter, '.ref-meal-list');
-        });
-        const firstType = document.createElement('option');
-        firstType.value = '';
-        mealsReferenceTypeSelection.appendChild(firstType);
-        settingsData.mealTypes.map(type => {
-            const option = document.createElement('option');
-            option.value = type;
-            const optionText = document.createTextNode(type);
-            option.appendChild(optionText);
-            mealsReferenceTypeSelection.appendChild(option);
-        });
-        mealsReferenceTypeFilterContainer.appendChild(mealsReferenceTypeSelection);
-        mealsReferenceWrapper.appendChild(mealsReferenceTypeFilterContainer);
-        container.appendChild(mealsReferenceWrapper);
-
-        // * Season Filter
-        const mealsReferenceSeasonFilterContainer = document.createElement('div');
-        // Label
-        const mealsReferenceSeasonFilterLabel = document.createElement('label');
-        const mealsReferenceSeasonFilterLabelText = document.createTextNode('Filter Meals by "Season":');
-        mealsReferenceSeasonFilterLabel.appendChild(mealsReferenceSeasonFilterLabelText);
-        mealsReferenceSeasonFilterContainer.appendChild(mealsReferenceSeasonFilterLabel);
-        // Select
-        const mealsReferenceSeasonSelection = document.createElement('select');
-        mealsReferenceSeasonSelection
-        mealsReferenceSeasonSelection.setAttribute('name', 'season-selection');
-        mealsReferenceSeasonSelection.addEventListener('change', (e) => {
-            mealFilter = setMealFilters(e, mealFilter);
-            showFilteredMeals(mealFilter, '.ref-meal-list');
-        });
-        const firstSeason = document.createElement('option');
-        firstSeason.value = '';
-        mealsReferenceSeasonSelection.appendChild(firstSeason);
-        settingsData.mealSeasons.map(season => {
-            const option = document.createElement('option');
-            option.value = season;
-            const optionText = document.createTextNode(season);
-            option.appendChild(optionText);
-            mealsReferenceSeasonSelection.appendChild(option);
-        });
-        mealsReferenceSeasonFilterContainer.appendChild(mealsReferenceSeasonSelection);
-
-        // Append Filters to Wrapper
-        mealsReferenceWrapper.appendChild(mealsReferenceSeasonFilterContainer);
-
-        // Load Meals Reference Data
-        const mealsReferenceListContainer = document.createElement('div');
-        mealsReferenceListContainer.classList.add('ref-meal-list');
-        mealsReferenceWrapper.appendChild(mealsReferenceListContainer);
-        const mealsReferenceList = showFilteredMeals(mealFilter, '.ref-meal-list');
-
-        // Reference Buttons
-        const mealsReferenceButonContainer = document.createElement('div');
-        mealsReferenceButonContainer.classList.add('meal-reference-buttons');
-        // Add Meal Button
-        const mealsReferenceAddButton = document.createElement('button');
-        mealsReferenceAddButton.textContent = 'Add Meal';
-        mealsReferenceAddButton.dataset.section = 'meals-reference';
-        mealsReferenceAddButton.dataset.type = 'add-meal';
-        mealsReferenceAddButton.addEventListener('click', (e)=>{
-            let selected = '';
-            mealReferenceAddEditMealDialog(selected, e);
-        })
-        mealsReferenceButonContainer.appendChild(mealsReferenceAddButton);
-        // Edit Meal Button
-        const mealsReferenceEditButton = document.createElement('button');
-        mealsReferenceEditButton.dataset.section = 'meals-reference';
-        mealsReferenceEditButton.dataset.type = 'edit-meal';
-        mealsReferenceEditButton.textContent = 'Edit Meal';
-        mealsReferenceEditButton.addEventListener('click', (e) => {
-            const radios = document.querySelectorAll('.meal-selection-radio');
-            let selected = '';
-            radios.forEach(radio => radio.checked ? selected = radio.value : '');
-            selected != '' ? mealReferenceAddEditMealDialog(selected, e) : console.log('Nothing is selected');
-        })
-        mealsReferenceButonContainer.appendChild(mealsReferenceEditButton);
-        // Delete Meal Button
-        const mealsReferenceDeleteButton = document.createElement('button');
-        mealsReferenceDeleteButton.textContent = 'Delete Meal';
-        mealsReferenceDeleteButton.addEventListener('click', () => {
-            const radios = document.querySelectorAll('.meal-selection-radio');
-            let selected = '';
-            radios.forEach(radio => radio.checked ? selected = radio.value : '');
-            selected != '' ? mealReferenceDeletedDialog(selected, e) : '';
-        })
-        mealsReferenceButonContainer.appendChild(mealsReferenceDeleteButton)
-        // Clear Radio Selections
-        const mealsReferenceClearButton = document.createElement('button');
-        mealsReferenceClearButton.textContent = 'Clear Selection';
-        mealsReferenceClearButton.addEventListener('click', () => {
-            const radios = document.querySelectorAll('.meal-selection-radio');
-            radios.forEach(radio => radio.checked ? radio.checked = false : '');
-        })
-        mealsReferenceButonContainer.appendChild(mealsReferenceClearButton)
-
-        mealsReferenceWrapper.appendChild(mealsReferenceButonContainer);
-
-        // Append Wrapper to Container
-        container.appendChild(mealsReferenceWrapper);
-    }
-    // Meal Reference Add/Edit Logic
     function mealReferenceAddEditMealDialog(selection,e) {
         console.log(e)
         // Add or Edit
@@ -825,6 +971,8 @@ window.onload = function(){
         editMealModalTypeLabel.appendChild(editMealModalTypeLabelText);
         editMealModalTypeContainer.appendChild(editMealModalTypeLabel);
         const editMealModalTypeSelect = document.createElement('select');
+        const blankEditType = document.createElement('option');
+        editMealModalTypeSelect.appendChild(blankEditType);
         // Select Input
         settingsData.mealTypes.forEach(type => {
             const option = document.createElement('option');
@@ -863,6 +1011,9 @@ window.onload = function(){
         editMealModalSeasonLabel.appendChild(editMealModalSeasonLabelText);
         editMealModalSeasonContainer.appendChild(editMealModalSeasonLabel);
         const editMealModalSeasonSelect = document.createElement('select');
+        // Blank Option
+        const blankEditSeason = document.createElement('option');
+        editMealModalSeasonSelect.appendChild(blankEditSeason);
         // Select Input
         settingsData.mealSeasons.forEach(season => {
             const option = document.createElement('option');
@@ -940,7 +1091,6 @@ window.onload = function(){
         document.body.appendChild(editMealOverlay);
 
     }
-    // Meal Reference Delete Logic
     function mealReferenceDeletedDialog(selection, e){
         // Deleted Selected Item if no 'future' meal plan items have the meal in it
         // Todays Date
@@ -969,7 +1119,7 @@ window.onload = function(){
         loadMealsReference(e);
     }
 
-    // ** Meal & Meal Plan Helper Functions
+// ** Meal & Meal Plan Helper Functions
     // New Meal Plan Object
     function newMealPlanObject(date, meal) {
         const newMealPlanObject = {
@@ -978,7 +1128,6 @@ window.onload = function(){
         }
         return newMealPlanObject;
     }
-    // New Meal Object
     function newMealObject(meal, type, link, season) {
         // console.log('Attempting to create new meal!', mealsReferenceData);
         // Meal Exists flag (if a meal with the same name is already in the database)
@@ -1013,7 +1162,6 @@ window.onload = function(){
         }
         
     }
-    // Set Meal Filters
     function setMealFilters(e, object) {
         const filterType = e.target.name;
         const filteredItem = e.target.options[e.target.selectedIndex].value;
@@ -1025,7 +1173,6 @@ window.onload = function(){
         }
         return object;
     }
-    // Show Filtered Meal List
     function showFilteredMeals(object, parent) {
         // Grab Parent Container
         const container = document.querySelector(`${parent}`);
@@ -1062,145 +1209,6 @@ window.onload = function(){
     }
 
 // ** Settings Functions
-    function loadSettings(e){
-        // Grab meal plan container
-        const container = getSection(e);
-        // Clear previous meal plan
-        cleanSectionData(container);
-
-        // Flags
-        const flags = {
-            type: 'false',
-            season: 'false'
-        }
-
-        // Wrap Settings Data
-        const settingsWrapper = document.createElement('div');
-        settingsWrapper.classList.add('content-wrapper');
-
-        // ** Type Selection List
-        // Container
-        const typeSelectionDataContainer = document.createElement('div');
-        typeSelectionDataContainer.classList.add('settings-data-container')
-        // * Label & Input (Enter New Type)
-        const newTypeSelectionContainer = document.createElement('div');
-        // Label
-        const newTypeSelectionLabel = document.createElement('label');
-        newTypeSelectionLabel.textContent = 'Enter a "New" meal type:';
-        newTypeSelectionContainer.appendChild(newTypeSelectionLabel);
-        // Input
-        const newTypeSelectionInput = document.createElement('input');
-        newTypeSelectionInput.setAttribute('type', 'text');
-        newTypeSelectionInput.classList.add('new-type-selection-input');
-        newTypeSelectionInput.addEventListener('click', (e) => {
-            flags.type = true;
-            flags.season = false;
-            expandSettingsSection(flags);
-        });
-        newTypeSelectionContainer.appendChild(newTypeSelectionInput);
-        // * Button
-        const newTypeSelectionAddButton = document.createElement('button');
-        newTypeSelectionAddButton.textContent = 'Add Type';
-        newTypeSelectionAddButton.addEventListener('click', () => {
-            const newTypeValue = document.querySelector('.new-type-selection-input').value;
-            addMealType(newTypeValue);
-        })
-        newTypeSelectionContainer.appendChild(newTypeSelectionAddButton);
-        // Append type selection container to wrapper
-        typeSelectionDataContainer.appendChild(newTypeSelectionContainer);
-        // * Type List
-        const typeSelectionList = document.createElement('div');
-        typeSelectionList.classList.add('type-selection-list');
-        typeSelectionList.classList.add('transition');
-        // Append Meal Type List container to wrapper
-        typeSelectionDataContainer.appendChild(typeSelectionList);
-        settingsWrapper.appendChild(typeSelectionDataContainer);
-
-        // ** Meal Seasons List
-        // Container
-        const seasonSelectionDataContainer = document.createElement('div');
-        seasonSelectionDataContainer.classList.add('settings-data-container')
-        // * Label & Input
-        const newSeasonSelectionContainer = document.createElement('div');
-        // Label
-        const newSeasonSelectionLabel = document.createElement('label');
-        newSeasonSelectionLabel.textContent = 'Enter a "New" meal season:';
-        newSeasonSelectionContainer.appendChild(newSeasonSelectionLabel);
-        // Input
-        const newSeasonSelectionInput = document.createElement('input');
-        newSeasonSelectionInput.setAttribute('type', 'text');
-        newSeasonSelectionInput.classList.add('new-season-selection-input');
-        newSeasonSelectionInput.addEventListener('click', (e) => {
-            flags.type = false;
-            flags.season = true;
-            expandSettingsSection(flags);
-        });
-        newSeasonSelectionContainer.appendChild(newSeasonSelectionInput);
-        // * Button
-        const newSeasonSelectionAddButton = document.createElement('button');
-        newSeasonSelectionAddButton.textContent = 'Add Season';
-        newSeasonSelectionAddButton.addEventListener('click', () => {
-            const newSeasonValue = document.querySelector('.new-season-selection-input').value;
-            addMealSeason(newSeasonValue);
-        })
-        newSeasonSelectionContainer.appendChild(newSeasonSelectionAddButton);
-        // Season List
-        const seasonSelectionList = document.createElement('div');
-        seasonSelectionList.classList.add('season-selection-list');
-        seasonSelectionList.classList.add('transition');
-        // Append type selection container to wrapper
-        seasonSelectionDataContainer.appendChild(newSeasonSelectionContainer)
-        // Append Meal Season List container to wrapper
-        seasonSelectionDataContainer.appendChild(seasonSelectionList);
-        settingsWrapper.appendChild(seasonSelectionDataContainer);
-
-        // ** Dark Mode
-        const darkModeContainer = document.createElement('div');
-        darkModeContainer.classList.add('dark-mode-container');
-        // * Label & Input
-        const darkModeLabelSpan = document.createElement('span');
-        darkModeLabelSpan.classList.add('dark-mode-text');
-        darkModeLabelSpan.textContent = 'Dark Mode';
-        darkModeContainer.appendChild(darkModeLabelSpan);
-        // Label
-        const darkModeLabel = document.createElement('label');
-        darkModeLabel.classList.add('toggle');
-        darkModeLabel.setAttribute('for', 'dark-mode-check')
-        const darkModeSwitch = document.createElement('span');
-        darkModeSwitch.classList.add('toggle-switch');
-        darkModeSwitch.classList.add('transition');
-        settingsData.darkMode ? darkModeSwitch.classList.add('on') : darkModeSwitch.classList.remove('on');
-        darkModeLabel.appendChild(darkModeSwitch);
-        darkModeContainer.appendChild(darkModeLabel);
-        // Input
-        const darkModeCheckbox = document.createElement('input');
-        darkModeCheckbox.setAttribute('type', 'checkbox');
-        darkModeCheckbox.setAttribute('id', 'dark-mode-check');
-        darkModeCheckbox.addEventListener('click', () => {
-            darkModeToggle();
-        });
-        darkModeContainer.appendChild(darkModeCheckbox);
-        // Append Dark Mode Container to wrapper
-        settingsWrapper.appendChild(darkModeContainer);
-
-        // ** Download All Data
-
-        // ** Clear All Data
-        const clearDataContainer = document.createElement('div');
-        // * Label & Input
-        const clearDataLabel 
-
-        // Append wrapper to main container
-        container.appendChild(settingsWrapper);
-
-        // 'ul' of meal types
-        showMealTypesList();
-        // 'ul' of meal seasons
-        showMealSeasonsList();
-        // Set Dark Mode Toggle
-        darkModeEnabled();
-    }
-    // Settings Section Expand
     function expandSettingsSection(flags){
         const typeList = document.querySelector('.type-selection-list');
         const seasonList = document.querySelector('.season-selection-list');
@@ -1215,8 +1223,6 @@ window.onload = function(){
             seasonList.classList.remove('show');
         }
     }
-    // * Meal Type List Functions
-    // Show Meal Types List
     function showMealTypesList(){
         // Container
         const container = document.querySelector('.type-selection-list');
@@ -1265,7 +1271,6 @@ window.onload = function(){
         })
         container.appendChild(minimizeTypeListButton)
     }
-    // Add Meal Type
     function addMealType(value){
         let typeNotPresent = true;
         settingsData.mealTypes.forEach(type => type == value ? typeNotPresent = false : '')
@@ -1274,14 +1279,12 @@ window.onload = function(){
         typeNotPresent ? document.querySelector('.new-type-selection-input').value = '' : '';
         showMealTypesList();
     }
-    // Remove Meal Type
     function removeMealType(value){
         settingsData.mealTypes.forEach(type => type == value ? console.log(`Deleted ${value} from meal type list!`) : '')
         settingsData.mealTypes = settingsData.mealTypes.filter(type => type != value);
         localStorage.setItem('settingsData', JSON.stringify(settingsData));
         showMealTypesList();
     };
-    // * Meal Seasons List Functions
     function showMealSeasonsList(){
         // Container
         const container = document.querySelector('.season-selection-list');
@@ -1332,7 +1335,6 @@ window.onload = function(){
         })
         container.appendChild(minimizeSeasonListButton)
     }
-    // Add Meal Season
     function addMealSeason(value){
         let seasonNotPresent = true;
         settingsData.mealSeasons.forEach(season => season == value ? seasonNotPresent = false : '');
@@ -1341,69 +1343,194 @@ window.onload = function(){
         seasonNotPresent ? document.querySelector('.new-season-selection-input').value = '' : '';
         showMealSeasonsList();
     }
-    // Remove Meal Season
     function removeMealSeason(value){
         settingsData.mealSeasons.forEach(season => season == value ? console.log(`Deleted ${season} from meal seasons list!`) : '');
         settingsData.mealSeasons = settingsData.mealSeasons.filter(season => season != value);
         localStorage.setItem('settingsData', JSON.stringify(settingsData));
         showMealSeasonsList();
     }
-    // * Dark Mode
     function darkModeToggle(){
         // Change Dark-Mode state
         settingsData.darkMode ? settingsData.darkMode = false : settingsData.darkMode = true;
 
         // Get Toggle Switch
-        const toggleSwitch = document.querySelector('.toggle-switch');
+        const toggleSwitch = document.querySelector('.toggle');
 
         // Set Toggle Switch State & update dark-mode state
         if(settingsData.darkMode){
             document.body.classList.add('dark-mode');
             toggleSwitch.classList.add('on')
-            console.log(`Dark Mode: ${settingsData.darkMode}`)
         }else{
             document.body.classList.remove('dark-mode');
             toggleSwitch.classList.remove('on')
-            console.log(`Dark Mode: ${settingsData.darkMode}`)
         }
 
         // Save settingsData
         localStorage.setItem('settingsData', JSON.stringify(settingsData))
     }
     function darkModeEnabled(){
+        // Check for Toggle Switch
+        const toggleSwitch = document.querySelector('.toggle');
+        // If switch is defined update toggle state
+        if(toggleSwitch != undefined){
+            console.log(`Setting Dark Mode Toggle Switch: ${settingsData.darkMode}`)
+            settingsData.darkMode ? toggleSwitch.classList.add('on') : toggleSwitch.classList.remove('on') ;
+        }
+
         // Set Toggle Switch State & update dark-mode state
-        if (settingsData.darkMode) {
-            document.body.classList.add('dark-mode');
-            console.log(`Dark Mode: ${settingsData.darkMode}`)
-        } else {
-            document.body.classList.remove('dark-mode');
-            console.log(`Dark Mode: ${settingsData.darkMode}`)
+        settingsData.darkMode ?document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode');
+    }
+    function clearAllDataPopup(){
+        // Bring up confirmation (require text to be input: like 'DELETE');
+        // ** Overlay
+        const deleteDataOverlay = document.createElement('div');
+        deleteDataOverlay.classList.add('overlay');
+        deleteDataOverlay.classList.add('transition');
+        // ** Modal
+        const deleteDataModal = document.createElement('div');
+        deleteDataModal.classList.add('modal');
+        // * Heading
+        const deleteDataModalHeading = document.createElement('h2');
+        deleteDataModalHeading.textContent = 'Are you sure you want to delete ALL of you "Simple Meal Planning" Data?'
+        deleteDataModal.appendChild(deleteDataModalHeading);
+        // * Subtext
+        const deleteDataModalSubtext = document.createElement('h3');
+        deleteDataModalSubtext.textContent = 'This action cannot be undone. '
+        deleteDataModal.appendChild(deleteDataModalSubtext);
+        // ** Button Container
+        const deleteDataModalButtonContainer = document.createElement('div');
+        // Delete Button
+        const deleteDataModalDeleteButton = document.createElement('button');
+        deleteDataModalDeleteButton.textContent = 'DELETE'
+        deleteDataModalDeleteButton.dataset.section = 'home'
+        deleteDataModalDeleteButton.addEventListener('click', clearAllData);
+        deleteDataModalButtonContainer.appendChild(deleteDataModalDeleteButton);
+
+        // Cancel Button
+        const deleteDataModalCancelButton = document.createElement('button');
+        deleteDataModalCancelButton.textContent = 'Cancel'
+        deleteDataModalCancelButton.addEventListener('click', closeOverlayModal);
+        deleteDataModalButtonContainer.appendChild(deleteDataModalCancelButton);
+        // * Append Button Container to Modal
+        deleteDataModal.appendChild(deleteDataModalButtonContainer);
+
+        // Append Modal to Overlay
+        deleteDataOverlay.appendChild(deleteDataModal);
+        // Append Overlay to Body
+        document.body.appendChild(deleteDataOverlay);
+
+        // Show Overlay/Modal
+        setTimeout(() => {
+            const showCont = document.querySelector('.overlay');
+            showCont.classList.add('show');
+        }, 500)
+
+    }
+    function clearAllData(e){
+        // Clear Data
+        localStorage.clear();
+        // Close Modal
+        closeOverlayModal();
+        // Clear Data Arrays/Objects
+        mealPlanData = JSON.parse(localStorage.getItem('mealPlanData')) || [];
+        localStorage.setItem('mealPlanData', JSON.stringify(mealPlanData));
+        mealsReferenceData = JSON.parse(localStorage.getItem('mealsReferenceData')) || [];
+        localStorage.setItem('mealsReferenceData', JSON.stringify(mealsReferenceData));
+        remindersData = JSON.parse(localStorage.getItem('remindersData')) || [];
+        localStorage.setItem('remindersData', JSON.stringify(remindersData));
+        settingsData = JSON.parse(localStorage.getItem('settingsData')) || {
+            mealSeasons: [],
+            mealTypes: [],
+            darkMode: false
+        };
+        localStorage.setItem('settingsData', JSON.stringify(settingsData));
+        // Reload Section & Data
+        goToSection(e);
+        darkModeEnabled();
+    }
+    function downloadAllData(){
+        // Section Headings
+        const headings = [
+            'Meal Plan', 'Meals Reference', 'Reminders'
+        ]
+
+        // Section Headers
+        const mealPlanHeaders = [
+            'Date', 'Name', 'Type', 'Link', 'Season'
+        ]
+        const mealsReferenceHeaders = [
+            'Name', 'Type', 'Link', 'Season'
+        ]
+        const remindersHeaders = [
+            'Date', 'Reminder'
+        ]
+
+        // Section Data to JSON
+        const mealPlanJSON = JSON.stringify(mealPlanData);
+        console.log(mealPlanJSON);
+        const mealsReferenceJSON = JSON.stringify(mealsReferenceData);
+        const remindersJSON = JSON.stringify(remindersData);
+
+        // Create CSV String
+        let csv = '';
+        csv = convertDataToCSV(mealPlanData);
+        // csv += convertDataToCSV(mealsReferenceJSON);
+        // csv += convertDataToCSV(remindersJSON);
+
+        console.log(csv);
+
+        // Export CSB Data
+        // exportDataToCSV(csv);
+    }
+    function convertDataToCSV(objArray){
+        let str = '';
+
+        let csvArray = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+
+        csvArray.forEach(obj => {
+            const values = Object.values(obj);
+
+            values.forEach(prop => {
+                if(true){
+                    
+                }
+            })
+
+        })
+
+        return str;
+    }
+    function exportDataToCSV(csvData, fileTitle){
+        // File Title
+        let exportedFileName = `${fileTitle}.csv` || 'export.csv';
+
+        // Create CSV File
+        let blob = new Blob([csv], {
+            type: 'text/csv;charset=utf-8;'
+        });
+        if (navigator.msSaveBlob) {
+            navigator.msSaveBlob(blob, exp)
+        }else{
+            let link = document.createElement('a');
+            if(link.download !== undefined){
+                let url = URL.createObjectURL(blob);
+                link.setAttribute('href', url);
+                link.setAttribute('download', exportedFileName);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
         }
     }
-    // Clear All Data
-    function clearAllData(){
-        // Bring up confirmation (require text to be input: like 'DELETE');
 
-        // If text entered matches confirm the delete
-
-        // Clear all data from localStorage
-    }
-    // Download all Data
-    function downloadAllData(){
-        // Download data to a CSV? or HTML doc?
-    }
-
-    // ** Utility Functions **
-
-    // Update App Heading
+// ** Utility Functions
     function getSection(e){
-        // Grab meal plan container
         const sectionObj = getSectionObject(e);
         sectionText = sectionObj.section;
         const container = mainContainer.querySelector(`.${sectionText}`);
         return container;
     }
-    // Generate Home Button
     function generateHomeButton() {
         mealPlanButton = document.createElement('button');
         mealPlanButton.classList.add('main-button');
@@ -1415,19 +1542,16 @@ window.onload = function(){
 
         return mealPlanButton;
     }
-    // Grab Section Object
     function getSectionObject(e) {
         const index = appSections.map(opt => opt.section).indexOf(`${e.target.dataset.section}`);
         const obj = appSections[index];
         return obj;
     }
-    // Remove prior section data and update text
     function cleanSectionData(container) {
         if (container.querySelector('.content-wrapper') != null) {
             container.querySelector('.content-wrapper').remove();
         }
     }
-    // Modal Section To Show Function
     function modalSectionToShow(e) {
         // Remove 'show' class from children
         const container = document.querySelector('.modal');
@@ -1440,7 +1564,6 @@ window.onload = function(){
         const sectionToShow = document.querySelector(showSectionText);
         setTimeout(() => sectionToShow.classList.add('show'), 500);
     }
-    // Close Overlay/Modal
     function closeOverlayModal() {
         const showOverlay = document.querySelector('.overlay');
         console.log(showOverlay)
@@ -1450,7 +1573,7 @@ window.onload = function(){
         }, 500);
     }
 
-    // ** Start Script
+// ** Start Script
     function start() {
         console.clear();
         loadMainPage();
