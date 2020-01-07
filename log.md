@@ -7,13 +7,69 @@
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
 3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
-### Day 31: December 20, 2019
-**Today's Progress**: Meal Plan App & FreeCodeCamp (Regex)
+### Day 39: January 6, 2020
+**Today's Progress**: CSS Grid Resume
+
+* I started my '[CSS Grid Resume](https://github.com/nicreichelt/100-days-of-code/tree/master/css-grid-resume)' today
+
+Adding 'modals' to display detailed 'job duties' for each entry. This will help keep the main content short. 
+
+### Day 38: January 5, 2020
+**Today's Progress**: CSS Grid Resume
+
+I am taking a small break from my 'Meal Plan App'. I saw an article about making a resume with CSS grid and I have been wanting to make a digital resume for a while.
+
+* I started my '[CSS Grid Resume](https://github.com/nicreichelt/100-days-of-code/tree/master/css-grid-resume)' today
+
+Got the base up and running based on the '[CSS Tricks article](https://css-tricks.com/new-year-new-job-lets-make-a-grid-powered-resume/)'. 
+
+Started adding some of my info into it.
+
+### Day 37: January 3, 2020
+**Today's Progress**: Meal Plan App
+
+I took another extended break around New Year's due to time with family and work.
 
 * I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
 
+Started implementing the 'Reminders' logic. Still deciding exactly how I want this to work
+- Deciding between  setting simple reminders from the screen or adding a reminders option to meal plans as well
+
+### Day 36: December 30, 2019
+**Today's Progress**: Meal Plan App
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Completed implementing the 'Download All Data' logic.
+
+### Day 35: December 29, 2019
+**Today's Progress**: Meal Plan App
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Started implementing the 'Download All Data' logic. This allows users to export their data to a CSV file.
+
+### Days 33-34: December 26 & 27, 2019
+**Today's Progress**: New Computer Setup
+
+I took an extended break for the holidays, but I still read a couple dev articles and had to setup my new dev computer.
+
+* I setup my new dev computer (HP 840 G3). It is a smaller, more portable laptop with decent power and a solid screen.
+
+### Day 32: December 21, 2019
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+'Delete All' logic has been implemented. This effectively resets the app to zero.
+
+### Day 31: December 20, 2019
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Both 'meal type' and 'meal season' can have items added from settings. 'Dark Mode' has been added as well. State is kept in localStorage.
+
 ### Day 30: December 19, 2019
-**Today's Progress**: Meal Plan App & FreeCodeCamp (Regex)
+**Today's Progress**: Meal Plan App
 
 * I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
 
@@ -22,7 +78,7 @@ Both 'meal type' and 'meal season' logic has been implemented. Adding and removi
 Both lists are now stored in localStorate in a 'settingsData' object.
 
 ### Day 29: December 18, 2019
-**Today's Progress**: Meal Plan App & FreeCodeCamp (Regex)
+**Today's Progress**: Meal Plan App
 
 * I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
 
