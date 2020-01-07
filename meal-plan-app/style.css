@@ -36,6 +36,7 @@ button{
     border:none;
     background-color: rgba(0,0,0,0.3);
     color:white;
+    cursor: pointer;
 }
 /* Main Buttons */
 button.main-button{
@@ -257,6 +258,9 @@ body.dark-mode{
     color: white;
 }
 div.delete-all-data-container{
+    z-index: 30;
+}
+div.download-data-container{
     z-index: 30;
 }
 

@@ -295,6 +295,25 @@ window.onload = function(){
         // Append Wrapper to Container
         container.appendChild(mealsReferenceWrapper);
     }
+    function loadReminders(e){
+        // Grab reference container
+        const container = getSection(e);
+
+        // Wrapper
+        const remindersWrapper = document.createElement('div');
+        remindersWrapper.classList.add('content-wrapper');
+
+        // Content
+
+        // Button Container
+        const reminderButtonContainer = document.createElement('div');
+        const addReminderButton = document.createElement('button');
+        reminderButtonContainer.appendChild(addReminderButton);
+        remindersWrapper.appendChild(reminderButtonContainer);
+
+        container.appendChild(remindersWrapper);
+
+    }
     function loadSettings(e) {
         // Grab meal plan container
         const container = getSection(e);
@@ -1208,6 +1227,9 @@ window.onload = function(){
         container.appendChild(mealList);
     }
 
+// ** Reminders Functions
+
+
 // ** Settings Functions
     function expandSettingsSection(flags){
         const typeList = document.querySelector('.type-selection-list');
@@ -1284,7 +1306,7 @@ window.onload = function(){
         settingsData.mealTypes = settingsData.mealTypes.filter(type => type != value);
         localStorage.setItem('settingsData', JSON.stringify(settingsData));
         showMealTypesList();
-    };
+    }
     function showMealSeasonsList(){
         // Container
         const container = document.querySelector('.season-selection-list');
@@ -1467,34 +1489,60 @@ window.onload = function(){
 
         // Section Data to JSON
         const mealPlanJSON = JSON.stringify(mealPlanData);
-        console.log(mealPlanJSON);
+        // console.log(mealPlanJSON);
         const mealsReferenceJSON = JSON.stringify(mealsReferenceData);
         const remindersJSON = JSON.stringify(remindersData);
 
         // Create CSV String
         let csv = '';
-        csv = convertDataToCSV(mealPlanData);
-        // csv += convertDataToCSV(mealsReferenceJSON);
-        // csv += convertDataToCSV(remindersJSON);
+        csv += 'Meal Plan Data\r\n\r\n'
+        for(heading in mealPlanHeaders){
+            csv += `${mealPlanHeaders[heading]},`
+        }
+        csv += '\r\n'
+        csv += convertDataToCSV(mealPlanData);
+        csv += '\r\n\r\n'
 
-        console.log(csv);
+        csv += 'Meal Reference Data\r\n\r\n'
+        for(heading in mealsReferenceHeaders){
+            csv += `${mealsReferenceHeaders[heading]},`
+        }
+        csv += '\r\n'
+        csv += convertDataToCSV(mealsReferenceJSON);
+        csv += '\r\n\r\n'
+
+        csv += 'Reminders Data\r\n\r\n'
+        for(heading in remindersHeaders){
+            csv += `${remindersHeaders[heading]},`
+        }
+        csv += '\r\n'
+        csv += convertDataToCSV(remindersJSON);
 
         // Export CSB Data
-        // exportDataToCSV(csv);
+        exportDataToCSV(csv);
     }
     function convertDataToCSV(objArray){
         let str = '';
 
         let csvArray = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
 
+        // Loop Through Array of Objects
         csvArray.forEach(obj => {
             const values = Object.values(obj);
 
+            // Loop through object properties
             values.forEach(prop => {
-                if(true){
-                    
+                if(typeof prop == 'object'){
+                    console.log(`Property is Object: ${prop}`);
+                    for(var key in prop){
+                        str += `${prop[key]}, `;
+                    }
+                }else{
+                    console.log(`Property is just a property: ${prop}`)
+                    str += `${prop}, `;
                 }
             })
+            str += '\r\n'
 
         })
 
@@ -1505,7 +1553,7 @@ window.onload = function(){
         let exportedFileName = `${fileTitle}.csv` || 'export.csv';
 
         // Create CSV File
-        let blob = new Blob([csv], {
+        let blob = new Blob([csvData], {
             type: 'text/csv;charset=utf-8;'
         });
         if (navigator.msSaveBlob) {
