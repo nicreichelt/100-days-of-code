@@ -7,10 +7,31 @@
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
 3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 
+### Day 42: January 9, 2020
+**Today's Progress**: CSS Grid Resume
+
+* I finished the course on '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)' today
+
+Adding 'modals' to display detailed 'job duties' for each entry. This will help keep the main content short. 
+
+### Day 41: January 8, 2020
+**Today's Progress**: Learning
+
+* I started a course on '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)' today
+
+I know it is not a web standard yet, but I like the idea of a standardized way to create components for a site. This would allow those that don't want to use a framework to continue with basic web standards. Interesting stuff to work with.
+
+### Day 40: January 7, 2020
+**Today's Progress**: CSS Grid Resume
+
+* I worked on my '[CSS Grid Resume](https://github.com/nicreichelt/100-days-of-code/tree/master/css-grid-resume)' today
+
+Added social links, and planning simplification of the template. 
+
 ### Day 39: January 6, 2020
 **Today's Progress**: CSS Grid Resume
 
-* I started my '[CSS Grid Resume](https://github.com/nicreichelt/100-days-of-code/tree/master/css-grid-resume)' today
+* I worked on my '[CSS Grid Resume](https://github.com/nicreichelt/100-days-of-code/tree/master/css-grid-resume)' today
 
 Adding 'modals' to display detailed 'job duties' for each entry. This will help keep the main content short. 
 
