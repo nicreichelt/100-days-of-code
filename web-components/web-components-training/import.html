@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Reusable Templates Sample</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- include the polyfill for web components. This must precede imports -->
+    <script src="webcomponents-lite.js"></script>
+
+    <!-- import our template from an external file -->
+    <link rel="import" href="component.html">
+</head>
+
+<body>
+    <h1>Reusable Templates with HTML Imports</h1>
+    <div id="content">
+        <p>
+            HTML Imports provide a way to include web content into other HTML pages. This in turn
+            leads to greater modularity and promotes re-use of components. Content can be HTML, CSS,
+            or JavaScript, or a mix of all 3 - in other words, anything you would normally put into 
+            an HTML file.
+        </p>
+        <p>
+            In this example, the template used to create content is imported from a separate document.
+        </p>
+        <!-- new content will be placed into this div -->
+        <div id="example">
+        </div>
+    </div>
+    <button type="button" id="btnStamp">Stamp New Item</button>
+
+    <script>
+        var count = 1;
+
+        window.addEventListener("DOMContentLoaded", function(e) {
+            // add a click listener to the button
+            document.getElementById("btnStamp").addEventListener("click", function(e) {
+                // TODO: get the template and modify the content
+                let tmpl = document.querySelector('#tmpl');
+                tmpl.content.querySelector('span').textContent = count++
+
+                // TODO: make a deep copy of the template content and import it 
+                // into the current document 
+                let newNode = document.importNode(tmpl.content, true);
+                docuemtn.querySelector('#example').appendChild(newNode);
+
+            })
+        });
+    </script>
+</body>
+
+</html>

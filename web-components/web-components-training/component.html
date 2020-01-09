@@ -1,0 +1,21 @@
+<!-- Define the template that will hold content. The browser will parse this
+    but will not try to use the content in any way -->
+    <template id="tmpl">
+        <p>This is a new paragraph item: <span></span></p>
+    </template>
+    <script>
+        // In this case, our component will automatically add the template 
+        //  to the document that is importing this file so it can be used.
+    
+        // ownerDocument references this component document being imported
+        var thisImportDoc = document.currentScript.ownerDocument; 
+    
+        // Get the template from this file, clone it,
+        // and append it to the importing document.
+        var tmplNode = thisImportDoc.querySelector('#tmpl');
+        
+        // the "document" keyword here references the "main" document
+        // (the one that's importing this HTML file)
+        document.body.appendChild(tmplNode.cloneNode(true));
+    </script>
+    

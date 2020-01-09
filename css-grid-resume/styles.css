@@ -17,15 +17,15 @@
     padding: 20px;
 
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr 1fr;
     grid-gap: 15px;
 
     grid-template-areas: 
-        "name photo"
-        "work about"
-        "work eduction"
-        "community skills";
+        "name name photo"
+        "work work skills"
+        "work work skills"
+        "education education about";
 
 }
 
@@ -42,12 +42,12 @@
 .work{
     grid-area: work;
 }
-.eduction{
+.education{
     grid-area: education;
 }
-.community{
+/* .community{
     grid-area: community;
-}
+} */
 .skills{
     grid-area: skills;
 }
@@ -59,9 +59,12 @@ section{
     flex-direction: column;
     outline: 1px solid black;
     box-shadow: 4px 4px 0 0 rgba(0,0,0,0.1);
+    /* justify-content: center; */
+    /* align-items: center; */
 }
 section h2{
     text-align: center;
+    margin: 0 0 15px 0;
 }
 section p{
     padding: 5px 0;
@@ -74,6 +77,16 @@ section p{
 }
 .name h1{
     font-size: 3em;
+}
+.name div.social ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+}
+.name div.social ul li{
+    padding: 10px;
+    margin: 10px;
 }
 
 .photo{
@@ -98,12 +111,13 @@ span.work-item{
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
+    cursor: pointer;
 }
 span.work-item p.work-detail{
     width: 100%;
     margin: 0 10px;
 }
-div.additional-work-details{
+div.modal{
     top: 0;
     left: 0;
     position: fixed;
@@ -118,7 +132,7 @@ div.additional-work-details{
     overflow: hidden;
     opacity: 0;
 }
-div.additional-work-details.show{
+div.modal.show{
     max-height: 2000px;
     opacity: 1;
 }
@@ -126,9 +140,27 @@ div.additional-work-details span.close{
     position:absolute;
     top: 20px;
     right: 20px;
+    cursor: pointer;
 }
 div.details{
     position: relative;
     padding: 20px;
     background-color: white;
+}
+
+section.skills ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+}
+section.skills ul li{
+    padding: 5px;
+    margin: 5px;
+    outline: 1px solid black;
+}
+section.skills ul li.list-heading{
+    width: 100%;
+    outline: none;
 }

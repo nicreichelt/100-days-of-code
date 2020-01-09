@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Custom Element Sample</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+
+    <!-- include the polyfill for custom elements for browsers that don't support yet -->
+    <script src="../polyfills/webcomponents-lite.js"></script>
+
+    <script>
+        class MessageBanner extends HTMLElement {
+            constructor() {
+                super(); // always call super() first
+
+                // TODO: add a click event to hide the message
+                this.addEventListener('click', e => {
+                    this.visible = false;
+                    console.log('message-banner closed')
+                })
+            }
+
+            /** TODO: observedAttributes is used to indicate which attributes 
+                will trigger the attributeChangedCallback function **/
+            static get observedAttributes(){
+                return ['visible'];
+            }
+
+
+            /** Custom element lifecycle functions **/
+            connectedCallback() {
+                console.log("message-banner connected to page");
+                // TODO: set the initial state of the visible property
+                this.visible = this.hasAttribute('visible');
+            }
+
+            disconnectedCallback() {
+                console.log("message-banner disconnected from page");
+            }
+
+            adoptedCallback() {
+                console.log("message-banner adopted in page");                
+            }
+
+            attributeChangedCallback(name, oldValue, newValue) {
+                console.log("message-banner attr: " + name + " changed from '"
+                            + oldValue + "' to '" + newValue + "'");
+            }
+
+            /** TODO: Expose the visible attribute as getter and setter **/   
+            get visible(){
+                return this.hasAttribute('visible');
+            }  
+            set visible(val){
+                if(val){
+                    this.setAttribute('visible', '');
+                }
+                else{
+                    this.removeAttribute('visible')
+                }
+            }
+        }
+
+        // TODO: define the custom element for the browser
+        customElements.define('message-banner', MessageBanner)
+
+        // Programmatically show and hide the banner by setting a property
+        window.addEventListener("load", e => {
+            document.getElementById("togglebtn").addEventListener("click", evt => {
+                var banner = document.getElementById("banner");
+                banner.visible = !banner.visible;
+            })
+
+            document.querySelector('#createbtn').addEventListener('click', evt => {
+                let newBanner = document.createElement('message-banner');
+                newBanner.innerHTML = "<div>Banner created from script!</div>";
+                newBanner.visible = true;
+                // document.querySelector('#content').appendChild('banner');
+                document.body.insertBefore(newBanner, document.body.firstChild);
+            })
+        });
+    </script>
+    <!-- TODO: add some styling for the message banner -->
+    <style>
+        message-banner{
+            background: cornsilk;
+            border: 1pt solid goldenrod;
+            margin: 0;
+            max-height: 400px;
+            padding: 10pt;
+            position: relative;
+            display: none;
+            top: 0;
+            right: 0;
+        }
+        message-banner[visible]{
+            display: block;
+        }
+    </style>
+    
+</head>
+
+<body>
+    <h1>Defining Custom Elements</h1>
+    <div id="content">
+        <p>
+            Custom Elements let you add new tags to the browser that can be used  
+            just as if they were native to the browser. They can be instantiated
+            via JavaScript, have their own JavaScript API, and can extend the functionality of existing tags.
+        </p>
+        <p>This example shows how to create a simple message banner that hides itself
+            when clicked.</p>
+        <p>It is implemented as a custom <code>&lt;message-banner&gt;</code> element.</p>
+
+        <!-- new content will be placed into this div -->
+        <div id="example">
+            <!-- TODO: use our message banner element in the page -->
+            <message-banner id='banner' visible>
+                <div class='message'>
+                    This is a message banner element. Click on me!
+                </div>
+            </message-banner>
+            
+            <p>
+                Here is some other text content in the document.
+            </p>
+        </div>
+        <p>It can also be manipulated using JavaScript. Click the button to toggle the banner.</p>
+        <button id="togglebtn">Toggle Banner</button>
+        <button id='createbtn'>Create Banner</button>
+    </div>
+</body>
+
+</html>

@@ -18,7 +18,7 @@ function loadWorkDetailsEvents(){
         console.log(item)
     });
 
-    let addtlDetails = document.querySelectorAll('.additional-work-details');
+    let addtlDetails = document.querySelectorAll('.modal');
     addtlDetails.forEach(item => {
         item.querySelector('.close').addEventListener('click', closeDetails);
     })
@@ -26,6 +26,7 @@ function loadWorkDetailsEvents(){
 
 // Expand Work Item Details
 function showDetails(e){
+    console.log('Show Details')
     let className;
 
     this.classList.forEach(item => {
@@ -33,12 +34,24 @@ function showDetails(e){
     });
 
     setTimeout(function(){
-        document.querySelector(`.additional-work-details.${className}`).classList.add('show');
+        document.querySelector(`.modal.${className}`).style.maxHeight = '10000px';
+    }, 200);
+
+    setTimeout(function(){
+        document.querySelector(`.modal.${className}`).style.opacity = 1;
     }, 300);
 }
 
 // Close Work Item Details
 function closeDetails(e){
     console.log(this.parentNode.parentNode)
-    this.parentNode.parentNode.classList.remove('show');
+    // this.parentNode.parentNode.classList.remove('show');
+
+    let parent = this.parentNode.parentNode;
+
+    parent.style.opacity = 0;
+
+    setTimeout(function(){
+        parent.style.maxHeight = 0;
+    }, 400);
 }

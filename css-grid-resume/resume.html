@@ -6,7 +6,6 @@
         <title>JS Playground</title>
         <link rel="stylesheet" href="styles.css">
         <script src='main.js'></script>
-        <script src='date-functions.js'></script>
     </head>
 
     <body class='transition'>
@@ -15,20 +14,20 @@
 
             <section class='name'>
                 <h1>Nic Reichelt</h1>
-                <h3>I.T. Professional, Web Designer/Developer, Artist</h3>
+                <h3>I.T. Professional, Web Designer & Developer, Artist</h3>
+                <div class='social'>
+                    <ul>
+                        <li><a href='https://www.github.com/nicreichelt' target='_blank'>Github</a></li>
+                        <li><a href='https://www.linkedin.com/in/nicolasreichelt/' target='_blank'>LinkedIn</a></li>
+                        <li><a href='https://www.twitter.com/pxlnic' target='_blank'>Twitter</a></li>
+                        <li><a href='https://www.pinterest.com/pxlnic/pxlnic-my-pixel-art/' target='_blank'>Pinterest</a></li>
+                    </ul>
+                </div>
             </section>
 
             <Section class='photo'>
                 <img src='https://picsum.photos/200/200'>
             </Section>
-
-            <section class='about'>
-                <h2>About Me</h2>
-                <p><b>Location:</b> Citrus Heights, CA</p>
-                <p><b>Phone:</b> 916-806-1746</p>
-                <p><b>Email: </b> contact@nicreichelt.com</p>
-                <p><b>Website:</b> nicreichelt.com</p>
-            </section>
 
             <section class='work'>
                 <h2>Work History</h2>
@@ -40,7 +39,7 @@
                     </p>
                 </span>
 
-                <div class='additional-work-details caloes transition'>
+                <div class='modal additional-work-details caloes transition'>
                     <div class='details'>
                         <p>
                             I oversee unit projects, asset management, and am overhauling our process and procedures.<br><br> 
@@ -67,11 +66,11 @@
                     <p><b>nicreichelt.com</b> - Sacramento, CA</p>
                     <p><b>Sep. 2017 - Present</b></p>
                     <p class='work-detail'>
-                        I am a freelance website designer/developer, graphic artist, and provide local I.T. support to the greater Sacramento Area.
+                        I am a freelance website designer/developer, graphic artist, and provide local I.T. support to the greater Sacramento Area. I offer these services part-time, in addition to my full-time job with the State of CA.
                     </p>
                 </span>
 
-                <div class='additional-work-details nicreichelt transition'>
+                <div class='modal additional-work-details nicreichelt transition'>
                     <div class='details'>
                         <p>
                             I am a creator .<br><br> 
@@ -92,22 +91,98 @@
                     </div>
                 </div>
 
-                <span class='work-item'>
+                <hr>
+
+                <span class='work-item progressive'>
                     <p><b>Progressive Insurace</b> - Rancho Cordova, CA</p>
                     <p><b>Mar. 2018 - Aug. 2018</b></p>
+                    <p class='work-detail'>
+                        I was a <b>Service Consultant Associate</b>, assisting customer's with their policies throughout 46 states. My job was to ensure customer's understood their policy and made sure their policy information was up to date.
+                    </p>
                 </span>
 
-                <span class='work-item'>
+                <div class='modal additional-work-details progressive transition'>
+                    <div class='details'>
+                        <p>
+                            I am a creator .<br><br> 
+                            My specialities include:
+                        </p>
+                        <ul>
+                            <li>
+                                Asset Management for over 1500 mobile devices
+                            </li>
+                            <li>
+                                Standardization of unit processes to ensure consistency in how assets and databases are handled
+                            </li>
+                            <li>
+                                Provide Tier 2 & 3 support for mobile devices (smartphones & tablets)
+                            </li>
+                        </ul>
+                        <span class='close'>[X]</span>
+                    </div>
+                </div>
+
+                <hr>
+
+                <span class='work-item verizon'>
                     <p><b>Verizon wireless</b> - Rancho Cordova, CA</p>
                     <p><b>August, 2006 - Jan. 2017</b></p>
+                    <p class='work-detail'>
+                        I ended my time at Verizon as a <b>Consultant of Customer Service Operations</b>, providing leadership with reporting and analysis on call center metrics. I started as a <b>Customer Service Representative</b> and worked my way into operations.
+                    </p>
                 </span>
+
+                <div class='modal additional-work-details verizon transition'>
+                    <div class='details'>
+                        <p>
+                            I am a creator .<br><br> 
+                            My specialities include:
+                        </p>
+                        <ul>
+                            <li>
+                                Asset Management for over 1500 mobile devices
+                            </li>
+                            <li>
+                                Standardization of unit processes to ensure consistency in how assets and databases are handled
+                            </li>
+                            <li>
+                                Provide Tier 2 & 3 support for mobile devices (smartphones & tablets)
+                            </li>
+                        </ul>
+                        <span class='close'>[X]</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class='skills'>
+                <h2>Skills & Expertise</h2>
+                <ul>
+                    <li class='list-heading'><h3>Tech Knowledge</h3></li>
+                    <li>Standard HTML, CSS, JS</li>
+                    <li>Vue.js</li>
+                    <li>Node.js</li>
+                    <li>MongoDB</li>
+                    <li>WordPress</li>
+                    <li>PHP</li>
+                    <li>MySQL</li>
+                </ul>
+                <ul>
+                    <li class='list-heading'><h3>Skills</h3></li>
+                    <li>Front-end Web Design/Development</li>
+                    <li>Back-end Web Development</li>
+                    <li>System Administration</li>
+                    <li>Graphic Design</li>
+                    <li>I.T. Support</li>
+                    <li>Project Management</li>
+                    <li>Business Consulting</li>
+                    <li>Asset Management</li>
+                </ul>
             </section>
 
             <section class='education'>
-                <h2>Edutcation</h2>
+                <h2>Education</h2>
                 <span class='education-item'>
-                    <p><b>Western Governor's University</b></p>
-                    <p>Salt Lake City, UT</p>
+                    <p><b>Western Governor's University</b> - Salt Lake City, UT</p>
                     <p>B.S. I.T. Software Development - Aug. 2017</p>
                 </span>
                 <span class='education-item'>
@@ -121,12 +196,12 @@
                 </span>
             </section>
 
-            <section class='community'>
-                <h2>Community</h2>
-            </Section>
-
-            <section class='skills'>
-                <h2>Skills</h2>
+            <section class='about'>
+                <h2>About Me</h2>
+                <p><b>Location:</b> <a href='https://goo.gl/maps/XVZbHwUkTTG3PPCZ9' target='_blank'>Citrus Heights, CA</a></p>
+                <p><b>Phone:</b> <a href='tel:19168061749' data-rel='external'>916-806-1746</a></p>
+                <p><b>Email: </b> <a href='mailto:contact@nicreichelt.com' data-rel='external'>contact@nicreichelt.com</a></p>
+                <p><b>Website:</b> <a href='https://nicreichelt.com' target='_blank'>nicreichelt.com</a></p>
             </section>
             
         </article>
