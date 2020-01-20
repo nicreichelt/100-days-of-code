@@ -3,12 +3,25 @@
 ### All Projects
 **Link(s) to work & Learning**
 1. **PROJECT**: [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
-2. **LEARNING**: [JavaScript30](https://javascript30.com)
+2. **PROJECT**: '[CSS Grid Resume](https://github.com/nicreichelt/100-days-of-code/tree/master/css-grid-resume)'
+3. **LEARNING**: [JavaScript30](https://javascript30.com)
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
-3. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+4. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+5. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
+
+### Day 43: January 19, 2020
+**Today's Progress**: Meal Plan App
+
+I am hoping this was my last break in this process. We have moved into our new place and things are settling so I am going to focus on my dev work more and completing the next 57 days without a break.
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Reaquainted myself with the project and started work on the Reminders Logic. Got the main list function added, and the modal. Planning a change to the show/hide modal logic so it just fades in (no slide down visible). 
+
+More planning to come. Once I complete this phase I am going to rewrite the project with cleaner code and maybe some light 'Web Components' implementation. After that rewrite I will create a full Node/Vue app. Still thinking through the DB (possibly MongoDB).
 
 ### Day 42: January 9, 2020
-**Today's Progress**: CSS Grid Resume
+**Today's Progress**: Learning
 
 * I finished the course on '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)' today
 
