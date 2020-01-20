@@ -303,11 +303,24 @@ window.onload = function(){
         const remindersWrapper = document.createElement('div');
         remindersWrapper.classList.add('content-wrapper');
 
-        // Content
+        // Modal (move to it's own function)
+            // Reminder Text
+            // Reminder Date
+            // Reminder Time
 
-        // Button Container
+        // Content
+        // Reminder List
+        const reminderListContainer = document.createElement('div');
+        reminderListContainer.classList.add('reminder-list');
+        reminderListContainer.loadReminders();
+        remindersWrapper.appendChild(reminderListContainer);
+
+
+        // Button Container (add, edit, delete, clear)
         const reminderButtonContainer = document.createElement('div');
         const addReminderButton = document.createElement('button');
+        addReminderButton.textContent = 'Add Reminder';
+        addReminderButton.addEventListener('click', newReminderDialog);
         reminderButtonContainer.appendChild(addReminderButton);
         remindersWrapper.appendChild(reminderButtonContainer);
 
@@ -529,17 +542,13 @@ window.onload = function(){
 
 // ** Meal Plan Functions
     function loadCurrentWeekMeals(firstDay){
-        // Create Array for Weeks Meal Plan Data
         const weekArray = [];
-        // Set last day of week for end of day
         const lastDay = changeDate(firstDay, 7);
         lastDay.timeEndOfDay();
         // Loop through meal plan data and check if meals are within the range
         mealPlanData.forEach(meal => {
             mealDate = new Date(meal.date);
-            // Check if meal date is within the given week
             if (mealDate >= firstDay && mealDate <= lastDay) {
-                // If so add to weekArray
                 console.log('Meal Added!');
                 weekArray.push(meal);
             }
@@ -898,7 +907,8 @@ window.onload = function(){
         showFilteredMeals(mealFilter, '.modal-meal-list');
         setTimeout(() => {
             const showOverlay = document.querySelector('.overlay');
-            console.log(showOverlay)
+            console.log(showOverlay);
+            
             showOverlay.classList.add('show')
             }, 500)
     }
@@ -1228,7 +1238,53 @@ window.onload = function(){
     }
 
 // ** Reminders Functions
+    function newReminderDialog(){
+        const newReminderOverlay = document.createElement('div');
+        newReminderOverlay.classList.add('overlay');
+        newReminderOverlay.classList.add('transition');
+        
+        const newReminderModal = document.createElement('div');
+        newReminderModal.classList.add('modal');
 
+        const newReminderModalHeading = document.createElement('h2');
+        newReminderModalHeading.textContent = 'Add a New Reminder?';
+        newReminderModal.appendChild(newReminderModalHeading);
+        
+        // New Reminder Text Content
+        const newReminderTextContainer = document.createElement('div');
+
+        const newReminderTextLabel = document.createElement('label');
+        newReminderTextLabel.textContent = 'Reminder text: ';
+        newReminderTextContainer.appendChild(newReminderTextLabel);
+
+        const newReminderTextInput = document.createElement('input');
+        newReminderTextInput.setAttribute('type', 'text');
+        newReminderTextContainer.appendChild(newReminderTextInput);
+        // Buttons
+
+        // Append Modal to Overlay
+        newReminderOverlay.appendChild(newReminderModal);
+        newReminderOverlay.style.maxHeight = '2000px'
+        setTimeout(() => {
+            const showOverlay = document.querySelector('.overlay');
+            showOverlay.classList.add('show');
+        }, 500)
+        
+        // Append Overlay to Body
+        document.body.appendChild(newReminderOverlay);
+    }
+    function newReminderObject(){
+
+    }
+    HTMLDivElement.prototype.loadReminders = function(){
+        const reminderList = document.createElement('ul');
+        remindersData.forEach(reminder => {
+            const reminderItem = document.createElement('li');
+            reminderItem.textContent = reminder;
+            reminderList.appendChild(reminderItem);
+        });
+        this.appendChild(reminderList);
+    }
 
 // ** Settings Functions
     function expandSettingsSection(flags){

@@ -1,0 +1,114 @@
+<template id="message-banner-tmpl">
+    <style>
+        :host {
+            background: cornsilk;
+            border: 1pt solid goldenrod;
+            margin: 0;
+            max-height: 400px;
+            padding: 15px;
+            position: relative;
+            top: 0;
+            right: 0;
+            display:none;
+        }
+        
+        :host([visible]) {
+            display: block;
+        }
+
+        :host([type="critical"]) {
+            background: red;
+            border: 1pt solid maroon;
+            color: white;
+            font-weight:600
+        }
+
+        :host #closebox {
+            cursor: pointer;
+        }
+    </style>
+    <div id='content' class="message">
+        <span id='closebox'>[X] </span>
+        <slot></slot>
+    </div>
+</template>
+
+<script>
+(function() {
+    let thisImportDoc = document.currentScript.ownerDocument;
+
+    class MessageBanner extends HTMLElement {
+        constructor() {
+            super(); // always call super() first
+        }
+
+        /** Used to indicate which attributes will trigger the
+            attributeChangedCallback function **/
+        static get observedAttributes() {
+            return ["visible"];
+        }
+        static get template() {
+            if (!this._template) {
+                this._template = thisImportDoc.querySelector("#message-banner-tmpl");
+            }
+            return this._template;
+        }
+        /** Custom Component Reactions **/
+        connectedCallback() {
+            console.log("message-banner connected to page");
+
+            let shadowRoot = this.attachShadow({mode: "open"});
+            let tmpl = MessageBanner.template;
+            shadowRoot.appendChild(
+                document.importNode(tmpl.content,true)
+            );
+
+            // add a click event to hide the message
+            var closebox = shadowRoot.querySelector("#closebox");
+            closebox.addEventListener("click", e => {
+                this.visible = false;
+                console.log("message-banner closed");
+            });
+
+            // If the browser doesn't natively support ShadowDOM, we have
+            // to polyfill the styling mechanism for the component
+            const supportsNativeShadowDOM = !!HTMLElement.prototype.attachShadow;
+            if (!supportsNativeShadowDOM) {
+                ShadyCSS.applyStyle(this);
+            }
+        }
+
+        disconnectedCallback() {
+            console.log("message-banner disconnected from page");
+        }
+
+        adoptedCallback() {
+            console.log("message-banner adopted in page");
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+            console.log("message-banner attr: " + name + " changed from '" +
+                oldValue + "' to '" + newValue + "'");
+        }
+
+        /** Expose the visible attribute as getter and setter **/
+        get visible() {
+            return this.hasAttribute('visible');
+        }
+
+        set visible(val) {
+            if (val) {
+                this.setAttribute('visible', '');
+            } else {
+                this.removeAttribute('visible');
+            }
+        }
+    }
+
+    // This is only needed for browsers that don't yet have native ShadowDOM 
+    // support. When native support is present this call does nothing
+    ShadyCSS.prepareTemplate(MessageBanner.template, "message-banner");
+
+    customElements.define("message-banner", MessageBanner);
+})();
+</script>

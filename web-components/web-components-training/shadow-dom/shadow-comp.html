@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Complete WebComponent Sample</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- include the polyfill for WebComponents -->
+    <script src="webcomponents-lite.js"></script>
+
+    <!-- TODO: Import our MessageBanner component. The imported HTML file takes care
+        of all the necessary component registration and setup -->
+    <link rel='import' href='msg-banner.html' id='tmplFile'>
+
+    <script>
+        // Programmatically show and hide the banner by setting a property
+        window.addEventListener("load", e => {
+            document.getElementById("btn").addEventListener("click", evt => {
+                document.getElementById("banner").visible = !document.getElementById("banner").visible;
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <h1>A Complete WebComponent</h1>
+    <div id="content">
+        <p>
+            This example uses all four WebComponent standards to create a finished MessageBanner that
+            can be included in any HTML file and used as a standalone component.
+        </p>
+        <p>
+            The MessageBanner component is defined in an external HTML file that is imported
+            into the main page. The imported file takes care of all the component registration
+            and setup and defines the template used by the component.
+        </p>
+        <!-- new content will be placed into this div -->
+        <div id="example">
+            <message-banner id="banner" visible>
+                 This is a message banner element
+            </message-banner>
+            <p>
+                Here is some other content in the document.
+            </p>
+        </div>
+        <button id="btn">Toggle Banner</button>
+    </div>
+</body>
+
+</html>
