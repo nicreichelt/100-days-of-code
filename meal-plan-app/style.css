@@ -279,10 +279,10 @@ div.overlay{
     padding: 10px;
     opacity: 0;
 }
-div.overlay.show{
+/* div.overlay.show{
     max-height: 2000px;
     opacity: 1;
-}
+} */
 div.overlay div.modal{
     background-color: gray;  
     outline: 2px solid black;  

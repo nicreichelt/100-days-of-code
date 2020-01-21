@@ -506,16 +506,25 @@ window.onload = function(){
         // Hide All "Section" divs
         const divs = mainContainer.querySelectorAll('div');
         divs.forEach(div => {
-            div.classList.remove('show');
-            div.style.zIndex = -10;
+            div.style.opacity = 0;
+            setTimeout(() => {
+                div.style.maxHeight = 0;
+                div.style.zIndex = -10;
+            }, 100)
+            
         })
 
         // Show selected "Section" div
         const section = document.querySelector(`.${e.target.dataset.section}`);
         // Delay screen load by 0.5s
+        
+        console.log(`Section to show: ${section.dataset.section}`);
         setTimeout(() => {
-            section.classList.add('show');
-            section.style.zIndex = 10;
+            section.style.maxHeight = '2000px';
+            setTimeout(() => {
+                section.style.opacity = 1;
+                section.style.zIndex = 10;
+            }, 300);
         }, 500);
 
         // Load Section
@@ -905,11 +914,12 @@ window.onload = function(){
         document.body.appendChild(overlay);
         // Add Existing Meal Options
         showFilteredMeals(mealFilter, '.modal-meal-list');
+
+        overlay.style.maxHeight = '2000px';
+
         setTimeout(() => {
-            const showOverlay = document.querySelector('.overlay');
-            console.log(showOverlay);
-            
-            showOverlay.classList.add('show')
+            const showOverlay = document.querySelector('.overlay');            
+            showOverlay.style.opacity = 1;
             }, 500)
     }
     function addMealPlanData(date, meal) {
@@ -1254,20 +1264,70 @@ window.onload = function(){
         const newReminderTextContainer = document.createElement('div');
 
         const newReminderTextLabel = document.createElement('label');
-        newReminderTextLabel.textContent = 'Reminder text: ';
+        newReminderTextLabel.textContent = 'Reminder Text: ';
         newReminderTextContainer.appendChild(newReminderTextLabel);
 
         const newReminderTextInput = document.createElement('input');
         newReminderTextInput.setAttribute('type', 'text');
         newReminderTextContainer.appendChild(newReminderTextInput);
+
+        newReminderModal.appendChild(newReminderTextContainer);
+
+        // New Reminder Date Content
+        const newReminderDateContainer = document.createElement('div');
+
+        const newReminderDateLabel = document.createElement('label');
+        newReminderDateLabel.textContent = 'Reminder Date: ';
+        newReminderDateContainer.appendChild(newReminderDateLabel);
+
+        const newReminderDateInput = document.createElement('input');
+        newReminderDateInput.setAttribute('type', 'date');
+        let todaysDate = getDateText(new Date());
+        console.log(todaysDate)
+        newReminderDateInput.value = todaysDate;
+        newReminderDateContainer.appendChild(newReminderDateInput);
+
+        newReminderModal.appendChild(newReminderDateContainer);
+
+        // New Reminder Time
+        const newReminderTimeContainer = document.createElement('div');
+
+        const newReminderTimeeLabel = document.createElement('label');
+        newReminderTimeeLabel.textContent = 'Reminder Time: ';
+        newReminderTimeContainer.appendChild(newReminderTimeeLabel);
+
+        const newReminderTimeInput = document.createElement('input');
+        newReminderTimeInput.setAttribute('type', 'time');
+        newReminderTimeInput.value = '17:00'
+        newReminderTimeContainer.appendChild(newReminderTimeInput);
+
+        newReminderModal.appendChild(newReminderTimeContainer);
+
         // Buttons
+        const newReminderButtonContainer = document.createElement('div');
+        newReminderButtonContainer.classList.add('modal-button-container');
+
+        newReminderSaveButton = document.createElement('button');
+        newReminderSaveButton.textContent = 'Add Reminder';
+        newReminderSaveButton.addEventListener('click', () => {
+            console.log(`Reminder Text: ${newReminderTextInput.value}`, `Reminder Date: ${newReminderDateInput.value}`, `Reminder Time: ${newReminderTimeInput.value}`);
+            addReminder();
+        });
+        newReminderButtonContainer.appendChild(newReminderSaveButton)
+
+        newReminderCancelButton = document.createElement('button');
+        newReminderCancelButton.textContent = 'Cancel';
+        newReminderCancelButton.addEventListener('click', closeOverlayModal);
+        newReminderButtonContainer.appendChild(newReminderCancelButton)
+
+        newReminderModal.appendChild(newReminderButtonContainer);
 
         // Append Modal to Overlay
         newReminderOverlay.appendChild(newReminderModal);
         newReminderOverlay.style.maxHeight = '2000px'
         setTimeout(() => {
             const showOverlay = document.querySelector('.overlay');
-            showOverlay.classList.add('show');
+            showOverlay.style.opacity = 1;
         }, 500)
         
         // Append Overlay to Body
@@ -1275,6 +1335,11 @@ window.onload = function(){
     }
     function newReminderObject(){
 
+    }
+    function addReminder(){
+        console.log('Add New Reminder!')
+
+        closeOverlayModal();
     }
     HTMLDivElement.prototype.loadReminders = function(){
         const reminderList = document.createElement('ul');
@@ -1498,9 +1563,10 @@ window.onload = function(){
         document.body.appendChild(deleteDataOverlay);
 
         // Show Overlay/Modal
+        overlay.style.maxHeight = '2000px'
         setTimeout(() => {
             const showCont = document.querySelector('.overlay');
-            showCont.classList.add('show');
+            showCont.style.opacity = 1;
         }, 500)
 
     }
@@ -1661,18 +1727,20 @@ window.onload = function(){
         const container = document.querySelector('.modal');
         const children = container.querySelectorAll('.options-section');
         children.forEach((child) => {
-            child.classList.remove('show')
+            child.style.maxHeight = '0px';
+            child.style.opacity = 0;
         });
         // Select section to show
         const showSectionText = `.${e.target.id}-options`;
         const sectionToShow = document.querySelector(showSectionText);
-        setTimeout(() => sectionToShow.classList.add('show'), 500);
+        sectionToShow.style.maxHeight = '2000px'
+        setTimeout(() => sectionToShow.style.opacity = 1, 500);
     }
     function closeOverlayModal() {
         const showOverlay = document.querySelector('.overlay');
-        console.log(showOverlay)
-        showOverlay.classList.remove('show')
+        showOverlay.style.opacity = 0;
         setTimeout(() => {
+            showOverlay.style.maxHeight = '0px';
             showOverlay.remove()
         }, 500);
     }
