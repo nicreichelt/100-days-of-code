@@ -9,6 +9,22 @@
 4. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 5. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
 
+### Day 45: January 21, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Got the 'new reminder' popup pretty much solid. You can now add new reminders, set the date/time/text and it saves to LocalStorage. This then populates to the list of reminders. Also added new date/time function to get the time in AM/PM. 
+
+Lastly refactored the show/hide animations to use a prototype function on 'div' elements. Updated all transitions with this effect for consistency. Not 100% thrilled with some of it, but may be able to fix down the road.
+
+### Day 44: January 20, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+I started the dialog for adding reminders. Modal pops up and got the inputs set. Does not load into array yet though. Did a little refactoring to clean up code.
+
 ### Day 43: January 19, 2020
 **Today's Progress**: Meal Plan App
 
