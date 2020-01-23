@@ -9,6 +9,13 @@
 4. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 5. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
 
+### Day 46: January 22, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Worked on the 'Edit' Reminder logic. Started to refactor the 'add' method to work for add/edit. Spent some time on efficiently selecting the element and data selected when editing. Will need to add checks to prevent errors, but it is mostly there. Need to implement 'update' logic when editing instead of creating a new entry.
+
 ### Day 45: January 21, 2020
 **Today's Progress**: Meal Plan App
 
