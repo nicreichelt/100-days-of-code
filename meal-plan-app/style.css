@@ -173,6 +173,20 @@ div.modal div.update-meal-options div{
     padding: 0 10px;
 }
 
+/* Reminders Section */
+div.reminder-list ul{
+    list-style: none;
+}
+div.reminder-list ul li{
+    display: flex;
+    outline: 1px solid black;
+    margin: 10px 0;
+    padding: 5px;
+}
+div.reminder-list ul li input{
+    margin: 0 5px 0 0;
+}
+
 /* Settings Section */
 div.settings div.settings-data-container {
     width: 100%;
@@ -279,10 +293,6 @@ div.overlay{
     padding: 10px;
     opacity: 0;
 }
-/* div.overlay.show{
-    max-height: 2000px;
-    opacity: 1;
-} */
 div.overlay div.modal{
     background-color: gray;  
     outline: 2px solid black;  
@@ -335,5 +345,8 @@ div.overlay div.modal div.modal-button-container button{
 
 /* Transition */
 .transition{
-    transition: 0.5s ease;
+    transition: max-height 0.25s cubic-bezier(0,1,0,1);
+}
+.transition{
+    transition: 0.3s ease;
 }

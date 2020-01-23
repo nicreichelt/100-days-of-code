@@ -50,8 +50,21 @@ function checkDaylightSavings(date){
 // Get Date Text (short - YYYY/MM/DD or MM/DD/YYYY)
 function getDateText(date, type = 'int'){
     if(type == 'int'){
-        return dateText = `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate() < 10 ? 0 : ''}${date.getDate()}`;
+        return dateText = `${date.getFullYear()}-${date.getMonth()+1 < 10 ? 0 : ''}${date.getMonth()+1}-${date.getDate() < 10 ? 0 : ''}${date.getDate()}`;
     }else if(type == 'us'){
-        return dateText = `${date.getMonth()+1}-${date.getDate() < 10 ? 0 : ''}${date.getDate()}-${date.getFullYear()}`;
+        return dateText = `${date.getMonth()+1 < 10 ? 0 : ''}${date.getMonth()+1}-${date.getDate() < 10 ? 0 : ''}${date.getDate()}-${date.getFullYear()}`;
     }
+}
+
+// Get Time Text (AM/PM)
+function getTimeText(time){
+    let timeArray = time.split(":");
+    let timeText = ''
+    if(timeArray[0] > 12){
+        timeText =  `${timeArray[0]-12}:${timeArray[1]} PM`;
+    }else{
+        timeText = `${timeArray[0]}:${timeArray[1]} AM`;
+    }
+
+    return timeText;
 }
