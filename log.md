@@ -9,6 +9,13 @@
 4. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 5. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
 
+### Day 47: January 23, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Got the 'Add/Edit' logic complete. Reminders in their basic form is complete. Need to style the section a little bit, but the main pieces are there. Next I am figuring out how to present the reminders/alerts when the time hits and to provide an option to delete reminders, and separate 'past reminders'. Altogether it's almost done.
+
 ### Day 46: January 22, 2020
 **Today's Progress**: Meal Plan App
 
