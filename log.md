@@ -9,6 +9,20 @@
 4. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 5. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
 
+### Day 49: January 26, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Added the 'Delete' reminder functionality. You can now delete reminders from the reminders page. More code clean up.
+
+### Day 48: January 24, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Cleaned up some of the codeto reduce footprint and 'clutter'. Ran through all sections to ensure all features still working. All works as it is supposed to.
+
 ### Day 47: January 23, 2020
 **Today's Progress**: Meal Plan App
 
