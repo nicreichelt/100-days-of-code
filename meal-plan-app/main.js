@@ -64,6 +64,9 @@ window.onload = function(){
         "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
     ];
 
+    // Pause Reminders
+    let pauseAlerts = false;
+
 // ** Build Functions
 
     // Load Home Screen (Main Page)
@@ -278,8 +281,14 @@ window.onload = function(){
         mealsReferenceDeleteButton.addEventListener('click', () => {
             const radios = document.querySelectorAll('.meal-selection-radio');
             let selected = '';
-            radios.forEach(radio => radio.checked ? selected = radio.value : '');
-            selected != '' ? mealReferenceDeletedDialog(selected, e) : '';
+            let checked = false
+            radios.forEach(radio => {
+                if(radio.checked) {
+                    selected = radio.value
+                    checked = true;
+                }
+            });
+            checked ? mealReferenceDeletedDialog(selected, e) : '';
         })
         mealsReferenceButonContainer.appendChild(mealsReferenceDeleteButton)
         // Clear Radio Selections
@@ -332,6 +341,16 @@ window.onload = function(){
             reminderDialog(e, value)
         });
         reminderButtonContainer.appendChild(editReminderButton);
+
+        const deleteReminderButton = document.createElement('button');
+        deleteReminderButton.dataset.type = 'delete';
+        deleteReminderButton.textContent = 'Delete Reminder';
+        deleteReminderButton.addEventListener('click', (e) => {
+            const value = document.querySelector('input[name=reminder-radio]:checked').id
+            console.log(value);
+            deleteReminder(e, value);
+        })
+        reminderButtonContainer.appendChild(deleteReminderButton);
 
         remindersWrapper.appendChild(reminderButtonContainer);
 
@@ -1416,6 +1435,30 @@ window.onload = function(){
 
         closeOverlayModal();
     }
+    function deleteReminder(e, value = ''){
+        let reminderIndex = 0;
+
+        if(value == ''){
+            alert('You must select an option to delete.');
+        }
+
+        text = document.querySelector(`#reminder-${value}`).querySelector('[data-type=text]').textContent;
+        date = document.querySelector(`#reminder-${value}`).querySelector('[data-type=date-time]').dataset.date;
+        time = document.querySelector(`#reminder-${value}`).querySelector('[data-type=date-time]').dataset.time;
+
+        remindersData.forEach((reminder, index) => {
+            if(reminder.text == text && reminder.date == date && reminder.time == time){
+                reminderIndex = index;
+            }
+        });
+
+        remindersData.splice(reminderIndex,1);
+
+        localStorage.setItem('remindersData', JSON.stringify(remindersData));
+
+        document.querySelector('.reminder-list ul').remove();
+        document.querySelector('.reminder-list').loadRemindersList();
+    }
     HTMLDivElement.prototype.loadRemindersList = function(){
         sortReminders();
         const reminderList = document.createElement('ul');
@@ -1450,6 +1493,120 @@ window.onload = function(){
             i++;
         });
         this.appendChild(reminderList);
+    }
+    Array.prototype.loadRemindersForAlerts = function(){
+        this.length = 0;
+        remindersData.forEach((reminder, index) => {
+            let reminderObject = {
+                index: index,
+                reminderDateTime: new Date(`${reminder.date} ${reminder.time}`),
+                reminderMessage: reminder.text
+            }
+            this.push(reminderObject);
+        });
+    }
+    function checkReminders(){
+        let reminders = [];
+
+        let reminderInterval = setInterval(function(){
+            reminders.loadRemindersForAlerts();
+
+            const now = new Date();
+            let minuteBefore = new Date();
+            minuteBefore.setMinutes(minuteBefore.getMinutes()-1);
+            let minuteAfter = new Date();
+            minuteAfter.setMinutes(minuteAfter.getMinutes()+1);
+
+            reminders.forEach((reminder,index) => {
+                if(reminder.reminderDateTime.getTime() > minuteBefore.getTime() && reminder.reminderDateTime.getTime() < minuteAfter.getTime() && !pauseAlerts){
+                    console.log(`Reminder: ${reminder.reminderMessage}`);
+                    createReminderPopup(reminder);
+                    pauseAlerts = true;
+                }
+            });
+        }, 1000)
+    }
+    function createReminderPopup(reminder){
+        // Create Popup
+        const reminderPopup = document.createElement('div');
+        reminderPopup.classList.add('reminder-popup');
+        reminderPopup.classList.add('transition');
+        reminderPopup.dataset.index = reminder.index;
+
+        // Content
+        const reminderPopupText = document.createElement('p');
+        reminderPopupText.textContent = reminder.reminderMessage;
+        reminderPopup.appendChild(reminderPopupText);
+
+        // Buttons (Snooze, Dismiss)
+        const reminderPopupButtonContainer = document.createElement('div');
+
+        const reminderPopupDismissButton = document.createElement('button');
+        reminderPopupDismissButton.textContent = 'Dismiss';
+        reminderPopupDismissButton.addEventListener('click', () => {
+            dismissPopup();
+        });
+        reminderPopupButtonContainer.appendChild(reminderPopupDismissButton);
+
+        const reminderPopupSnoozeButton = document.createElement('button');
+        reminderPopupSnoozeButton.textContent = 'Snooze';
+        reminderPopupSnoozeButton.addEventListener('click', () => {
+            snoozePopup();
+        });
+        reminderPopupButtonContainer.appendChild(reminderPopupSnoozeButton);
+
+        reminderPopup.appendChild(reminderPopupButtonContainer);
+
+        setInterval(() => {
+            reminderPopup.style.opacity = 1;
+        }, 500);
+        
+        document.body.appendChild(reminderPopup);
+
+        clearInterval(checkReminders);
+    }
+    function dismissPopup(e){
+        const index = document.querySelector('.reminder-popup').dataset.index;
+
+        console.log(index)
+
+        remindersData.splice(index,1);
+
+        localStorage.setItem('remindersData', JSON.stringify(remindersData));
+
+        const popup = document.querySelector('.reminder-popup');
+        popup.remove();
+
+        document.querySelector('.reminder-list ul').remove();
+        document.querySelector('.reminder-list').loadRemindersList();
+
+        pauseAlerts = false;
+        checkReminders();
+    }
+    function snoozePopup(e){
+        const index = document.querySelector('.reminder-popup').dataset.index;
+
+        console.log(remindersData[index])
+
+        let placeholderDate = new Date(`${remindersData[index].date} ${remindersData[index].time}`);
+        console.log(placeholderDate.getHours())
+        placeholderDate.setMinutes(placeholderDate.getMinutes() + 15);
+
+        console.log(placeholderDate)
+
+        remindersData[index].time = `${placeholderDate.getHours()}:${placeholderDate.getMinutes()}`;
+
+
+        localStorage.setItem('remindersData', JSON.stringify(remindersData));
+
+        const popup = document.querySelector('.reminder-popup');
+        popup.remove();
+
+        document.querySelector('.reminder-list ul').remove();
+        document.querySelector('.reminder-list').loadRemindersList();
+
+        pauseAlerts = false;
+        checkReminders();
     }
 
 // ** Settings Functions
@@ -1873,6 +2030,7 @@ window.onload = function(){
         console.clear();
         loadMainPage();
         darkModeEnabled();
+        checkReminders();
     }
     start();
 }
