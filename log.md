@@ -9,6 +9,20 @@
 4. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 5. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
 
+### Day 51: January 28, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Completed 'show reminder' logic. Reminders pop up in the upper right hand corner and can be 'snoozed' for 15 minutes, or 'dismissed'. Dismissing the reminder removes it from the array.
+
+### Day 50: January 27, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Worked on 'show reminder' logic. Figured out a way to check the reminders with 'setInterval' with minimal issues.
+
 ### Day 49: January 26, 2020
 **Today's Progress**: Meal Plan App
 
