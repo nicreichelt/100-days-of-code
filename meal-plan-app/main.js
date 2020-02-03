@@ -1871,32 +1871,31 @@ window.onload = function(){
 
         // Section Data to JSON
         const mealPlanJSON = JSON.stringify(mealPlanData);
-        // console.log(mealPlanJSON);
         const mealsReferenceJSON = JSON.stringify(mealsReferenceData);
         const remindersJSON = JSON.stringify(remindersData);
 
         // Create CSV String
         let csv = '';
         csv += 'Meal Plan Data\r\n\r\n'
-        for(heading in mealPlanHeaders){
-            csv += `${mealPlanHeaders[heading]},`
-        }
+        mealPlanHeaders.forEach(header => {
+            csv += `${header},`
+        })
         csv += '\r\n'
-        csv += convertDataToCSV(mealPlanData);
+        csv += convertDataToCSV(mealPlanJSON);
         csv += '\r\n\r\n'
 
         csv += 'Meal Reference Data\r\n\r\n'
-        for(heading in mealsReferenceHeaders){
-            csv += `${mealsReferenceHeaders[heading]},`
-        }
+        mealsReferenceHeaders.forEach(header => {
+            csv += `${header},`
+        })
         csv += '\r\n'
         csv += convertDataToCSV(mealsReferenceJSON);
         csv += '\r\n\r\n'
 
         csv += 'Reminders Data\r\n\r\n'
-        for(heading in remindersHeaders){
-            csv += `${remindersHeaders[heading]},`
-        }
+        remindersHeaders.forEach(header => {
+            csv += `${header},`
+        });
         csv += '\r\n'
         csv += convertDataToCSV(remindersJSON);
 

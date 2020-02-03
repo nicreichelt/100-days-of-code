@@ -103,6 +103,7 @@ div.meal-plan ul li {
     margin: 5px;
     outline: 1px solid black;
     display: flex;
+    cursor: pointer;
     /* flex-direction: row; */
 }
 div.meal-plan ul li.meal-exists{
@@ -193,6 +194,19 @@ div.reminder-popup{
     padding: 15px;
     outline: 1px solid black;
     opacity: 0;
+}
+div.reminders div.content-wrapper button{
+    margin: 5px;
+}
+div.reminders div.reminder-list ul{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 0 10px 0;
+}
+div.reminders div.reminder-list ul li{
+    width: calc(50% - 20px);
+    margin: 5px;
 }
 
 /* Settings Section */
