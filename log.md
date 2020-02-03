@@ -9,6 +9,17 @@
 4. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 5. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
 
+### Day 52: February 03, 2020
+**Today's Progress**: Meal Plan App
+
+Took a few days off to focus on my Pixel Art work more.
+
+* I finished the prototype on my '[Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)' today
+
+Made sure all logic was working as intended. Some minor features will not be implemented in this version but in v1.0, which I am starting tomorrow. Fixed bug with csv export as well.
+
+Took note of the main changes that are needed.
+
 ### Day 51: January 28, 2020
 **Today's Progress**: Meal Plan App
 
