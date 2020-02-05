@@ -2,12 +2,22 @@
 
 ### All Projects
 **Link(s) to work & Learning**
-1. **PROJECT**: [Meal Plan App](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
-2. **PROJECT**: '[CSS Grid Resume](https://github.com/nicreichelt/100-days-of-code/tree/master/css-grid-resume)'
-3. **LEARNING**: [JavaScript30](https://javascript30.com)
+1. **PROJECT**: [Meal Plan App Prototype](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
+2. **PROJECT**: [Meal Plan App Prototype](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)
+3. **PROJECT**: '[CSS Grid Resume](https://github.com/nicreichelt/100-days-of-code/tree/master/css-grid-resume)'
+4. **LEARNING**: [JavaScript30](https://javascript30.com)
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
-4. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
-5. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
+5. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
+6. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
+
+### Day 52: February 04, 2020
+**Today's Progress**: Meal Plan App
+
+Took a few days off to focus on my Pixel Art work more.
+
+* I started the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Got the frame of the app implemented and basic section switching and transitions are working smoothly. Chose base colors and styled the basic elements.
 
 ### Day 52: February 03, 2020
 **Today's Progress**: Meal Plan App
