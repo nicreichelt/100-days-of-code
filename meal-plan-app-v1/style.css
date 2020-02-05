@@ -1,0 +1,96 @@
+/* COLOR REFERENCE */
+/*
+    background: #f1faee
+
+*/
+
+/* Global Styles */
+* {
+    padding: 0;
+    margin: 0;
+    /* outline: 1px solid red; */
+    font-size: 12pt;
+}
+.transition{
+    transition: max-height 0.25s cubic-bezier(0,1,0,1);
+}
+.transition{
+    transition: 0.3s ease;
+}
+
+/* Main Container Styles */
+body{
+    font-size: 1em;
+    background-color: #f1faee;
+    color: #1d3557;
+}
+#container{
+    display:flex;
+    flex-direction: column;
+    margin: 0 auto;
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+    min-height: calc(100vh - 40px);
+}
+#app-heading{
+    /* margin: 0 0 20px 0; */
+    text-align: center;
+    font-size: 2em;
+}
+#content-container{
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#popup{
+    z-index: 30;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: calc(100% - 40px);
+    width: calc(100% - 40px);
+    padding: 20px;
+    max-height: 0;
+    opacity: 0;
+    background-color: rgba(0,0,0,0.4);
+}
+#reminders{
+    z-index: 30;
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    padding: 10px;
+    max-height: 0;
+    opacity: 0;
+}
+
+/* Main Button */
+div.home-button-container{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+button.main-button{
+    padding: 15px;
+    margin: 0 0 20px 0;
+    border-style: solid;
+    border-color: #457b9d;
+    border-width: 3px;
+    border-radius: 10px;
+    background-color: #f1faee;
+    min-width: 50%;
+    /* margin: 0 auto; */
+    text-align: center;
+}
+button.main-button:hover{
+    box-shadow: -5px 5px 0 2px rgba(38,68,86,0.5);
+    background-color: #457b9d;
+    color: #f1faee;
+}
