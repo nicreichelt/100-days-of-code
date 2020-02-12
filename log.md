@@ -10,7 +10,35 @@
 5. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 6. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
 
-### Day 52: February 04, 2020
+### Day 57: February 12, 2020
+**Today's Progress**: Meal Plan App
+
+* I started the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Got the weeks to load the appropriate meals on the appropriate days and worke don styling to make the experience more pleasant.
+
+### Day 56: February 8 - 11, 2020
+**Today's Progress**: Hardware Research & Rust
+
+I got an itch after bringing my Pebble Time back. My Ticwatch E has been dying in several hours and felt I'd give my Pebble Time another shot.
+
+This got me looking into other options if this dies and I stumbled on a couple (PineTime and Watchy). This has led me to look into Rust, as I have been looking at Arduino and Raspberry Pi projects in the past. I got Rust setup in VSCode, but haven't done much with it yet. I am counting these days as 1 since it wasnt the most productive. Good info, but I am going to lump them together.
+
+### Day 55: February 07, 2020
+**Today's Progress**: Meal Plan App
+
+* I started the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Worked on refactoring the loops and date functions to work with the new setup a bit better, and can switch between weeks in Meal Plan section.
+
+### Day 54: February 04, 2020
+**Today's Progress**: Meal Plan App
+
+* I started the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Started work on the Meal Plan Section and got some helper functions created for creating the week list and list items.
+
+### Day 53: February 04, 2020
 **Today's Progress**: Meal Plan App
 
 Took a few days off to focus on my Pixel Art work more.
