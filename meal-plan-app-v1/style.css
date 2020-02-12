@@ -1,6 +1,9 @@
 /* COLOR REFERENCE */
 /*
     background: #f1faee
+    nav-buttons: #457b9d
+    content-buttons: #99c7c8
+    content-buttons hover:#7b9fa1
 
 */
 
@@ -17,6 +20,9 @@
 .transition{
     transition: 0.3s ease;
 }
+button, li{
+    cursor: pointer;
+}
 
 /* Main Container Styles */
 body{
@@ -27,6 +33,7 @@ body{
 #container{
     display:flex;
     flex-direction: column;
+    /* justify-content: center; */
     margin: 0 auto;
     padding: 20px;
     width: 100%;
@@ -45,6 +52,7 @@ body{
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    opacity: 0;
 }
 #popup{
     z-index: 30;
@@ -70,7 +78,7 @@ body{
     opacity: 0;
 }
 
-/* Main Button */
+/* Button & Button Container Styles */
 div.home-button-container{
     width: 100%;
     display: flex;
@@ -86,11 +94,65 @@ button.main-button{
     border-radius: 10px;
     background-color: #f1faee;
     min-width: 50%;
-    /* margin: 0 auto; */
     text-align: center;
 }
 button.main-button:hover{
     box-shadow: -5px 5px 0 2px rgba(38,68,86,0.5);
     background-color: #457b9d;
     color: #f1faee;
+}
+
+div.content-button-container{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin: 0 0 10px 0;
+}
+button.content-button{
+    padding: 10px;
+    border-style: solid;
+    border-color: #457b9d;
+    border-radius: 10px;
+    border-width: 3px;
+    background-color: transparent;
+}
+button.content-button:hover{
+    background-color:  #457b9d;
+    color: #f1faee;
+}
+#week-of-text h2.subheading{
+    padding: 10px;
+    margin: 0 10px;
+    font-size: 1.5em;
+}
+#week-of-text button{
+
+}
+
+/* Lists */
+#main-list{
+    list-style: none;
+    width: 75%;
+    padding: 0 20px;
+}
+#main-list li.list-item{
+    padding: 15px;
+    margin: 0 0 10px 0;
+    width: 100%;
+    border-style: solid;
+    border-color: #99c7c8;
+    border-width: 3px;
+    border-radius: 10px;
+}
+#main-list li.list-item.active{
+    background-color: #99c7c8;
+}
+#main-list li.list-item:hover{
+    background-color: #6b8bac;
+    border-color: #6b8bac;
+    color: #f1faee;
+}
+#main-list li.list-item:last-of-type{
+    margin: 0;
 }
