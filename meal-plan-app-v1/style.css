@@ -31,9 +31,9 @@ body{
     color: #1d3557;
 }
 #container{
+    position: relative;
     display:flex;
     flex-direction: column;
-    /* justify-content: center; */
     margin: 0 auto;
     padding: 20px;
     width: 100%;
@@ -55,18 +55,22 @@ body{
     opacity: 0;
 }
 #popup{
-    z-index: 30;
+    z-index: -10;
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-    height: calc(100% - 40px);
+    min-height: calc(100% - 40px);
+    height: 100vh;
     width: calc(100% - 40px);
     padding: 20px;
     max-height: 0;
     opacity: 0;
     background-color: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 #reminders{
     z-index: 30;
@@ -78,7 +82,7 @@ body{
     opacity: 0;
 }
 
-/* Button & Button Container Styles */
+/* Content Button & Button Container Styles */
 div.home-button-container{
     width: 100%;
     display: flex;
@@ -155,4 +159,148 @@ button.content-button:hover{
 }
 #main-list li.list-item:last-of-type{
     margin: 0;
+}
+
+/* Popup Styles */
+div.meal-plan-popup{
+    min-width: 60%;
+    padding: 40px;
+    border-radius: 20px;
+    background-color: #457b9d;
+}
+div.meal-plan-popup h2{
+    width: 100%;
+    text-align: center;
+    padding: 0 0 20px 0;
+    font-size: 2em;
+    color: #f1faee;
+}
+div.popup-content div.add-edit-dialog-radios input[type='radio']{
+    display: none;
+}
+div.popup-content div.add-edit-dialog-radios{
+    margin: 0 0 20px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+div.popup-content div.add-edit-dialog-radios label{
+    padding: 10px;
+    background-color: #f1faee;
+    cursor: pointer;
+    margin: 0 20px 0 0;
+    border-radius: 10px;
+}
+div.popup-content div.add-edit-dialog-radios label:hover{
+    background-color: #99c7c8;
+}
+div.popup-content div.add-edit-dialog-radios label:last-of-type{
+    margin: 0;
+}
+div.popup-content div.add-edit-dialog-radios input[type="radio"]:checked+label{
+    background-color: #1d3557;
+    color: #f1faee
+}
+div.meal-forms-container{
+    position: relative;
+}
+div.new-meal-form.active,
+div.existing-meal-form.active{
+    opacity: 1;
+    max-height: 3000px;
+    z-index: 30;
+}
+div.new-meal-form{
+    overflow: hidden;
+    z-index: -30;
+    opacity: 0;
+    max-height: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    align-items: stretch;
+}
+div.new-meal-form input, 
+div.new-meal-form select{
+    padding: 10px;
+    margin: 10px auto;
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+}
+div.new-meal-form input{
+    width: calc(100% - 20px);
+}
+div.new-meal-form input:focus, 
+div.new-meal-form select:focus{
+    box-shadow: 0 0 0 2pt #99c7c8;
+}
+div.existing-meal-form{
+    overflow: hidden;
+    z-index: -30;
+    opacity: 0;
+    max-height: 0;
+}
+div.existing-meal-dropdowns{
+    padding: 0 0 20px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+div.existing-meal-dropdowns select{
+    border-radius: 10px;
+    border: none;
+    padding: 10px;
+    background-color: #f1faee;
+    color: #1d3557;    
+    margin: 0 20px 0 0;
+}
+div.existing-meal-dropdowns select:last-of-type{
+    margin: 0;
+}
+div.existing-meal-list{
+    /* padding: 20px; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+div.existing-meal-list input{
+    display: none;
+}
+div.existing-meal-list label{
+    padding: 10px;
+    background-color: #f1faee;
+    color: #1d3557;
+    border-radius: 10px;
+    margin: 10px;
+    width: calc(50% - 40px);
+}
+div.existing-meal-list label:hover{
+    background-color: #99c7c8;
+}
+div.existing-meal-list input[type="radio"]:checked+label{
+    background-color: #1d3557;
+    color: #f1faee
+}
+div.add-edit-dialog-buttons{
+    margin: 20px 0 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+div.add-edit-dialog-buttons button{
+    padding: 10px;
+    background-color: #f1faee;
+    border-radius: 10px;
+    margin: 0 20px 0 0;
+    border:none;
+}
+div.add-edit-dialog-buttons button:last-of-type{
+    margin: 0;
+}
+div.add-edit-dialog-buttons button:hover{
+    background-color: #1d3557;
+    color: #f1faee
 }
