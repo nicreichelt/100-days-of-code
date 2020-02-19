@@ -3,7 +3,7 @@
 ### All Projects
 **Link(s) to work & Learning**
 1. **PROJECT**: [Meal Plan App Prototype](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app)
-2. **PROJECT**: [Meal Plan App Prototype](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)
+2. **PROJECT**: [Meal Plan App v1.0](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)
 3. **PROJECT**: '[CSS Grid Resume](https://github.com/nicreichelt/100-days-of-code/tree/master/css-grid-resume)'
 4. **LEARNING**: [JavaScript30](https://javascript30.com)
     * My personal branch for the JS 30 Challenge can be found on my [Github](https://github.com/nicreichelt/30-days-of-js)
