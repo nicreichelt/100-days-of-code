@@ -10,10 +10,52 @@
 5. **LEARNING**: [FreeCodeCamp JS Cert Course](https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures)
 6. **LEARNING**: '[Web Components (LinkedIn Learning)](https://www.linkedin.com/learning/learning-web-components/welcome?u=2045532)'
 
+### Day 62: February 19, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Finalized the logic for adding/updating meal plan items. Got stuck on flagging already existing meals and passing data around.
+
+### Day 61: February 18, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Worked on Meal Plan Dialog for adding/updating meal plan items. Stuck on flagging a meal of the same name. Refactored a couple functions to save space.
+
+### Day 61: February 18, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Worked on Meal Plan Dialog for adding/updating meal plan items. Stuck on flagging a meal of the same name. Refactored a couple functions to save space.
+
+### Day 60: February 15, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Worked on the Meal Plan Dialog. Added Existing Meal Form and can switch between the two forms with transition.
+
+### Day 59: February 14, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Worked on the Meal Plan Dialog. New Meal Form is structured, but needs logs. And the Existing Meal Form needs to be added.
+
+### Day 58: February 13, 2020
+**Today's Progress**: Meal Plan App
+
+* I worked on the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+
+Got the Meal Plan Dialog started. Clicking on a meal plan item pops the dialog, but there is no content aside from the heading and radio buttons for 'new' or 'existing' meal.
+
 ### Day 57: February 12, 2020
 **Today's Progress**: Meal Plan App
 
-* I started the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+* I worked on the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
 
 Got the weeks to load the appropriate meals on the appropriate days and worke don styling to make the experience more pleasant.
 
@@ -27,14 +69,14 @@ This got me looking into other options if this dies and I stumbled on a couple (
 ### Day 55: February 07, 2020
 **Today's Progress**: Meal Plan App
 
-* I started the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+* I worked on the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
 
 Worked on refactoring the loops and date functions to work with the new setup a bit better, and can switch between weeks in Meal Plan section.
 
 ### Day 54: February 04, 2020
 **Today's Progress**: Meal Plan App
 
-* I started the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
+* I worked on the v1 refactor of my '[Meal Plan App v1](https://github.com/nicreichelt/100-days-of-code/tree/master/meal-plan-app-v1)' today
 
 Started work on the Meal Plan Section and got some helper functions created for creating the week list and list items.
 
