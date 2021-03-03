@@ -1,0 +1,100 @@
+{
+  "serviceCards": [
+    {
+      "id": 1,
+      "name": "Hardware Setup",
+      "startingRate": "50",
+      "description": "Computing equipment, cable management, and more ...",
+      "color": "#3AAFA9",
+      "slideDescription": "Setting up new computing equipment can be a process. I'm here to help",
+      "slideBulletPoints": [
+        "Computers, printers, and networking equipment",
+        "Hardware/OS Configuration",
+        "Cable management"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Hardware Upgrades",
+      "startingRate": "100",
+      "description": "Base computer upgrades for improved performance",
+      "color": "#DB7851",
+      "slideDescription": "If your computer is running slow, or you just want increased performance, a base hardware upgrade can solve that.",
+      "slideBulletPoints": [
+        "Hard Drive, RAM, Video Card",
+        "Old equipment disposal"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Software Services",
+      "startingRate": "100",
+      "description": "Install, setup, configuration of various software",
+      "color": "#6EA4BF",
+      "slideDescription": "Sometimes you need some additional software to get the most out of your computer",
+      "slideBulletPoints": [
+        "OS Install/Configuration",
+        "Plex Media Server Setup & Physical Media Conversion"
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Mobile Device Support",
+      "startingRate": "50",
+      "description": "Slow phone, or need help setting up a new one",
+      "color": "#A63A50",
+      "slideDescription": "Android and iOS make up almost all smartphones, and they are can do so much for you",
+      "slideBulletPoints": [
+        "Smartphone setup/configuration",
+        "Smart device connections"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Troubleshoting",
+      "startingRate": "50",
+      "description": "Troubleshooting of various computing and software systems",
+      "color": "#91587A",
+      "slideDescription": "When something is not working as it should, isolating the root of the issue is key",
+      "slideBulletPoints": [
+        "Computer, printer, networking gear, smartphone, etc.",
+        "Software conflicts"
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Tech Consulting",
+      "startingRate": "50",
+      "description": "Picking the right tech is tough when there are so many options",
+      "color": "#6C747A",
+      "slideDescription": "Consultations for helping you pick the right device, and service for your needs",
+      "slideBulletPoints": [
+        "Device research and recommendations",
+        "Software/Service research and recommendations"
+      ]
+    }
+  ],
+  "socialLinks": [
+    {
+      "id": 1,
+      "name": "Facebook",
+      "url": "https://facebook.com/NicReicheltIT",
+      "class": "fa fa-facebook",
+      "color": "#3B5998"
+    },
+    {
+      "id": 2,
+      "name": "LinkedIn",
+      "url": "https://linkedin.com/in/nicolasreichelt",
+      "class": "fa fa-linkedin",
+      "color": "#7CB82F"
+    },
+    {
+      "id": 3,
+      "name": "Twitter",
+      "url": "https://twitter.com/pxlnic",
+      "class": "fa fa-twitter",
+      "color": "#55ACEE"
+    }
+  ]
+}

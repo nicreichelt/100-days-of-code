@@ -1,0 +1,208 @@
+/* COLOR SCHEME */
+/* 
+
+*/
+
+/* *** VARIABLES */
+:root{
+    /* Font */
+    --base-font-size: 12px;
+    --app-heading-font-size: 2em;
+
+    /* Primary Container Colors */
+    --main-background-color: #f1faee;
+    --main-font-color: #1d3557;
+
+    --overlay-background-color: rgba(0,0,0,0.4);
+    --popup-background-color: #457b9d;
+
+    --reminders-background-color: red;
+
+    /* Primary Button Variables */
+    --button-background-color: #f1faee;
+    --button-font-color: #1d3557;
+    --button-hover-font-color: #f1faee;
+    /* Navgational Button Variables */
+    --nav-button-accent-color: #457b9d;
+    /* Content Button Variables */
+    --content-button-accent-color: #99c7c8;
+    /* Action Button Variables */
+    --action-button-accent-color: #1d3557;
+}
+
+/* *** GLOBAL STYLES */
+body{
+    font-size: 12px;
+
+    background-color: var(--main-background-color);
+    color: var(--main-font-color);
+}
+.transition{
+    transition: all 0.3s ease;
+}
+/* Button Styles */
+.button{
+    padding: 10px;
+    text-align: center;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #f1faee;
+    color: var(--button-font-color);
+}
+.button.nav{
+    border-color: var(--nav-button-accent-color);
+}
+.button.nav.main{
+    min-width: 50%;
+    font-size: 1.2em;
+}
+.button.content{
+    border-color: var(--content-button-accent-color);
+}
+.button:hover{
+    color: #f1faee;
+}
+.button.nav:hover{
+    background-color:var(--nav-button-accent-color);
+}
+.button.content:hover{
+    background-color: var(--content-button-accent-color);
+}
+/* Close Button */
+a.close {
+    position: relative;
+    z-index: 20;
+    width: 20px;
+    height: 20px;
+    opacity: 0.3;
+}
+a.close:hover {
+    opacity: 1;
+}
+a.close:before, .close:after {
+    right: 10px;
+    position: absolute;
+    content: ' ';
+    height: 20px;
+    width: 3px;
+    background-color: #1d3557;
+}
+a.close:before {
+    transform: rotate(45deg);
+}
+a.close:after {
+    transform: rotate(-45deg);
+}
+
+/* *** MAIN STYLES (CONTAINERS) */
+#container{
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+
+    padding: 20px;
+    width: 100%;
+    max-width: 800px;
+}
+
+#app-heading{
+    text-align: center;
+    font-size: var(--app-heading-font-size);
+    margin: 0;
+}
+
+#content-container{
+    position: relative;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    width: 100%;
+}
+#content-container > *{
+    margin: 0 0 10px 0;
+}
+#content-container > *:nth-last-child(1){
+    margin: 0;
+}
+
+#popup{
+    z-index: -10;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    min-height: calc(100% - 40px);
+    height: 100vh;
+    width: calc(100% - 40px);
+    padding: 20px;
+    max-height: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    background-color: var(--overlay-background-color);
+}
+
+#reminders{
+    z-index: 30;
+    position: fixed;
+    top: 40px;
+    right: 40px;
+    padding: 10px;
+
+    max-height: 0;
+
+    opacity: 0;
+}
+
+
+/* *** SECTION STYLES */
+/* Main Content Section */
+#content-container div.home-button-container{
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    margin: 0 0 20px 0;
+}
+#content-container div.content-button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 50%;
+}
+#content-container ul#main-list{
+    min-width: 75%;
+    list-style: none;
+    padding: 10px;
+}
+#content-container ul#main-list li.list-item{
+    width: 100%;
+    padding: 10px;
+    margin: 0 0 10px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.3em;
+    position: relative;
+}
+
+/* Popup Section */
+#popup div.popup-content{
+    background-color: var(--popup-background-color);
+}
+
+/*  */

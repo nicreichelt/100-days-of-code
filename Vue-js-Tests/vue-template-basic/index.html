@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scaling" />
+    <title>Vue Template</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+
+  <body class="transition">
+    <div id="app">
+      <!-- Header? -->
+      <!-- Sticky Banner -->
+      <sticky-banner :update-margin="false"></sticky-banner>
+
+      <!-- CONTENT -->
+      <!-- Splash Screen -->
+      <splash-screen></splash-screen>
+
+      <!-- Services Offered -->
+      <services></services>
+
+      <!-- Contact Form -->
+      <contact-form></contact-form>
+
+      <!-- Footer -->
+      <page-footer></page-footer>
+    </div>
+
+    <!-- JS Scripts (Vue connection, SMTPJS, and local scripts) -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script
+      src="https://kit.fontawesome.com/bd081c2c2b.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="data.json"></script>
+    <script type="module" src="main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,381 @@
+/* Global Styles */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* VARIABLE STYLES */
+:root {
+  /* Primary Styles */
+  --primary-background-color: #ddd;
+  --primary-font-color: #222;
+  --primary-accent-color: #888;
+  --base-font: 12px;
+  --element-botton-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.4);
+  --center-element: center;
+
+  /* Sticky Nav */
+  --sticky-nav-background-color: #db7851;
+  --sticky-nav-font-color: #fefefe;
+  --sticky-nav-accent-color: rgba(256, 256, 256, 0.3);
+
+  /* Splash Screen */
+  --splash-background-color: #3aafa9;
+  --splash-font-color: #feffff;
+  --splash-heading-text-shadow: 2px 2px rgba(0, 0, 0, 0.4);
+  --splash-heading-font-size: 3.5em;
+  --splash-heading-font-family: sans-serif;
+  --splash-sub-heading-font-size: 2.5em;
+  --splash-sub-heading-font-family: helvetica;
+  --splash-text-shadow: 1px 1px rgba(0, 0, 0, 0.4);
+  --splash-text-font-famiy: monaco;
+  --splash-text-font-size: 1.5em;
+
+  /* Services Screen */
+
+  /* Services Popup */
+  --services-popup-overlay-background-color: rgba(0, 0, 0, 0.4);
+  --services-popup-card-background-color: #fefefe;
+  --services-popup-card-font-color: #222;
+
+  /* Contact Form */
+  --contact-form-background-color: #f0f2f3;
+  --contact-form-font-color: #6c747a;
+  --contact-form-button-background-color: rgb(166, 58, 80);
+  --contact-form-button-font-color: #fefefe;
+
+  /* Footer */
+  --footer-background-color: #222;
+  --footer-font-color: #fefefe;
+}
+
+/* GENERAL STYLES */
+/* Buttons */
+.btn {
+  cursor: pointer;
+  padding: 5px;
+}
+.base-btn {
+  padding: 10px 20px;
+  background-color: var(--primary-accent-color);
+  border-radius: 3px;
+  color: var(--primary-background-color);
+  text-decoration: none;
+}
+.transition {
+  transition: all 0.3s ease;
+}
+a.close {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  z-index: 20;
+  width: 25px;
+  height: 25px;
+  opacity: 0.3;
+  margin-left: auto;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+a.close:hover {
+  opacity: 0.7;
+}
+a.close:before,
+.close:after {
+  right: 12px;
+  position: absolute;
+  content: " ";
+  height: 25px;
+  width: 3px;
+}
+a.close:before {
+  transform: rotate(45deg);
+}
+a.close:after {
+  transform: rotate(-45deg);
+}
+
+/* Sticky Banner */
+div.sticky-banner {
+  z-index: 30;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  opacity: 0;
+  max-height: 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--sticky-nav-background-color);
+  color: var(--sticky-nav-font-color);
+  box-shadow: var(--element-botton-shadow);
+}
+div.sticky-banner.show {
+  opacity: 1;
+  max-height: 200px;
+  padding: 10px;
+}
+ddiv.sticky-banner p {
+  text-align: center;
+  margin: 0 25px 0 0;
+}
+div.sticky-banner a.close:before,
+div.sticky-banner a.close:after {
+  background-color: var(--sticky-nav-font-color);
+}
+
+/* Section */
+div.section {
+  padding: 20px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+div.section h1 {
+  width: 100%;
+  margin: 0 0 20px 0;
+  text-align: center;
+}
+
+/* Card */
+div.card-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+div.card {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  margin: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+
+  cursor: pointer;
+}
+div.card:hover {
+  box-shadow: 5px 5px 3px 5px rgba(0, 0, 0, 0.3);
+}
+div.card img {
+  margin: -40px auto 0 auto;
+  border: 5px solid white;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+/* Overlay */
+div.popup-overlay {
+  opacity: 0;
+  z-index: -10;
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 20px;
+  background-color: var(--services-popup-overlay-background-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+div.popup-overlay.show {
+  opacity: 1;
+  z-index: 10;
+}
+div.popup-overlay a.close {
+  z-index: 20;
+  top: 45px;
+  margin-right: 20px;
+  background-color: white;
+  padding: 10px;
+  position: absolute;
+  opacity: 0.5;
+}
+div.popup-overlay a.close:hover {
+  opacity: 0.8;
+}
+div.popup-overlay a.close:before,
+div.popup-overlay a.close:after {
+  background-color: var(--services-popup-card-font-color);
+  right: 21px;
+}
+div.popup-overlay div.popup-card {
+  position: relative;
+  color: var(--services-popup-card-font-color);
+  background-color: var(--services-popup-card-background-color);
+  padding: 20px;
+  border-radius: 5px;
+  max-width: 600px;
+}
+div.popup-overlay div.popup-card ul {
+  margin-left: 20px;
+}
+
+/* Splash Screen */
+div#app div.splash {
+  position: relative;
+  height: 100vh;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--splash-background-color);
+  color: var(--splash-font-color);
+  text-shadow: var(--splash-text-shadow);
+  font-family: var(--splash-text-font-famiy);
+}
+div#app div.splash h1 {
+  text-shadow: var(--splash-heading-text-shadow);
+  font-size: var(--splash-heading-font-size);
+  font-family: var(--splash-heading-font-family);
+  margin: -30px 0 0 0;
+}
+div#app div.splash h2 {
+  text-shadow: var(--splash-heading-text-shadow);
+  font-size: var(--splash-sub-heading-font-size);
+  font-family: var(--splash-sub-heading-font-family);
+}
+div#app div.splash p {
+  font-size: var(--splash-text-font-size);
+  text-align: var(--center-element);
+}
+div#app div.splash a.base-btn {
+  position: absolute;
+  margin: 0 0 20px 0;
+  bottom: 0;
+}
+
+/* Services Screen */
+div#app div.services {
+  /* min-height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+div#app div.services div.card div.card-topper {
+  padding: 25px;
+}
+div#app div.services div.card div.card-content {
+  padding: 5px 20px 20px 20px;
+}
+div#app div.services div.card p {
+  text-align: center;
+  padding: 0 0 10px 0;
+}
+div#app div.services div.card p:last-of-type {
+  padding: 0;
+}
+div#app div.services div.card p.service-name {
+  font-size: 1.1em;
+}
+div#app div.services div.card p.service-price {
+  text-decoration: underline;
+}
+
+/* Contact Section */
+div#app div.contact-form {
+  background-color: var(--contact-form-background-color);
+  color: var(--contact-form-font-color);
+  max-width: 680px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+div#app div.contact-form form {
+  display: flex;
+  flex-direction: column;
+}
+div#app div.contact-form form * {
+  margin: 0 auto 15px auto;
+  max-width: 600px;
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+div#app div.contact-form form:last-child {
+  margin: 0 auto;
+}
+div#app div.contact-form form input#contact-button {
+  background-color: var(--contact-form-button-background-color);
+  color: var(--contact-form-button-font-color);
+  cursor: pointer;
+}
+div#app div.contact-form form input#contact-button:hover {
+  opacity: 0.8;
+}
+
+/* Page Footer */
+div#app footer.footer {
+  padding: 20px;
+  background-color: var(--footer-background-color);
+  color: var(--footer-font-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+div#app footer.footer div.social {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+}
+div#app footer.footer div.social a {
+  width: 50px;
+  padding: 15px;
+  margin: 10px;
+  font-size: 1.2em;
+  background-color: #feffff;
+  border-radius: 50%;
+  text-decoration: none;
+  color: var(--footer-background-color);
+  text-align: center;
+}
+div#app footer.footer div.social a:hover {
+  color: #feffff;
+}
+div#app footer.footer a.copyright {
+  text-align: center;
+  margin: 0 auto;
+  color: var(--footer-font-color);
+  text-decoration: none;
+}
+
+/* BREAK PONITS */
+/* Basic Phone */
+
+/* Mobile */
+@media screen and (min-width: 300px) {
+  div.card {
+    width: 80%;
+  }
+}
+
+/* Tablet */
+@media screen and (min-width: 580px) {
+  div.card {
+    width: calc(49% - 20px);
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 800px) {
+  div.card {
+    width: calc(33% - 20px);
+  }
+}

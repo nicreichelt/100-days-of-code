@@ -70,6 +70,8 @@ window.onload = function(){
 
     // ** Load Section Functions
     function loadSection(sectionName){
+        checkDarkMode();
+        
         const section = getAppSectionData(sectionName);
 
         updateHeading(section.heading);
@@ -103,18 +105,45 @@ window.onload = function(){
             addWeekOfText(firstDay);
             sectionContentContainer.appendChild(currentWeekMealPlan);
         },frontEndSettings.changeDelay);
-        // -> [X] Get Current Weeks Meal Plan Items
-        // -> [X] Create an "ul" with a loop and insert meal plan items
-        // -> [ ] Add Remove button with remove functionality to items?
     }
     function loadMealReferencesSection(){
         console.log('Meal References Loaded!');
+
     }
     function loadRemindersSection(){
         console.log('Reminders Loaded!');
     }
     function loadSettingsSection(){
         console.log('Settings Loaded!');
+        // Manage Meal Type List
+        const mealTypeListContainer = document.createElement('div');
+        mealTypeListContainer.classList.add('expanding-section-container');
+        mealTypeListContainer.classList.add('meal-type-list-container');
+        mealTypeListContainer.generateMealTypeList();
+
+        // Manage Meal Season List
+        const mealSeasonListContainer = document.createElement('div');
+        mealSeasonListContainer.classList.add('meal-season-list-container');
+        mealSeasonListContainer.classList.add('expanding-section-container');
+        mealSeasonListContainer.generateMealSeasonList();
+
+        // Dark Mode
+        const darkModeContainer = document.createElement('div');
+        darkModeContainer.classList.add('dark-mode-container');
+        darkModeContainer.generateDarkModeButton();
+
+        // Download/Delete Data
+        const downloadAndDeleteDataContainer = document.createElement('div');
+        downloadAndDeleteDataContainer.classList.add('content-button-container');
+        downloadAndDeleteDataContainer.generateDownloadAndDeleteButtons();
+
+        // Append Containers to screen
+        setTimeout(() => {
+            sectionContentContainer.appendChild(mealTypeListContainer);
+            sectionContentContainer.appendChild(mealSeasonListContainer);
+            sectionContentContainer.appendChild(darkModeContainer);
+            sectionContentContainer.appendChild(downloadAndDeleteDataContainer);
+        }, frontEndSettings.changeDelay);
     }
     // * App Section Helper Functions
     function getAppSectionData(sectionName){
@@ -195,7 +224,8 @@ window.onload = function(){
         changeType == 1 ? changeWeek = changeDate(firstDay, 7) : '';
 
         const changeWeekButton = document.createElement('button');
-        changeWeekButton.classList.add('content-button');
+        changeWeekButton.classList.add('button');
+        changeWeekButton.classList.add('nav');
         changeWeekButton.classList.add('transition');
         changeWeekButton.dataset.firstDay = changeWeek;
         changeType == -1 ? changeWeekButton.textContent = 'Previous Week' : '';
@@ -382,13 +412,16 @@ window.onload = function(){
         let listItem = document.createElement('li');
         listItem.classList.add('list-item');
         listItem.classList.add('meal-plan-item');
-        listItem.classList.add('transition')
+        listItem.classList.add('button');
+        listItem.classList.add('content');
+        listItem.classList.add('transition');
         listItem.dataset.date = date;
         listItem.addEventListener('click', addEditMealDialog);
 
         if(mealPlanItem){
             listItem.dataset.meal = mealPlanItem.name;
             listItem.createMealPlanListItemText(day, mealPlanItem);
+            listItem.generateMealPlanDeleteButton(date, mealPlanItem);
         }else{
             listItem.dataset.meal = 'none';
             listItem.textContent = `${day} |`;
@@ -397,7 +430,17 @@ window.onload = function(){
         return listItem;
     }
     HTMLLIElement.prototype.createMealPlanListItemText = function(day, mealPlanItem = false){
-        this.textContent = `${day} | ${mealPlanItem.name}`;
+        const mealText = document.createElement('a');
+        mealText.textContent = `${day} | ${mealPlanItem.name}`;
+        this.appendChild(mealText);
+    }
+    HTMLLIElement.prototype.generateMealPlanDeleteButton = function(day, mealPlanItem = false){
+        const closeButton = document.createElement('a');
+        closeButton.classList.add('close');
+        closeButton.addEventListener('click', (e) => {
+            removeMealPlanData(day, mealPlanItem, e);
+        });
+        this.appendChild(closeButton);
     }
     // * Meal Plan Data Helpers
     function newMealPlanObject(date, meal){
@@ -438,20 +481,29 @@ window.onload = function(){
             return mealExistsflag;
         }
     }
-    function updateMealPlanData(mealDate, mealPlan, updateType = 'new'){
+    function updateMealPlanData(mealDate, mealItem, updateType = 'new'){
         let mealExistsflag = false;
-        updateType == 'new' ? mealExistsflag = addMealReferenceData(mealPlan) : '';
+        updateType == 'new' ? mealExistsflag = addMealReferenceData(mealItem) : '';
 
         if(!mealExistsflag){
             let  mealIndex
             mealPlanData.forEach((meal, index) => {
                 meal.date == mealDate ? mealIndex = index : '';
             });
-            mealPlanData[mealIndex] = newMealPlanObject(mealDate, mealPlan);
+            mealPlanData[mealIndex] = newMealPlanObject(mealDate, mealItem);
             localStorage.setItem('mealPlanData', JSON.stringify(mealPlanData));
         }
 
         return mealExistsflag;
+    }
+    function removeMealPlanData(mealDate, mealItem, e){
+        e.stopPropagation();
+        if(confirm(`Are you sure you want to clear ${mealItem.name} from ${getDateText(mealDate)}`)){
+            mealPlanData = mealPlanData.filter(meal => meal.date != `${mealDate}`);
+            localStorage.setItem('mealPlanData', JSON.stringify(mealPlanData));
+            removePriorWeek();
+            loadMealPlanSection(getFirstDayOfWeek(new Date(mealDate)));
+        }
     }
     function getMealDialogType(){
         const mealDialogRadios = document.querySelectorAll('input[name=popup-radios]');
@@ -485,8 +537,6 @@ window.onload = function(){
         });
 
         selectedMeal = getMeal(selectedMealName);
-
-        console.log(selectedMeal)
 
         return selectedMeal;
     }
@@ -558,6 +608,7 @@ window.onload = function(){
             existingMealList.style.maxHeight = '3000px';
         },frontEndSettings.changeDelay);
     }
+    // * Meal Reference Data Helper Functions
     function addMealReferenceData(meal){
         let mealExistsFlag = false;
 
@@ -632,8 +683,78 @@ window.onload = function(){
     }
 
     // ** Settings Functions
-    function darkModeToggle(){
+    HTMLDivElement.prototype.generateMealTypeList = function(){
+        const elementArray = generateExpandingSection('settings-type', 'Manage Meal Types');
 
+        const clickLabel = elementArray.label;
+
+        const typeListSection = elementArray.list;
+        settingsData.mealTypes.forEach(type => {
+            const text = document.createElement('label');
+            text.textContent = type;
+            typeListSection.appendChild(text);
+        })
+
+        this.appendChild(clickLabel);
+        this.appendChild(typeListSection);
+    }
+    HTMLDivElement.prototype.generateMealSeasonList = function(){
+        const elementArray = generateExpandingSection('settings-season', 'Manage Meal Seasons');
+
+        const clickLabel = elementArray.label;
+
+        const seasonListSection = elementArray.list;
+
+        this.appendChild(clickLabel);
+        this.appendChild(seasonListSection);
+    }
+    HTMLDivElement.prototype.generateDarkModeButton = function(){
+        const heading = document.createElement('h2');
+        heading.id = 'dark-mode-heading'
+        heading.textContent = `Turn Dark Mode ${settingsData.darkMode ? 'Off' : 'On'}`;
+        this.appendChild(heading);
+
+        const darkModeToggleButtons = generateToggleSwitch('dark-mode', settingsData.darkMode, darkModeToggle);
+        darkModeToggleButtons.forEach(el => this.appendChild(el));
+    }
+    HTMLDivElement.prototype.generateDownloadAndDeleteButtons = function(){
+        const downloadButton = document.createElement('button');
+        downloadButton.textContent = 'Download App Data';
+        downloadButton.classList.add('content-button');
+        downloadButton.classList.add('transition');
+        downloadButton.addEventListener('click', downloadAppData);
+        this.appendChild(downloadButton);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete App Data';
+        deleteButton.classList.add('content-button');
+        deleteButton.classList.add('transition');
+        deleteButton.classList.add('delete-button');
+        deleteButton.addEventListener('click', deleteAppData);
+        this.appendChild(deleteButton);
+    }
+    function downloadAppData(){
+        console.log('Downloading Data ...');
+    }
+    function deleteAppData(){
+        console.log('Deleting Data ...');
+    }
+    function darkModeToggle(){
+        settingsData.darkMode = !settingsData.darkMode;
+
+        const heading = document.querySelector('#dark-mode-heading');
+        heading.textContent = `Turn Dark Mode ${settingsData.darkMode ? 'Off' : 'On'}`;
+
+        const toggle = document.querySelector('#dark-mode-toggle');
+        if(toggle != undefined){
+            settingsData.darkMode ? toggle.classList.add('on') : toggle.classList.remove('on');
+            settingsData.darkMode ? document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode');
+        }
+
+        localStorage.setItem('settingsData', JSON.stringify(settingsData));
+    }
+    function checkDarkMode(){
+        settingsData.darkMode ? document.body.classList.add('dark-mode') : document.body.classList.remove('dark-mode');
     }
 
     // *** GLOBAL UI FUNCTIONS ***
@@ -668,7 +789,9 @@ window.onload = function(){
     }
     HTMLDivElement.prototype.addMainButton = function(section){
         const mainButton = document.createElement('button');
-        mainButton.classList.add('main-button');
+        mainButton.classList.add('button');
+        mainButton.classList.add('nav');
+        mainButton.classList.add('main');
         mainButton.classList.add('transition')
         mainButton.textContent = section.buttonText;
         mainButton.addEventListener('click', (e) => {
@@ -723,6 +846,60 @@ window.onload = function(){
         setTimeout(() => {
             popupContainer.children[0].remove();
         }, frontEndSettings.changeDelay);
+    }
+    function generateToggleSwitch(switchName, toggleSetting, toggleFunction){
+        // Label
+        const toggleLabel = document.createElement('label');
+        toggleLabel.classList.add('toggle');
+        toggleLabel.id = `${switchName}-toggle`
+        toggleLabel.setAttribute('for', `${switchName}-check`);
+        toggleSetting ? toggleLabel.classList.add('on') : toggleLabel.classList.remove('on');
+        
+        // Span
+        const toggleSpan = document.createElement('span');
+        toggleSpan.classList.add('toggle-switch');
+        toggleSpan.classList.add('transition');
+        toggleLabel.appendChild(toggleSpan);
+
+        // Input (Checkbox)
+        const toggleInput = document.createElement('input');
+        toggleInput.setAttribute('type', 'checkbox');
+        toggleInput.id = `${switchName}-check`;
+        toggleInput.addEventListener('click', toggleFunction);
+
+        return [toggleLabel, toggleInput];
+    }
+    function generateExpandingSection(sectionName, labelText){
+        const sectionObject = {
+            label: '',
+            list: ''
+        }
+
+        const label = document.createElement('div');
+        label.classList.add(`${sectionName}-label`);
+        label.classList.add(`expanding-section-label`);
+        label.addEventListener('click', expandSection, true);
+        const expandIcon = document.createElement('a');
+        expandIcon.classList.add('expand-icon');
+        expandIcon.classList.add('transition');
+        label.appendChild(expandIcon);
+        const labelTextElement = document.createElement('p');
+        labelTextElement.textContent = labelText
+        label.appendChild(labelTextElement);
+        sectionObject.label = label;
+
+        const list = document.createElement('div');
+        list.classList.add(`${sectionName}-list`);
+        list.classList.add(`expanding-section-list`);
+        list.classList.add('transition');
+        sectionObject.list = list;
+
+        return sectionObject;
+    }
+    function expandSection(e){
+        const parent = e.currentTarget;
+        const container = parent.parentElement;
+        container.classList.contains('expanded') ? container.classList.remove('expanded') : container.classList.add('expanded');
     }
 
     // *** TEST FUNCTIONS (Remove these one features are built) ***
